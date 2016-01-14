@@ -1,0 +1,36 @@
+{
+  "name": "greenius",
+  "homepage": "https://github.com/GitMoneyCrew/greenius",
+  "authors": [
+    "Robert Cardiff",
+    "Elizabeth Banalagay",
+    "Geetha Ratnam",
+    "Brandon Goodfliesh"
+  ],
+  "description": "A smarter way to plant",
+  "main": "index.js",
+  "moduleType": [],
+  "keywords": [
+    "plant",
+    "garden"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "angular-animate": "~1.4.8",
+    "angular-bootstrap": "~0.14.3",
+    "bootstrap": "~3.3.6",
+    "jquery": "1.9.1 - 2"
+  }
+}
