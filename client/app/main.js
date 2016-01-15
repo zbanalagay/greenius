@@ -4,7 +4,8 @@ var main = angular.module('greeniusApp',
 	'dashboard',
 	'myPlants',
 	'plantProfile',
-	'services']);
+	'services',
+	'ui.router']);
 
 main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
 	$urlRouterProvider.otherwise('/dashboard');
@@ -14,7 +15,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/login',
 			views: {
 				'indexPage': {
-					templateUrl: './auth/loginView.html',
+					templateUrl: './app/auth/loginView.html',
 					controller: 'authController'
 				}
 			}
@@ -23,7 +24,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/signup',
 			views: {
 				'indexPage': {
-					templateUrl: './auth/signupView.html',
+					templateUrl: './app/auth/signupView.html',
 					controller: 'authController'
 				}
 			}
@@ -32,7 +33,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/browsePlant',
 			views: {
 				'indexPage': {
-					templateUrl: './browsePlant/browsePlantView.html',
+					templateUrl: './app/browsePlant/browsePlantView.html',
 					controller: 'browsePlantController'
 				}
 			}
@@ -41,7 +42,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/dashboard',
 			views: {
 				'indexPage': {
-					templateUrl: './dashboard/dashboardView.html',
+					templateUrl: './app/dashboard/dashboardView.html',
 					controller: 'dashboardController'
 				}
 			}
@@ -50,7 +51,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/myPlants',
 			views: {
 				'indexPage': {
-					templateUrl: './myPlants/myPlantsView.html',
+					templateUrl: './app/myPlants/myPlantsView.html',
 					controller: 'myPlantsController'
 				}
 			}
@@ -59,7 +60,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/plantProfile',
 			views: {
 				'indexPage': {
-					templateUrl: './plantProfile/plantProfileView.html',
+					templateUrl: './app/plantProfile/plantProfileView.html',
 					controller: 'plantProfileController'
 				}
 			}
