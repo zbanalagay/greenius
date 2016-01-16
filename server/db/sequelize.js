@@ -9,7 +9,7 @@ var sequelize = new Sequelize('test', null, null,{
 
 var models = {};
 
-models.Users = sequelize.define('Users', {
+models.User = sequelize.define('User', {
   username: {
    type: Sequelize.STRING
  },
@@ -27,7 +27,7 @@ models.Users = sequelize.define('Users', {
  }
 });
 
-models.Plants = sequelize.define('Plants', {
+models.Plant = sequelize.define('Plant', {
   userId:{
     type: Sequelize.INTERGER
   },
@@ -48,7 +48,7 @@ models.Plants = sequelize.define('Plants', {
   }
 });
 
-models.speciesInfo = sequlize.define('SpeciesInfo', {
+models.SpeciesInfo = sequlize.define('SpeciesInfo', {
   speciesName: {
     type: Sequelize.STRING
   },
@@ -66,8 +66,38 @@ models.speciesInfo = sequlize.define('SpeciesInfo', {
   }
 });
 
-models.garden = sequlize.define('Garden', {
+models.Garden = sequlize.define('Garden', {
   gardenName: {
     type: Sequelize.STRING
   }
 });
+
+//establish the relationships between the tables
+models.User.hasMany(models.Plant);
+models.Garden.hasMany(models.Plant);
+models.SpeciesInfo.hasMany(models.Plant);
+models.User.belongsToMany(models.Garden, {through: 'Plant'});
+models.Garden.belongsToMany(models.User, {through: 'Plant'});
+
+// {force: true} will drop the table and re-create it
+models.User.sync({force: false})
+           .then(function() {
+             console.log('User sync in sequelize.js');
+           });
+
+models.Plant.sync({force: false})
+            .then(function() {
+              console.log('Plant sync in sequelize.js');
+            });
+
+models.SpeciesInfo.sync({force: false})
+            .then(function() {
+              console.log('SpeciesInfo sync in sequelize.js');
+            });
+
+models.Garden.sync({force: false})
+             .then(function() {
+               console.log('Garden sync in sequelize.js');
+             });
+
+module.exports = models;
