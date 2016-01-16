@@ -19,7 +19,59 @@ var helpers = {
   },
 
   addPlant : function(plant) {
+    var plantObj = {};
 
+    // Check for User ID
+    return db.User.findOne({
+      where: {username: user.username}
+    })
+    .then(function(userResults) {
+      if(!userResults) {
+        throw Error('Username does not exist');
+      }
+      console.log('User ID exists: ', userResults);
+      plantObj.userResults = userResults; // TODO: Findout userId
+
+        // Check for Species ID
+        return db.SpeciesInfo.findOne({
+          where: {speciesName: plant.commonName}
+        })
+        .then(function(speciesResults) {
+          if(!speciesResults) {
+            throw Error('Species does not exist');
+          }
+          console.log('Species exists: ', speciesResults);
+          plantObj.speciesResults = speciesResults; // TODO: Findout speciesId
+
+            // Check for Garden ID
+            return db.Garden.findOne({
+              where: {gardenName: plant.gardenName}
+            })
+            .then(function(gardenResults) {
+              if(!gardenResults) {
+                throw Error('Garden does not exist');
+              }
+              console.log('Garden exists: ', gardenResults);
+              plantObj.gardenResults = gardenResults; // TODO: Findout gardenId
+
+                // Insert plant into Plant table
+                return db.Plant.create({
+                  userId: plantObj.userResults,
+                  speciesId: plantObj.speciesResults,
+                  plantDate: plant.plantDate,
+                  nickname: plant.nickname,
+                  plantStatus: plant.plantStatus,
+                  gardenId: plantObj.gardenResults
+                })
+                .then(function(plantResults) {
+                  console.log('Add plant successful');
+                })
+                .catch(function(error) {
+                   console.log('Error adding plant to the database', error);
+                })
+            })
+        })
+    })
   },
 
   addGarden : function(garden) {
