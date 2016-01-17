@@ -6,16 +6,16 @@ var helpers = {
   addUser : function(user) {
     return db.User.findOne({
       where: {username: user.username}
-      })
-      .then(function(userResult) {
-         if(userResult){
-           throw Error('Username is already taken');
-         }
-         return db.User.create(user);
-      })
-      .catch(function(error) {
-         console.log('Error adding user to the database', error);
-      })
+    })
+    .then(function(userResult) {
+       if(userResult){
+         throw Error('Username is already taken');
+       }
+       return db.User.create(user);
+    })
+    .catch(function(error) {
+       console.log('Error adding user to the database', error);
+    })
   },
 
   addPlant : function(plant) {

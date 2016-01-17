@@ -21,21 +21,21 @@ models.User = sequelize.define('User', {
  },
  location: {
    type: Sequelize.STRING
- }
+ },
  userPic: {
    type: Sequelize.STRING
  }
 });
 
 models.Plant = sequelize.define('Plant', {
-  userId:{
-    type: Sequelize.INTERGER
+  idOfUser:{
+    type: Sequelize.INTEGER
   },
-  speciesId:{
-    type: Sequelize.INTERGER
+  idOfSpecies:{
+    type: Sequelize.INTEGER
   },
   plantDate:{
-    type: Sequelize.INTERGER
+    type: Sequelize.INTEGER
   },
   nickname: {
     type: Sequelize.STRING
@@ -43,30 +43,48 @@ models.Plant = sequelize.define('Plant', {
   plantStatus: {
     type: Sequelize.STRING
   },
-  gardenId: {
-    type: Sequelize.INTERGER
+  idOfGarden: {
+    type: Sequelize.INTEGER
   }
 });
 
-models.SpeciesInfo = sequlize.define('SpeciesInfo', {
-  speciesName: {
+models.SpeciesInfo = sequelize.define('SpeciesInfo', {
+  commonName: {
+    type: Sequelize.STRING
+  },
+  botanicalName: {
     type: Sequelize.STRING
   },
   plantPic: {
     type: Sequelize.STRING
   },
+  plantLink: {
+    type: Sequelize.STRING
+  },
   wateringInformation: {
     type: Sequelize.STRING
   },
-  germinationInformation: {
+  typeOf: {
     type: Sequelize.STRING
   },
-  locationInformation: {
+  exposure: {
+    type: Sequelize.STRING
+  },
+  generalInformation: {
+    type: Sequelize.STRING
+  },
+  plantingGuide: {
+    type: Sequelize.STRING
+  },
+  pestsDiseases: {
+    type: Sequelize.STRING
+  },
+  careGuide: {
     type: Sequelize.STRING
   }
 });
 
-models.Garden = sequlize.define('Garden', {
+models.Garden = sequelize.define('Garden', {
   gardenName: {
     type: Sequelize.STRING
   }
