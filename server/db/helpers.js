@@ -111,7 +111,7 @@ var helpers = {
         plantingGuide: species.plantingGuide,
         pestsDiseases: species.pestsDiseases,
         careGuide: species.careGuide
-      });
+      })
     })
     .then(function(speciesResult) {
       console.log('add species successful');
@@ -122,7 +122,36 @@ var helpers = {
   },
 
   addPlantToGarden : function(plant, garden) {
+    var plantObj = {};
+    return db.Garden.findOne({
+      where: {gardenName: garden.gardenName}
+    })
+    .then(function(gardenResult) {
+      if(gardenResult) {
+        throw ERROR('Garden name does not exist');
+      }
+      console.log('Garden name exists: ', gardenResult.gardenName);
+      plantObj.gardenId = gardenResult.Id;
 
+      return db.Plant.findOne({ // TODO: Make sure to pass in plantId
+        where: {plantId: plant.plantId}
+      })
+      .then(function(plantResult) {
+        if(plantResult) {
+          throw ERROR('Plant ID does not exist');
+        }
+        console.log('Plant name exists: ', plantResult);
+          return db.Plant.set({
+            gardenId: plantObj.Id
+          })
+        })
+        .then(function(addPlantToGardenResult) {
+          console.log('Add plant to garden successful');
+        })
+        .catch(function(error) {
+           console.log('Error adding plant to the database', error);
+        })
+    })
   },
 
   addUserToGarden : function(user, garden) {
