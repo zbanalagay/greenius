@@ -1,4 +1,4 @@
-var db = require('./sequlize.js');
+var db = require('./sequelize.js');
 
 var helpers = {
 
@@ -56,12 +56,12 @@ var helpers = {
 
                 // Insert plant into Plant table
                 return db.Plant.create({
-                  userId: plantObj.userResults,
-                  speciesId: plantObj.speciesResults,
+                  idOfUser: plantObj.userResults,
+                  idOfSpecies: plantObj.speciesResults,
                   plantDate: plant.plantDate,
                   nickname: plant.nickname,
                   plantStatus: plant.plantStatus,
-                  gardenId: plantObj.gardenResults
+                  idOfGarden: plantObj.gardenResults
                 })
                 .then(function(plantResults) {
                   console.log('Add plant successful');
@@ -74,12 +74,51 @@ var helpers = {
     })
   },
 
+  //garden is an object with gardenName
   addGarden : function(garden) {
-
+    return db.Garden.findOne({
+      where: {gardenName: garden.gardenName}
+    })
+    .then(function(gardenResult) {
+      if(gardenResult){
+        throw Error('Garden name is already taken');
+      }
+      return db.Garden.create(garden);
+    })
+    .catch(function(error) {
+      console.log('Error adding garden to database', error);
+    })
   },
 
+  //species is an object with commonName,botanicalName, plantLink, plantPic, wateringInformation, germinationInformation, locationInformation
   addSpeciesInfo : function(species) {
-
+    return db.SpeciesInfo.findOne({
+      where: {commonName: species.commonName}
+    })
+    .then(function(speciesResult) {
+      if(speciesResult){
+        throw Error('Species info is already in database');
+      }
+      return db.SpeciesInfo.create({
+        commonName: species.commonName,
+        botanicalName: species.botanicalName,
+        plantPic: species.plantPic,
+        plantLink: species.plantLink,
+        wateringInformation: species.wateringInformation,
+        typeOf: species.typeOf,
+        exposure: species.exposure,
+        generalInformation: species.generalInformation,
+        plantingGuide: species.plantingGuide,
+        pestsDiseases: species.pestsDiseases,
+        careGuide: species.careGuide
+      });
+    })
+    .then(function(speciesResult) {
+      console.log('add species successful');
+    })
+    .catch(function(error) {
+      console.log('Error adding species to database', error);
+    })
   },
 
   addPlantToGarden : function(plant, garden) {
