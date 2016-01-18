@@ -275,7 +275,7 @@ var lizz = {
   password: 'geetha',
   email: 'robert',
   location: 'sf',
-  userPic: 'dics'
+  userPic: 'happy'
 }
 helpers.addUser(lizz);
 helpers.getUser(lizz);
