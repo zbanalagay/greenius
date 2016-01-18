@@ -3,7 +3,7 @@ var app = express();
 var helper = require('./../../db/helpers.js');
 
 module.exports = {
-	 addPlant : function(req, res){
+	 addPlant: function(req, res){
 		 console.log(req.body, "THIS IS THE REQ.BODY");
 		 var plantData = req.body //TODO: find the plant object on the req.body
 		 helper.addPlant(plantData)
