@@ -48,7 +48,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('myPlants', {
-			url: '/myPlants',
+			url: '/myPlants:username',
 			views: {
 				'indexPage': {
 					templateUrl: './app/myPlants/myPlantsView.html',
