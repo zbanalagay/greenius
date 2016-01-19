@@ -1,7 +1,9 @@
 var gulp      = require('gulp'),
     nodemon   = require('gulp-nodemon'),
-    bs        = require('browser-sync'),
-    reload    = bs.reload,
+    jshint    = require('gulp-jshint'),
+    stylish = require('jshint-stylish'),
+    // bs        = require('browser-sync'),
+    // reload    = bs.reload,
     when      = require('gulp-if'),
     shell     = require('gulp-shell');
 
@@ -20,6 +22,12 @@ var paths = {
   styles: ['./client/assets/style.css'],
   test: ['./specs/*.js']
 };
+
+gulp.task('jshint', function() {
+  gulp.src(['./client/app/**/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
 
 
 gulp.task('start', ['serve'],function () {
