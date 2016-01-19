@@ -64,8 +64,8 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 					controller: 'plantProfileController'
 				}
 			}
-		})
-}])
+		});
+}]);
 // .run(function($cookies){
 //    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
 //      if(toState.name === 'myPlants' && toParams.username === undefined){

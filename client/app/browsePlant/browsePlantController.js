@@ -13,5 +13,5 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants', function($s
     } else{
       alert('You must enter a plant');
     }
-  }
+  };
 }]);
