@@ -48,7 +48,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('myPlants', {
-			url: '/myPlants:username',
+			url: '/myPlants',
 			views: {
 				'indexPage': {
 					templateUrl: './app/myPlants/myPlantsView.html',
@@ -57,7 +57,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('plantProfile', {
-			url: '/plantProfile',
+			url: '/plantProfile/:commonname',
 			views: {
 				'indexPage': {
 					templateUrl: './app/plantProfile/plantProfileView.html',
@@ -65,4 +65,18 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 				}
 			}
 		})
-}]);
+}])
+// .run(function($cookies){
+//    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
+//      if(toState.name === 'myPlants' && toParams.username === undefined){
+//        evt.preventDefault();
+//        var username = $cookies.get('myUser');
+//        if(username){
+//          $state.go('myPLants', {username: username});
+//        }else{
+//          $state.go('login');
+//        }
+//
+//      }
+//    };
+// })
