@@ -12,5 +12,5 @@ auth.controller('authController', ['$scope', 'Users', function($scope, Plants){
       } else{
           alert('You must enter a username');
       }
-    }
+    };
 }]);
