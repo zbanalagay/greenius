@@ -43,6 +43,24 @@ services.factory('Plants', ['$http', function($http){
   }
 }]);
 
+services.factory('Users', ['$http', function($http){
+  var addUser = function(user) {
+    return $http({
+      method: 'POST',
+      url: 'api/users/addUser',
+      params: user
+    }).then(function(response) {
+      console.log('SUCCESSFUL POST FOR ADDUSER')
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
+  
+  return {
+    addUser: addUser
+  }
+}]);
+
 //populate once we have our cookie (and once our cookies are figured out)
 //this will make it easy to remember info about the user, so you can just pass around this factory
 services.factory('ProfileInfo', ['$http', function($http){
@@ -63,4 +81,4 @@ services.factory('ProfileInfo', ['$http', function($http){
     getProfile: getProfile,
     setProfile: setProfile
   }
-}])
+}]);
