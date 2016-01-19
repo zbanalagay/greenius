@@ -8,6 +8,7 @@ module.exports = {
 		 var plantData = req.body //TODO: find the plant object on the req.body
 		 helper.addPlant(plantData)
        .then(function(results) {
+         //need to call addSpeciesInfo?
 					console.log('SUCCESS GOT A POST REQUEST, ADDPLANT HANDLER');
 					res.status(200).send(results);
 				})
