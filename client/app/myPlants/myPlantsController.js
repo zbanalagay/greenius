@@ -19,8 +19,8 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
           })
           .catch(function(error) {
             console.log(error, 'ERROR IN GETUSERPLANTS CONTROLLER');
-          })
-  }
+          });
+  };
 
   
 }]);
