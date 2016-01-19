@@ -13,4 +13,5 @@ auth.controller('authController', ['$scope', 'Users', function($scope, Plants){
           alert('You must enter a username');
       }
     }
+    
 }]);
