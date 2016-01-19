@@ -81,4 +81,5 @@ services.factory('ProfileInfo', ['$http', function($http){
     getProfile: getProfile,
     setProfile: setProfile
   }
+  
 }]);
