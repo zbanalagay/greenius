@@ -7,7 +7,7 @@ plantProfile.controller('plantProfileController'['$scope', 'Plants', '$state', f
     console.log($scope.data.commonname) //TODO: Make sure this is what we want
 
     $scope.data.getSpecieInfoOfPlant = function(){
-      Plants.getSpecieInfo($state.data).
+      Plants.getSpecieInfo($state.data)
         .then(function(data) {
 
         })
