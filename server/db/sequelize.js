@@ -58,7 +58,7 @@ models.SpeciesInfo = sequelize.define('SpeciesInfo', {
   plantPic: {
     type: Sequelize.STRING
   },
-  plantLink: {
+  plantsLink: {
     type: Sequelize.STRING
   },
   wateringInformation: {
