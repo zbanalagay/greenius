@@ -11,20 +11,26 @@ var models = {};
 
 models.User = sequelize.define('User', {
   username: {
-   type: Sequelize.STRING
- },
- password: {
-   type: Sequelize.STRING
- },
- email: {
-   type: Sequelize.STRING
- },
- location: {
-   type: Sequelize.STRING
- },
- userPic: {
-   type: Sequelize.STRING
- }
+    type: Sequelize.STRING
+  },
+  password: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING
+  },
+  location: {
+    type: Sequelize.STRING
+  },
+  userPic: {
+    type: Sequelize.STRING
+  },
+  createdAt: {
+    type: Sequelize.STRING
+  },
+  updatedAt: {
+    type: Sequelize.STRING
+  }
 });
 
 models.Plant = sequelize.define('Plant', {
@@ -45,6 +51,12 @@ models.Plant = sequelize.define('Plant', {
   },
   idOfGarden: {
     type: Sequelize.INTEGER
+  },
+  createdAt: {
+    type: Sequelize.STRING
+  },
+  updatedAt: {
+    type: Sequelize.STRING
   }
 });
 
@@ -58,7 +70,7 @@ models.SpeciesInfo = sequelize.define('SpeciesInfo', {
   plantPic: {
     type: Sequelize.STRING
   },
-  plantsLink: {
+  plantLink: {
     type: Sequelize.STRING
   },
   wateringInformation: {
@@ -81,11 +93,23 @@ models.SpeciesInfo = sequelize.define('SpeciesInfo', {
   },
   careGuide: {
     type: Sequelize.STRING
+  },
+  createdAt: {
+    type: Sequelize.STRING
+  },
+  updatedAt: {
+    type: Sequelize.STRING
   }
 });
 
 models.Garden = sequelize.define('Garden', {
   gardenName: {
+    type: Sequelize.STRING
+  },
+  createdAt: {
+    type: Sequelize.STRING
+  },
+  updatedAt: {
     type: Sequelize.STRING
   }
 });
@@ -104,18 +128,18 @@ models.User.sync({force: false})
            });
 
 models.Plant.sync({force: false})
-            .then(function() {
-              console.log('Plant sync in sequelize.js');
-            });
+           .then(function() {
+             console.log('Plant sync in sequelize.js');
+           });
 
 models.SpeciesInfo.sync({force: false})
-            .then(function() {
-              console.log('SpeciesInfo sync in sequelize.js');
-            });
+           .then(function() {
+             console.log('SpeciesInfo sync in sequelize.js');
+           });
 
 models.Garden.sync({force: false})
-             .then(function() {
-               console.log('Garden sync in sequelize.js');
-             });
+            .then(function() {
+              console.log('Garden sync in sequelize.js');
+            });
 
 module.exports = models;
