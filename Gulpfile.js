@@ -6,6 +6,7 @@ var gulp      = require('gulp'),
     // reload    = bs.reload,
     when      = require('gulp-if'),
     shell     = require('gulp-shell');
+    gulpSqlite3 = require('gulp-sqlite3');
 
 
 // the paths to our app files
@@ -43,6 +44,12 @@ gulp.task('start', ['serve'],function () {
 gulp.task('karma', shell.task([
   'karma start'
 ]));
+
+// Initialize DB // TODO: Implement database backup with gulp
+// gulp.task('addSpeciesData', function() {
+//   return gulp.src('./server/db/data.csv')
+//     .pipe(gulpSqlite3('db.sqlite'));
+// });
 
 // start our node server using nodemon
 gulp.task('serve', function() {
