@@ -211,6 +211,18 @@ var helpers = {
     })
   },
 
+  getPlant : function(plant) {
+    return db.Plant.findOne({    
+     where : {nickname: nickname}
+    })
+    .then(function(plantResult) {
+         if(!userResult) {
+            throw ERROR ('Plant nickname does not exist');
+        }
+        console.log ('Plant exists: ' , plantResult);
+    })
+  },
+
   getUserPlants : function(user) {
     var userId;
     return db.User.findOne({
@@ -268,17 +280,5 @@ var helpers = {
   // getGardenUsers : function(garden) {
 
   // }  // future feature
-
-};
-var lizz = {
-  username: 'lizz',
-  password: 'geetha',
-  email: 'robert',
-  location: 'sf',
-  userPic: 'happy'
-}
-helpers.addUser(lizz);
-helpers.getUser(lizz);
-
 
 module.exports = helpers;
