@@ -197,14 +197,16 @@ var helpers = {
   },
 
   getSpeciesInfo : function(species) {
-    return db.SpeciesInfo.findOne({
+    return db.SpeciesInfo.findAll({
       where: {commonName: species.commonName}
     })
     .then(function(specieResult) {
       if(!specieResult) {
         throw ERROR('Species does not exist');
       }
+      console.log(specieResult, "yo this is specieResult database")
       console.log('Specie associated with this name ', species.commonName);
+      return specieResult;
     })
     .catch(function(error) {
       console.log('Error, retrieving speciesInfo: ', error);

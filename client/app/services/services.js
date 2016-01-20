@@ -7,7 +7,7 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/addPlant',
       data: plant
     }).then(function(response) {
-      console.log('SUCCESSFUL POST FOR ADDPLANT');
+      console.log(response, 'SUCCESSFUL POST FOR ADDPLANT');
     }).catch(function(error) {
       console.log(error, 'ERROR IN ADDPLANT FACTORY');
     });
@@ -20,6 +20,8 @@ services.factory('Plants', ['$http', function($http){
       data: user
     }).then(function(response) {
       console.log('SUCCESFUL GET FOR GETUSERSPLANTS');
+      console.log(response, 'GETUSERSPLANTS PLANTS FACTORY')
+      return response.data //TODO: find what we need on the response.data
     }).catch(function(error) {
       console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
     })
@@ -27,11 +29,12 @@ services.factory('Plants', ['$http', function($http){
 
   var getSpecieInfo = function (plant){
     return $http({
-      method: 'GET',
+      method: 'POST',
       url: '/api/plants/loadSpecieInfo',
       data: plant
     }).then(function(response) {
-      console.log('SUCCESFUL GET FOR GETSPECIEINFO');
+      console.log(response.data,'SUCCESFUL GET FOR GETSPECIEINFO');
+      return response.data //TODO: find what we need on the response.data
     }).catch(function(error) {
       console.log(error, 'ERROR IN GETSPECIEINFO FACTORY');
     })
@@ -53,17 +56,17 @@ services.factory('Users', ['$http', function($http){
     }).then(function(response) {
 
       console.log('SUCCESSFUL POST FOR ADDUSER');
-      
+
       // Once complete, clear the form (except location)
-      $scope.formData.username = "";
-      $scope.formData.password = "";
-      $scope.formData.email = "";
-      $scope.formData.userPic = "";
+      $scope.formData.username = '';
+      $scope.formData.password = '';
+      $scope.formData.email = '';
+      $scope.formData.userPic = '';
     }).catch(function(error) {
       console.log('ERROR FOR ADDUSER', error);
     });
   }
-  
+
   return {
     addUser: addUser
   }
@@ -73,7 +76,13 @@ services.factory('Users', ['$http', function($http){
 //this will make it easy to remember info about the user, so you can just pass around this factory
 services.factory('ProfileInfo', ['$http', function($http){
   var profile = {
-    username: undefined
+    // Below is for MVP testing purposes
+    username: 'Lizz',
+    gardenName: 'Eden'
+
+    // Real one to populate
+    // username: undefined,
+    // gardenName: undefined
     // TODO: FINISH THIS
   }
 
@@ -87,7 +96,9 @@ services.factory('ProfileInfo', ['$http', function($http){
 
   return{
     getProfile: getProfile,
-    setProfile: setProfile
+    setProfile: setProfile,
+  // Below is for MVP testing purposes
+    profile: profile
   }
 
 }]);

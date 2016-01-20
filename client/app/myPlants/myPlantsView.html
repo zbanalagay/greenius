@@ -1,4 +1,9 @@
-<div class="container-fluid">
-  <div class="row">
+
+<div class='container-fluid'>
+  <div class='row'>
+    <button ng-submit = 'getUserPlants()' type='submit'>Get My Plants</button>
+    <div ng-repeat= 'plant in data.plants'>
+      <p ng-click= 'gotToPlant()'>{{plant}}</p>
+    </div>
   </div>
 </div>

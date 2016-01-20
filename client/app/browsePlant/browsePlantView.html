@@ -1,4 +1,25 @@
 <div class="container-fluid">
   <div class="row">
+    <form ng-submit='browse()' novalidate>
+      <input type='text' placeholder='Find Plant' ng-model= 'data.commonName'></input>
+      <input type='submit' value = 'Browse Plant'></input>
+    </form>
+
+    <!-- search results -->
+    <div ng-repeat='result in data.specieResult'>
+      <!-- TODO non mvp-make modal on click to show specie info from database -->
+      <div>
+        {{result}}
+      <!-- TODO if the user clicks this button -form will appear to add plant -->
+
+        <button ng-submit='userWantsToAddPlant()' type='submit'>Add Plant?</button>
+        <form ng-submit = 'addPlant()' ng-if= 'promptToAddPlant === true' novalidate>
+          <input type = 'text' ng-model='data.nickname' placeholder='Nickname your plant'></input>
+          <!-- TODO tell the user how to format date, so as to match with our database, put a checker to make sure -->
+          <input type = 'text' ng-model= 'data.plantDate' placeholder ='What day do you want to plant?'></input>
+          <input type = 'submit'>Add Plant</input>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
