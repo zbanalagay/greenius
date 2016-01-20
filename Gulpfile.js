@@ -5,8 +5,9 @@ var gulp      = require('gulp'),
     // bs        = require('browser-sync'),
     // reload    = bs.reload,
     when      = require('gulp-if'),
-    shell     = require('gulp-shell');
-    gulpSqlite3 = require('gulp-sqlite3');
+    shell     = require('gulp-shell'),
+    gulpSqlite3 = require('gulp-sqlite3'),
+    Server = require('karma').Server;
 
 
 // the paths to our app files
@@ -41,9 +42,12 @@ gulp.task('start', ['serve'],function () {
   // });
 });
 
-gulp.task('karma', shell.task([
-  'karma start'
-]));
+gulp.task('tdd', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
+});
+
 
 // Initialize DB // TODO: Implement database backup with gulp
 // gulp.task('addSpeciesData', function() {
