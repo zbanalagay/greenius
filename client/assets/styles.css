@@ -101,6 +101,14 @@
   width: auto;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.dropdown-menu {
+  margin-left: 10%;
+}
+
 @media(min-width:668px) {
   #wrapper {
     padding-left: 250px;

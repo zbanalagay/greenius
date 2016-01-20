@@ -276,6 +276,7 @@ var helpers = {
       })
     })
   }
+};
 
   // getGardenUsers : function(garden) {
 
