@@ -10,17 +10,19 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
 
   $scope.goToPlant = function(plant){
     $state.go('plantProfile', {nickname: plant});
-  }
+  };
 
   $scope.getUserPlants = function(){
-    Plants.getUserPlants($scope.data)
+    Plants.getUsersPlants($scope.data)
           .then(function(resultData) {
-            $scope.data.plants = resultData;
+            $scope.data.resultPlants = resultData;
           })
           .catch(function(error) {
             console.log(error, 'ERROR IN GETUSERPLANTS CONTROLLER');
           });
   };
 
+  // immediately calls this function when controller loads
+ $scope.getUserPlants();
 
 }]);

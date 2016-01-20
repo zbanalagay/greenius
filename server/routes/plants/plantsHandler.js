@@ -9,7 +9,7 @@ module.exports = {
 		 helper.addPlant(plantData)
        .then(function(results) {
          //need to call addSpeciesInfo?
-					console.log('SUCCESS GOT A POST REQUEST, ADDPLANT HANDLER');
+					console.log('SUCCESS IN ADDPLANT HANDLER');
 					res.status(200).send(results);
 				})
 				.catch(function(error) {
@@ -24,7 +24,7 @@ module.exports = {
 		 var plantData = req.body //TODO: find the plant object on the req.body
 		 helper.getUserPlants(plantData, userData)
 		   .then(function(results) {
-					console.log('SUCCESS GOT A GET REQUEST, GETPLANTSFORAUSER HANDLER');
+					console.log('SUCCESS IN GETPLANTSFORAUSER HANDLER');
 					res.status(200).send(results);
 				})
 				.catch(function(error) {
@@ -40,12 +40,26 @@ module.exports = {
      helper.getSpeciesInfo(specieData)
        .then(function(results) {
          console.log(results, "THIS IS RESULTS GETSPECIE HANDLER")
-         console.log('SUCCESS GOT A GET REQUEST, GETSPECIEINFO HANDLER');
+         console.log('SUCCESS IN GETSPECIEINFO HANDLER');
          res.status(200).send(results);
        })
        .catch(function(error) {
-         console.log('ERROR ISNIDE GETSPECIEINFO HANDLER');
+         console.log(error, 'ERROR ISNIDE GETSPECIEINFO HANDLER');
          res.status(404).send(error);
        })
-   }
+   },
+
+   getPlant: function(req, res){
+     console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETPLANTHABDKER');
+     var plantData = req.body;
+     helper.getPlant(plantData)
+       .then(function(results) {
+         console.log(results, 'SUCCESS IN GETPLANT HANDLER');
+         res.status(200).send(results);
+       })
+       .catch(function(error) {
+         console.log(error, 'ERROR INSIDE GETPLANT HANDLER');
+         res.status(404).send(error);
+       })
+    }
 }

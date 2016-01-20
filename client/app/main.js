@@ -30,7 +30,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('browsePlant', {
-			url: '/browsePlant',
+			url: '/browseplant',
 			views: {
 				'indexPage': {
 					templateUrl: './app/browsePlant/browsePlantView.html',
@@ -48,7 +48,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('myPlants', {
-			url: '/myPlants',
+			url: '/myplants',
 			views: {
 				'indexPage': {
 					templateUrl: './app/myPlants/myPlantsView.html',
@@ -57,7 +57,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('plantProfile', {
-			url: '/plantProfile/:commonname',
+			url: '/plantprofile/:commonname',
 			views: {
 				'indexPage': {
 					templateUrl: './app/plantProfile/plantProfileView.html',
