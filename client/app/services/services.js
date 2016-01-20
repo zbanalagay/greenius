@@ -7,11 +7,11 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/addPlant',
       data: plant
     }).then(function(response) {
-      console.log(response, 'SUCCESSFUL POST FOR ADDPLANT');
+        console.log(response, 'SUCCESS ADDPLANT PLANTS FACTORY');
     }).catch(function(error) {
-      console.log(error, 'ERROR IN ADDPLANT FACTORY');
+        console.log(error, 'ERROR IN ADDPLANT FACTORY');
     });
-  }
+  };
 
   var getUsersPlants = function(user){
     return $http({
@@ -19,13 +19,12 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadPlants',
       data: user
     }).then(function(response) {
-      console.log('SUCCESFUL GET FOR GETUSERSPLANTS');
-      console.log(response, 'GETUSERSPLANTS PLANTS FACTORY')
-      return response.data //TODO: find what we need on the response.data
+        console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY')
+        return response.data //TODO: find what we need on the response.data
     }).catch(function(error) {
-      console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
+        console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
     })
-  }
+  };
 
   var getSpecieInfo = function (plant){
     return $http({
@@ -33,16 +32,30 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadSpecieInfo',
       data: plant
     }).then(function(response) {
-      console.log(response.data,'SUCCESFUL GET FOR GETSPECIEINFO');
-      return response.data //TODO: find what we need on the response.data
+        console.log(response.data,'SUCCESS GETSPECIEINFO PLANTS FACTORY');
+        return response.data //TODO: find what we need on the response.data
     }).catch(function(error) {
-      console.log(error, 'ERROR IN GETSPECIEINFO FACTORY');
+        console.log(error, 'ERROR IN GETSPECIEINFO FACTORY');
+    })
+  };
+
+  var getPlant = function (plant) {
+    return $http({
+      method: 'POST',
+      url: '/api/plants/loadPlantInfo',
+      data: plant
+    }).then(function(response) {
+        console.log(response.data, 'SUCCESS GETPLANT PLANTS FACTORY');
+        return response.data //TODO: find what we need on the response.data
+    }).catch(function(error) {
+        console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
     })
   }
   return {
     addPlant: addPlant,
     getUsersPlants: getUsersPlants,
-    getSpecieInfo: getSpecieInfo
+    getSpecieInfo: getSpecieInfo,
+    getPlant: getPlant
   }
 }]);
 
