@@ -4,14 +4,14 @@ var helpers = {
 
   //user is an object with keys: username, password, email, location, userPic
   addUser : function(user) {
-    return db.User.findOne({
+    return db.Users.findOne({
       where: {username: user.username}
     })
     .then(function(userResult) {
        if(userResult){
          throw Error('Username is already taken');
        }
-       return db.User.create(user);
+       return db.Users.create(user);
     })
     .catch(function(error) {
        console.log('Error adding user to the database ', error);
@@ -22,7 +22,7 @@ var helpers = {
     var plantObj = {};
 
     // Check for User ID
-    return db.User.findOne({
+    return db.Users.findOne({
       where: {username: user.username}
     })
     .then(function(userResults) {
@@ -33,7 +33,7 @@ var helpers = {
       plantObj.userResults = userResults; // TODO: Findout userId
 
         // Check for Species ID
-        return db.SpeciesInfo.findOne({
+        return db.SpeciesInfos.findOne({
           where: {speciesName: plant.commonName}
         })
         .then(function(speciesResults) {
@@ -44,7 +44,7 @@ var helpers = {
           plantObj.speciesResults = speciesResults; // TODO: Findout speciesId
 
             // Check for Garden ID
-            return db.Garden.findOne({
+            return db.Gardens.findOne({
               where: {gardenName: plant.gardenName}
             })
             .then(function(gardenResults) {
@@ -55,7 +55,7 @@ var helpers = {
               plantObj.gardenResults = gardenResults; // TODO: Findout gardenId
 
                 // Insert plant into Plant table
-                return db.Plant.create({
+                return db.Plants.create({
                   idOfUser: plantObj.userResults,
                   idOfSpecies: plantObj.speciesResults,
                   plantDate: plant.plantDate,
@@ -76,14 +76,14 @@ var helpers = {
 
   //garden is an object with gardenName
   addGarden : function(garden) {
-    return db.Garden.findOne({
+    return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
     .then(function(gardenResult) {
       if(gardenResult){
         throw Error('Garden name is already taken');
       }
-      return db.Garden.create(garden);
+      return db.Gardens.create(garden);
     })
     .catch(function(error) {
       console.log('Error adding garden to database ', error);
@@ -92,14 +92,14 @@ var helpers = {
 
   //species is an object with commonName,botanicalName, plantLink, plantPic, wateringInformation, germinationInformation, locationInformation
   addSpeciesInfo : function(species) {
-    return db.SpeciesInfo.findOne({
+    return db.SpeciesInfos.findOne({
       where: {commonName: species.commonName}
     })
     .then(function(speciesResult) {
       if(speciesResult){
         throw Error('Species info is already in database');
       }
-      return db.SpeciesInfo.create({
+      return db.SpeciesInfos.create({
         commonName: species.commonName,
         botanicalName: species.botanicalName,
         plantPic: species.plantPic,
@@ -123,7 +123,7 @@ var helpers = {
 
   addGardenToPlant : function(plant, garden) {
     var plantObj = {};
-    return db.Garden.findOne({
+    return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
     .then(function(gardenResult) {
@@ -133,7 +133,7 @@ var helpers = {
       console.log('Garden name exists: ', gardenResult.gardenName);
       plantObj.gardenId = gardenResult.Id;
 
-      return db.Plant.findOne({ // TODO: Make sure to pass in plantId
+      return db.Plants.findOne({ // TODO: Make sure to pass in plantId
         where: {plantId: plant.plantId}
       })
       .then(function(plantResult) {
@@ -141,7 +141,7 @@ var helpers = {
           throw ERROR('Plant ID does not exist');
         }
         console.log('Plant name exists: ', plantResult);
-          return db.Plant.set({
+          return db.Plants.set({
             gardenId: plantObj.gardenId
           })
         })
@@ -159,7 +159,7 @@ var helpers = {
   // }, // future feature
 
   getUser : function(user) {
-    return db.User.findOne({
+    return db.Users.findOne({
       where: {username: user.username}
     })
     .then(function(userResult) {
@@ -172,7 +172,7 @@ var helpers = {
 
   getGarden : function(garden) {
     gardenObj = {};
-    return db.Garden.findOne({
+    return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
     .then(function(gardenResult) {
@@ -181,7 +181,7 @@ var helpers = {
       }
       console.log('Garden name: ', gardenResult.gardenName);
       gardenObj.gardenId = gardenResult.gardenId; //TODO: find out gardenId
-      return db.Plant.getOne({
+      return db.Plants.getOne({
         where: {idOfGarden: gardenObj.gardenId}
       })
       .then(function(plantResult) {
@@ -197,7 +197,7 @@ var helpers = {
   },
 
   getSpeciesInfo : function(species) {
-    return db.SpeciesInfo.findAll({
+    return db.SpeciesInfos.findAll({
       where: {commonName: species.commonName}
     })
     .then(function(specieResult) {
@@ -214,7 +214,7 @@ var helpers = {
   },
 
   getPlant : function(plant) {
-    return db.Plant.findOne({    
+    return db.Plants.findOne({    
      where : {nickname: nickname}
     })
     .then(function(plantResult) {
@@ -227,7 +227,7 @@ var helpers = {
 
   getUserPlants : function(user) {
     var userId;
-    return db.User.findOne({
+    return db.Users.findOne({
       where: {username: user.username} 
     })
     .then(function(userResult) {
@@ -237,7 +237,7 @@ var helpers = {
       console.log('User associated with this plant: ', error);
       userId = userResult.userId;  //TODO: find out userId
 
-      return db.Plant.findAll({
+      return db.Plants.findAll({
         where: {idOfUser: userId}
       })
       .then(function(plantsResult) {
@@ -254,7 +254,7 @@ var helpers = {
 
   getGardenPlants : function(garden) {
     var gardenId;
-    return db.Garden.findOne({
+    return db.Gardens.findOne({
       where: {gardenName: garden.gardenName} 
     })
     .then(function(gardenResult) {
@@ -264,7 +264,7 @@ var helpers = {
       console.log('Garden associated with this plant: ', gardenResult);
       gardenId = gardenResult.gardenId; //TODO: find out gardenId
 
-      return db.Plant.findAll({
+      return db.Plants.findAll({
         where: {idOfGarden: gardenId}
       })
       .then(function(plantsResult) {
