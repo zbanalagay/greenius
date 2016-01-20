@@ -1,4 +1,11 @@
 <div class="container-fluid">
   <div class="row">
+    <form ng-submit='browse()' novalidate>
+      <input type='text' placeholder='Find Plant' ng-model= 'data.plant'></input>
+      <input type='submit' value = 'Browse Plant'></input>
+    </form>
+
+    <!-- TODO non mvp-make modal on click -->
+    <!-- TODO ng-repeat the results radio button and make ng click addPlant -->
   </div>
 </div>
