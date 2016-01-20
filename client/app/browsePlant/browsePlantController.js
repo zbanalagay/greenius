@@ -4,20 +4,15 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
 
   // TODO finalize how plant will be passed in based on view input and put it on $scope
     $scope.data.commonName = '';
-    // $scope.data.garden = '';
-    $scope.data['specieResults'];
+    $scope.data.specieResults;
     $scope.data.nickname = '';
     $scope.data.username = ProfileInfo.profile.username;
     $scope.data.gardenName = ProfileInfo.profile.gardenName;
-    // TODO need to tell user how to format
-    $scope.data.plantDate = '';
+    $scope.promptToAddPlant = false;
     // TODO need to fix for later w calendar stuff, for now itll be true
     $scope.data.plantStatus = true;
-    $scope.promptToAddPlant = false;
-
-    $scope.userWantsToAddPlant = function(){
-      $scope.promptToAddPlant = true;
-    }
+    // TODO need to tell user how to format
+    $scope.data.plantDate = '';
 
     // TODO call this when you want to query out scraped data
     $scope.browse = function(){
@@ -33,8 +28,13 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
             console.log(err, 'ERROR IN BROWSE FUNCTION')
           })
       }
-      // TODO query the scraped data for the plant and return options
-    }
+    };
+
+    $scope.userWantsToAddPlant = function(){
+      $scope.promptToAddPlant = true;
+    };
+
+
   //TODO call this function inside the view when submit the plant you want to add
   $scope.addPlant = function(){
     console.log($scope.data, 'CONSOLE.LOG ADDPLANT SCOPEDATAPLANT')
@@ -46,4 +46,5 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
       alert('You must enter a plant');
     }
   };
+  
 }]);
