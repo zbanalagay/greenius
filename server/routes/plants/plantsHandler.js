@@ -5,7 +5,7 @@ var helper = require('./../../db/helpers.js');
 module.exports = {
 	 addPlant: function(req, res) {
 		 console.log(req.body, 'THIS IS THE REQ.BODY INSIDE ADDPLANT');
-		 var plantData = req.body //TODO: find the plant object on the req.body
+		 var plantData = req.body;
 		 helper.addPlant(plantData)
        .then(function(results) {
          //need to call addSpeciesInfo?
@@ -35,10 +35,11 @@ module.exports = {
 
    getSpecieInfo: function(req, res) {
      console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETSPECIEINFO');
-     var specieData = req.body //TODO: find the specie object on the req.body
-     //TODO: should there be a getPlant helper function so it gets the plant specific info as well?
-     helper.getSpecieInfo(specieData)
+     var specieData = req.body;
+    //  TODO fix the database helperfunction- results needs to return the information not be empty
+     helper.getSpeciesInfo(specieData)
        .then(function(results) {
+         console.log(results, "THIS IS RESULTS GETSPECIE HANDLER")
          console.log('SUCCESS GOT A GET REQUEST, GETSPECIEINFO HANDLER');
          res.status(200).send(results);
        })
