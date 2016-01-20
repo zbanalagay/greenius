@@ -6,8 +6,14 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants', function($s
     $scope.data.plant = '';
     $scope.data.garden = '';
 
+    // TODO call this when you want to query out scraped data
+    $scope.browse = function(){
+      console.log($scope.data.plant, 'CONSOLE.LOG ADDPLANT SCOPEDATAPLANT')
+      // TODO query the scraped data for the plant and return options
+    }
   //TODO call this function inside the view when submit the plant you want to add
   $scope.addPlant = function(){
+    console.log($scope.data.plant, 'CONSOLE.LOG ADDPLANT SCOPEDATAPLANT')
     if($scope.data.plant){
       Plants.addPlant($scope.data);
     } else{
