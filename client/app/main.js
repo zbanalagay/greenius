@@ -8,7 +8,7 @@ var main = angular.module('greeniusApp',
 	'ui.router']);
 
 main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
-	$urlRouterProvider.otherwise('/dashboard');
+	$urlRouterProvider.otherwise('/');
 
 	$stateProvider
 		.state('login', {
