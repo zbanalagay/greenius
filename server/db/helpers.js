@@ -197,7 +197,7 @@ var helpers = {
   },
 
   getSpeciesInfo : function(species) {
-    return db.SpeciesInfos.findAll({
+    return db.SpeciesInfos.findOne({
       where: {commonName: species.commonName}
     })
     .then(function(specieResult) {
@@ -214,7 +214,7 @@ var helpers = {
   },
 
   getPlant : function(plant) {
-    return db.Plants.findOne({    
+    return db.Plants.findOne({
      where : {nickname: nickname}
     })
     .then(function(plantResult) {
@@ -228,7 +228,7 @@ var helpers = {
   getUserPlants : function(user) {
     var userId;
     return db.Users.findOne({
-      where: {username: user.username} 
+      where: {username: user.username}
     })
     .then(function(userResult) {
       if(!userResult) {
@@ -255,7 +255,7 @@ var helpers = {
   getGardenPlants : function(garden) {
     var gardenId;
     return db.Gardens.findOne({
-      where: {gardenName: garden.gardenName} 
+      where: {gardenName: garden.gardenName}
     })
     .then(function(gardenResult) {
       if(!gardenResult) {
