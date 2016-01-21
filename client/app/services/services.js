@@ -13,6 +13,17 @@ services.factory('Plants', ['$http', function($http){
     });
   };
 
+  var addGarden = function(garden) {
+    return $http({
+      method: 'POST',
+      url: '/api/plants/addGarden',
+      data: garden
+    }).then(function(response) {
+        console.log(response, 'SUCCESS ADDGARDEN PLANTS FACTORY');
+    }).catch(function(error) {
+        console.log(error, 'ERROR IN ADDGARDEN FACTORY');
+    })
+  }
   var getUsersPlants = function(user){
     return $http({
       method: 'GET',
@@ -20,7 +31,7 @@ services.factory('Plants', ['$http', function($http){
       data: user
     }).then(function(response) {
         console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY')
-        return response.data //TODO: find what we need on the response.data
+        return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
     })
@@ -33,7 +44,7 @@ services.factory('Plants', ['$http', function($http){
       data: plant
     }).then(function(response) {
         console.log(response.data,'SUCCESS GETSPECIEINFO PLANTS FACTORY');
-        return response.data //TODO: find what we need on the response.data
+        return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETSPECIEINFO FACTORY');
     })
@@ -46,16 +57,46 @@ services.factory('Plants', ['$http', function($http){
       data: plant
     }).then(function(response) {
         console.log(response.data, 'SUCCESS GETPLANT PLANTS FACTORY');
-        return response.data //TODO: find what we need on the response.data
+        return response.datal //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
     })
-  }
+  };
+
+  var getUserGardens = function(user) {
+    return $http({
+      method: 'POST',
+      url: '/api/plants/loadUserGardens',
+      data: user
+    }).then(function(response) {
+      console.log(response.data, 'SUCCESS GETUSERGARDENS PLANTS FACTORY');
+      return response.data; //TODO: find what we need on the response.data
+    }).catch(function(error) {
+        console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
+    })
+  };
+
+  var getGardenPlants = function(garden) {
+    return $http({
+      method: 'POST',
+      url: '/api/plants/loadGardenPlants',
+      data: garden
+    }).then(function(response) {
+        console.log(response.data, 'SUCCESS GETGARDENPLANTS PLANTS FACTORY');
+        return response.data; //TODO: find what we need on the response.data
+    }).catch(function(error) {
+        console.log(error, 'ERROR IN GETGARDENPLANTS PLANTS FACTORY');
+    })
+  };
+
   return {
     addPlant: addPlant,
+    addGarden: addGarden,
     getUsersPlants: getUsersPlants,
     getSpecieInfo: getSpecieInfo,
-    getPlant: getPlant
+    getPlant: getPlant,
+    getUserGardens: getUserGardens,
+    getGardenPlants: getGardenPlants
   }
 }]);
 
@@ -90,7 +131,9 @@ services.factory('ProfileInfo', ['$http', function($http){
     location: '',
     userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
     createdAt: '',
-    updatedAt: ''
+    updatedAt: '',
+    gardenName: 'Eden',
+    plantDate: ''
 
     // Real one to populate
     // username: undefined,
