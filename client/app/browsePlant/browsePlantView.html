@@ -8,20 +8,43 @@
     <!-- search results -->
     <div>
       <!-- TODO non mvp-make modal on click to show specie info from database -->
-      <div>
-        {{data.botanicalName}}
+      <div >
+        <h4>{{data.botanicalName}}</h4>
       <!-- TODO if the user clicks this button -form will appear to add plant -->
         <div>
-        <form ng-submit='specificPlantInfoPrompts()'  ng-if= 'promptToAddPlant === true' novalidate>
+        <form ng-submit='userChoseGarden()'  ng-if= 'promptToAddPlant === true' novalidate>
         <input type='submit' value ='Do you want to Plant?'></input>
         </form>
       </div>
-        <form ng-submit = 'addPlant()' ng-if= 'plantInfoPrompts === true' novalidate>
+
+        <div>
+          <form ng-submit= 'selectGarden()' name= 'selectGardenForm' ng-if= 'gardenPrompt === true'  novalidate>
+            <h4>Select Your Garden :</h4>
+             <!-- <input placeholder= 'Existing Garden' type= 'text' name= 'existing garden' ng-model= 'data.gardenName'required> -->
+               <select placeholder='Existing Garden'  ng-model='data.gardenName' >
+                 <option value='' disabled selected>Select garden</option>
+                 <option ng-repeat='garden in data.usersGardenArray'>{{garden}}</option>
+               </select>
+               or
+               <input ng-model='data.gardenName' type = 'text' placeholder = 'Create a New Garden' ng-model='data.gardenName'>
+             <input class = 'btn-primary'type= 'submit' value= 'Next'>
+           </form>
+
+          <!-- have a drop down of existing gardens or an input submit to create a new garden -->
+          <!-- if they click create a new garden - drop down disappears -->
+        <div>
+        <form ng-submit = 'addPlant()'ng-if= 'plantInfoPrompts === true' novalidate>
           <input type = 'text' ng-model='data.nickname' placeholder='Nickname your plant'></input>
           <!-- TODO tell the user how to format date, so as to match with our database, put a checker to make sure -->
-          <input type = 'text' ng-model= 'data.plantDate' placeholder ='What day do you want to plant?'></input>
+          <input type = 'text' ng-model= 'data.plantDate' placeholder ='Start plant date?'></input>
           <input type = 'submit' value = 'Add Plant to My Plants'></input>
         </form>
+        <div ng-if= 'plantInfoPrompts === true'>
+          <h2>Plants in {{data.gardenName}}:</h2>
+          <ul>
+            <li ng-repeat='plant in data.plantArray'> {{plant}} </li>
+          <!-- get garden plants -call everytime they add a plant -->
+       </div>
       </div>
     </div>
   </div>
