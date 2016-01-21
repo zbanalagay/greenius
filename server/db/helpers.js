@@ -2,8 +2,9 @@ var db = require('./sequelize.js');
 
 var helpers = {
 
-  //user is an object with keys: username, password, email, location, userPic
+  //user is an object with keys: username, password, email, location, userPic, nickname
   addUser : function(user) {
+    // Check for commonName in Users table
     return db.Users.findOne({
       where: {username: user.username}
     })
@@ -11,6 +12,7 @@ var helpers = {
        if(userResult){
          throw Error('Username is already taken');
        }
+       //Create a user in the Users table
        return db.Users.create(user);
     })
     .catch(function(error) {
@@ -18,10 +20,10 @@ var helpers = {
     })
   },
 
+  //plant is an object with username, commonName, gardenName, plantDate nickname, plantStatus
   addPlant : function(plant) {
     var plantObj = {};
-
-    // Check for User ID
+    //Check for username in Users Table 
     return db.Users.findOne({
       where: {username: plant.username}
     })
@@ -30,20 +32,20 @@ var helpers = {
         throw Error('Username does not exist');
       }
       console.log('User ID exists: ', userResults);
-      plantObj.userResults = userResults; // TODO: Findout userId
+      plantObj.userResults = userResults; 
 
-        // Check for Species ID
+        //Check for commonName in SpeciesInfos table
         return db.SpeciesInfos.findOne({
-          where: {speciesName: plant.commonName}
+          where: {commonName: plant.commonName}
         })
         .then(function(speciesResults) {
           if(!speciesResults) {
             throw Error('Species does not exist');
           }
           console.log('Species exists: ', speciesResults);
-          plantObj.speciesResults = speciesResults; // TODO: Findout speciesId
+          plantObj.speciesResults = speciesResults; 
 
-            // Check for Garden ID
+            // Check for gardenName in Gardens table
             return db.Gardens.findOne({
               where: {gardenName: plant.gardenName}
             })
@@ -52,16 +54,16 @@ var helpers = {
                 throw Error('Garden does not exist');
               }
               console.log('Garden exists: ', gardenResults);
-              plantObj.gardenResults = gardenResults; // TODO: Findout gardenId
+              plantObj.gardenResults = gardenResults; 
 
                 // Insert plant into Plant table
                 return db.Plants.create({
-                  idOfUser: plantObj.userResults,
-                  idOfSpecies: plantObj.speciesResults,
+                  idOfUser: plantObj.userResults.id,
+                  idOfSpecies: plantObj.speciesResults.id,
                   plantDate: plant.plantDate,
                   nickname: plant.nickname,
                   plantStatus: plant.plantStatus,
-                  idOfGarden: plantObj.gardenResults
+                  idOfGarden: plantObj.gardenResults.id
                 })
                 .then(function(plantResults) {
                   console.log('Add plant successful');
@@ -76,6 +78,7 @@ var helpers = {
 
   //garden is an object with gardenName
   addGarden : function(garden) {
+    //Check for gardenName in Gardens table
     return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
@@ -83,6 +86,7 @@ var helpers = {
       if(gardenResult){
         throw Error('Garden name is already taken');
       }
+      //Insert garden into Garden table
       return db.Gardens.create(garden);
     })
     .catch(function(error) {
@@ -92,6 +96,7 @@ var helpers = {
 
   //species is an object with commonName,botanicalName, plantLink, plantPic, wateringInformation, germinationInformation, locationInformation
   addSpeciesInfo : function(species) {
+    //Check for commonName in SpeciesInfos table
     return db.SpeciesInfos.findOne({
       where: {commonName: species.commonName}
     })
@@ -99,6 +104,7 @@ var helpers = {
       if(speciesResult){
         throw Error('Species info is already in database');
       }
+      // Insert species into SpeciesInfos table
       return db.SpeciesInfos.create({
         commonName: species.commonName,
         botanicalName: species.botanicalName,
@@ -121,8 +127,11 @@ var helpers = {
     })
   },
 
+  //plant is an object with plantId, commonName
+  //garden is an object with gardenName
   addGardenToPlant : function(plant, garden) {
     var plantObj = {};
+    // Check for Gardens gardenName
     return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
@@ -131,9 +140,9 @@ var helpers = {
         throw ERROR('Garden name does not exist');
       }
       console.log('Garden name exists: ', gardenResult.gardenName);
-      plantObj.gardenId = gardenResult.Id;
-
-      return db.Plants.findOne({ // TODO: Make sure to pass in plantId
+      plantObj.gardenId = gardenResult.id;
+      // Check for Plants gardenId
+      return db.Plants.findOne({ 
         where: {plantId: plant.plantId}
       })
       .then(function(plantResult) {
@@ -141,8 +150,9 @@ var helpers = {
           throw ERROR('Plant ID does not exist');
         }
         console.log('Plant name exists: ', plantResult);
+          //set idOfGarden 
           return db.Plants.set({
-            gardenId: plantObj.gardenId
+            idOfGarden: plantObj.gardenId
           })
         })
         .then(function(addPlantToGardenResult) {
@@ -158,7 +168,9 @@ var helpers = {
 
   // }, // future feature
 
+  //user is an object with username
   getUser : function(user) {
+    //Check for username in Users table
     return db.Users.findOne({
       where: {username: user.username}
     })
@@ -170,8 +182,10 @@ var helpers = {
     })
   },
 
+  //garden is an object with gardenName
   getGarden : function(garden) {
     gardenObj = {};
+    //Check for gardenName in Gardens table 
     return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
@@ -180,7 +194,8 @@ var helpers = {
         throw ERROR('Garden name does not exist');
       }
       console.log('Garden name: ', gardenResult.gardenName);
-      gardenObj.gardenId = gardenResult.gardenId; //TODO: find out gardenId
+      gardenObj.gardenId = gardenResult.id;
+      //Check for idOfGarden in Plants table
       return db.Plants.getOne({
         where: {idOfGarden: gardenObj.gardenId}
       })
@@ -196,7 +211,9 @@ var helpers = {
     })
   },
 
+  //species is an object with commonName
   getSpeciesInfo : function(species) {
+    //Check for commonName in SpeciesInfos table
     return db.SpeciesInfos.findOne({
       where: {commonName: species.commonName}
     })
@@ -204,8 +221,6 @@ var helpers = {
       if(!specieResult) {
         throw ERROR('Species does not exist');
       }
-      console.log(specieResult, "yo this is specieResult database")
-      console.log('Specie associated with this name ', species.commonName);
       return specieResult;
     })
     .catch(function(error) {
@@ -213,7 +228,9 @@ var helpers = {
     })
   },
 
-  getPlant : function(plant) {
+  //plant is an object with nickname
+  getPlantByNickname : function(plant) {
+    //Check for nickname in Plants table
     return db.Plants.findOne({
      where : {nickname: nickname}
     })
@@ -225,8 +242,10 @@ var helpers = {
     })
   },
 
+  //user is an object with username
   getUserPlants : function(user) {
     var userId;
+    //Check for username in Users table
     return db.Users.findOne({
       where: {username: user.username}
     })
@@ -235,8 +254,9 @@ var helpers = {
         throw ERROR('User does not exist');
       }
       console.log('User associated with this plant: ', error);
-      userId = userResult.userId;  //TODO: find out userId
-
+      //set userId variable for future use
+      userId = userResult.id;
+      //findAll plants in the Plants table with specified userId
       return db.Plants.findAll({
         where: {idOfUser: userId}
       })
@@ -252,8 +272,10 @@ var helpers = {
     })
   },
 
+  //garden is an object with gardenName
   getGardenPlants : function(garden) {
     var gardenId;
+    //Check for gardenName in Gardens table
     return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
     })
@@ -262,8 +284,8 @@ var helpers = {
         throw ERROR('Garden does not exist');
       }
       console.log('Garden associated with this plant: ', gardenResult);
-      gardenId = gardenResult.gardenId; //TODO: find out gardenId
-
+      gardenId = gardenResult.id;
+      //Check for idOfGarden in Plants table
       return db.Plants.findAll({
         where: {idOfGarden: gardenId}
       })
@@ -278,31 +300,70 @@ var helpers = {
       })
     })
   }
+
+  //garden is an object with username
+  // getAllGardenFromUser : function(garden) { // TODO: Needs to be completed(Robert)
+  //   var data = {};
+  //   return db.Users.findOne({
+  //     where: {username: garden.username}
+  //   })
+  //   .then(function(userResult) {
+  //     if(!userResult) {
+  //       throw Error('User does not exist');
+  //     }
+  //     console.log('UserId associated with this username: ', userResult.id);
+  //     data.userId = userResult.id;
+  //     //Check for plants where userId exists and Garden is not null in Plants table
+  //     return db.Plants.findAll({
+  //       where: {idOfUser: data.userId,
+  //               idOfGarden: {$not: null,}}
+  //     })
+  //     .then(function(plantResults) {
+  //       if(!plantResults) {
+  //         throw ERROR('No gardens exist for user')
+  //       }
+  //       console.log('GardenId associated with user: ', plantResults);
+  //       return db.Gardensfind({ 
+  //       })
+  //       .then(function(gardenResults) {
+  //       if(!plantResults) {
+  //         throw ERROR('No gardens exist for user')
+  //       }
+  //       console.log('Gardens associated with user: ', gardenResults);
+  //     })
+  //     .catch(function(error) {
+  //       console.log('Error, retrieving plantsResult: ', error);
+  //     })
+  //   })
+  // }
+
 };
 
-  // getGardenUsers : function(garden) {
+// var userNameRob = {username: 'Robert'};
 
-  // }  // future feature
+// helpers.getAllGardenFromUser(userNameRob);
 
-// These are temp. users
-var user1 = {
-  username: 'Robert',
-  password: 'SWISS',
-  email: 'robertstuartcardiff@gmail.com',
-  location: '',
-  userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
-  createdAt: '',
-  updatedAt: ''
-}
+  // // Use to add a new plant
+  // var plant1 = {
+  //   username: 'Robert',
+  //   commonName: 'Sunflowers',
+  //   gardenName: 'Flower Power',
+  //   plantDate: '',
+  //   nickname: 'Angelica',
+  //   plantStatus: 'Nursery'
+  // };
+  // helpers.addPlant(plant1);
 
-var user2 = {
-  username: 'Geetha',
-  password: 'HELLO',
-  email: 'geetharatnam1@gmail.com',
-  location: '',
-  userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_picture_for_a_facebook_prank.jpg',
-  createdAt: '',
-  updatedAt: ''
-}
+  // // Use to add a new user
+  // var profile1 = {
+  //   username: 'Robert',
+  //   password: 'SWISS',
+  //   email: 'robertstuartcardiff@gmail.com',
+  //   location: '',
+  //   userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
+  //   createdAt: '',
+  //   updatedAt: ''
+  // };
+  // helpers.addUser(profile1);
 
 module.exports = helpers;

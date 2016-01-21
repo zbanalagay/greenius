@@ -118,8 +118,8 @@ models.Gardens = sequelize.define('Garden', {
 models.Users.hasMany(models.Plants);
 models.Gardens.hasMany(models.Plants);
 models.SpeciesInfos.hasMany(models.Plants);
-models.Users.belongsToMany(models.Gardens, {through: 'Plant'});
-models.Gardens.belongsToMany(models.Users, {through: 'Plant'});
+models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
+models.Gardens.belongsToMany(models.Users, {through: 'Plants'});
 
 // {force: true} will drop the table and re-create it
 models.Users.sync({force: false})
