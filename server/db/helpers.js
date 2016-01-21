@@ -305,6 +305,4 @@ var user2 = {
   updatedAt: ''
 }
 
-helpers.addUser(user2);
-
 module.exports = helpers;
