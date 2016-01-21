@@ -90,22 +90,27 @@ services.factory('Users', ['$http', function($http){
 services.factory('ProfileInfo', ['$http', function($http){
   var profile = {
     // Below is for MVP testing purposes
-    username: 'Lizz',
-    gardenName: 'Eden'
+    username: 'Robert',
+    password: 'SWISS',
+    email: 'robertstuartcardiff@gmail.com',
+    location: '',
+    userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
+    createdAt: '',
+    updatedAt: ''
 
     // Real one to populate
     // username: undefined,
     // gardenName: undefined
     // TODO: FINISH THIS
-  }
+  };
 
   var getProfile = function() {
     // TODO: FINISH THIS
-  }
+  };
 
   var setProfile = function() {
     // TODO: FINISH THIS
-  }
+  };
 
   return{
     getProfile: getProfile,
