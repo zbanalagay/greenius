@@ -284,4 +284,27 @@ var helpers = {
 
   // }  // future feature
 
+// These are temp. users
+var user1 = {
+  username: 'Robert',
+  password: 'SWISS',
+  email: 'robertstuartcardiff@gmail.com',
+  location: '',
+  userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
+  createdAt: '',
+  updatedAt: ''
+}
+
+var user2 = {
+  username: 'Geetha',
+  password: 'HELLO',
+  email: 'geetharatnam1@gmail.com',
+  location: '',
+  userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_picture_for_a_facebook_prank.jpg',
+  createdAt: '',
+  updatedAt: ''
+}
+
+helpers.addUser(user2);
+
 module.exports = helpers;
