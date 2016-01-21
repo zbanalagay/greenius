@@ -23,7 +23,7 @@ var helpers = {
 
     // Check for User ID
     return db.Users.findOne({
-      where: {username: user.username}
+      where: {username: plant.username}
     })
     .then(function(userResults) {
       if(!userResults) {

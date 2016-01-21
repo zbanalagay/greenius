@@ -4,7 +4,7 @@ services.factory('Plants', ['$http', function($http){
   var addPlant = function(plant) {
     return $http({
       method: 'POST',
-      url: '/api/plants/addPlant',
+      url: '/api/plants/addPlants',
       data: plant
     }).then(function(response) {
         console.log(response, 'SUCCESS ADDPLANT PLANTS FACTORY');
