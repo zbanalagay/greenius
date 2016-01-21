@@ -9,7 +9,7 @@ var sequelize = new Sequelize('test', null, null,{
 
 var models = {};
 
-models.User = sequelize.define('User', {
+models.Users = sequelize.define('User', {
   username: {
     type: Sequelize.STRING
   },
@@ -33,7 +33,7 @@ models.User = sequelize.define('User', {
   }
 });
 
-models.Plant = sequelize.define('Plant', {
+models.Plants = sequelize.define('Plant', {
   idOfUser:{
     type: Sequelize.INTEGER
   },
@@ -60,7 +60,7 @@ models.Plant = sequelize.define('Plant', {
   }
 });
 
-models.SpeciesInfo = sequelize.define('SpeciesInfo', {
+models.SpeciesInfos = sequelize.define('SpeciesInfo', {
   commonName: {
     type: Sequelize.STRING
   },
@@ -102,7 +102,7 @@ models.SpeciesInfo = sequelize.define('SpeciesInfo', {
   }
 });
 
-models.Garden = sequelize.define('Garden', {
+models.Gardens = sequelize.define('Garden', {
   gardenName: {
     type: Sequelize.STRING
   },
@@ -115,29 +115,29 @@ models.Garden = sequelize.define('Garden', {
 });
 
 //establish the relationships between the tables
-models.User.hasMany(models.Plant);
-models.Garden.hasMany(models.Plant);
-models.SpeciesInfo.hasMany(models.Plant);
-models.User.belongsToMany(models.Garden, {through: 'Plant'});
-models.Garden.belongsToMany(models.User, {through: 'Plant'});
+models.Users.hasMany(models.Plants);
+models.Gardens.hasMany(models.Plants);
+models.SpeciesInfos.hasMany(models.Plants);
+models.Users.belongsToMany(models.Gardens, {through: 'Plant'});
+models.Gardens.belongsToMany(models.Users, {through: 'Plant'});
 
 // {force: true} will drop the table and re-create it
-models.User.sync({force: false})
+models.Users.sync({force: false})
            .then(function() {
              console.log('User sync in sequelize.js');
            });
 
-models.Plant.sync({force: false})
+models.Plants.sync({force: false})
            .then(function() {
              console.log('Plant sync in sequelize.js');
            });
 
-models.SpeciesInfo.sync({force: false})
+models.SpeciesInfos.sync({force: false})
            .then(function() {
              console.log('SpeciesInfo sync in sequelize.js');
            });
 
-models.Garden.sync({force: false})
+models.Gardens.sync({force: false})
             .then(function() {
               console.log('Garden sync in sequelize.js');
             });
