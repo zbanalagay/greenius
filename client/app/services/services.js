@@ -31,7 +31,7 @@ services.factory('Plants', ['$http', function($http){
       data: user
     }).then(function(response) {
         console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY')
-        return response; //TODO: find what we need on the response.data
+        return response;
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
     })
