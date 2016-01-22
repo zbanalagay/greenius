@@ -114,12 +114,31 @@ models.Gardens = sequelize.define('Garden', {
   }
 });
 
+models.UsersGardens = sequelize.define('UsersGarden', {
+  userId: {
+    type: Sequelize.INTEGER
+  },
+  gardenId: {
+    type: Sequelize.INTEGER
+  },
+  createdAt: {
+    type: Sequelize.STRING
+  },
+  updatedAt: {
+    type: Sequelize.STRING
+  } 
+});
+
 //establish the relationships between the tables
 models.Users.hasMany(models.Plants);
 models.Gardens.hasMany(models.Plants);
 models.SpeciesInfos.hasMany(models.Plants);
 models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
 models.Gardens.belongsToMany(models.Users, {through: 'Plants'});
+models.Users.hasMany(models.Gardens);
+models.Gardens.hasMany(models.Users);
+models.Users.belongsToMany(models.Gardens, {through: 'UsersGardens'});
+models.Gardens.belongsToMany(models.Users, {through: 'UsersGardens'});
 
 // {force: true} will drop the table and re-create it
 models.Users.sync({force: false})
@@ -140,6 +159,11 @@ models.SpeciesInfos.sync({force: false})
 models.Gardens.sync({force: false})
             .then(function() {
               console.log('Garden sync in sequelize.js');
+            });
+
+models.UsersGardens.sync({force: false})
+            .then(function() {
+              console.log('UsersGardens sync in sequelize.js');
             });
 
 module.exports = models;
