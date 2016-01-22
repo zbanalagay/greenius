@@ -45,10 +45,10 @@ module.exports = {
 	 getPlantsForAUser: function(req, res) {
 		 console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETPLANTSFORAUSER');
 		 var userData = req.body //TODO: find the user object on the req.body
-		 var plantData = req.body //TODO: find the plant object on the req.body
-		 helper.getUserPlants(plantData, userData)
+		//  var plantData = req.body //TODO: find the plant object on the req.body
+		 helper.getUserPlants(userData)
 		   .then(function(results) {
-					console.log('SUCCESS IN GETPLANTSFORAUSER HANDLER');
+					console.log(results, 'SUCCESS IN GETPLANTSFORAUSER HANDLER');
 					res.status(200).send(results);
 				})
 				.catch(function(error) {
@@ -75,7 +75,7 @@ module.exports = {
    getPlant: function(req, res){
      console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETPLANTHABDKER');
      var plantData = req.body;
-     helper.getPlant(plantData)
+     helper.getPlantByNickname(plantData)
        .then(function(results) {
          console.log(results, 'SUCCESS IN GETPLANT HANDLER');
          res.status(200).send(results);
