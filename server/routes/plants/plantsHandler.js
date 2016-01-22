@@ -9,7 +9,7 @@ module.exports = {
 		 helper.addPlant(plantData)
        .then(function(results) {
          //need to call addSpeciesInfo?
-					console.log('SUCCESS IN ADDPLANT HANDLER');
+					console.log(results, 'SUCCESS IN ADDPLANT HANDLER');
 					res.status(200).send(results);
 				})
 				.catch(function(error) {
@@ -17,6 +17,30 @@ module.exports = {
 					res.status(404).send(error);
 				})
 	 },
+
+   addGarden: function(req, res){
+     console.log(req.body, 'THIS IS THE REQ.BODY INSIDE ADDGARDEN');
+     var gardenData = req.body;
+     var userData = req.body;
+     helper.addGarden(gardenData)
+      .then(function(results) {
+        console.log(results, 'SUCCCESSSSSS')
+        helper.addUserToGarden(gardenData, userData)
+         .then(function(results) {
+           console.log('SUCCESS IN ADDGARDEN HANDLER');
+           res.status(200).send(results);
+         })
+         .catch(function(error) {
+           console.log(error, 'ERROR INSIDE ADDGARDEN HANDLER');
+           res.status(404).send(error);
+         })
+      })
+      .catch(function(error) {
+        console.log(error, 'ERROR INSIDE ADDGARDENGARDEN HANDLER');
+        res.status(404).send(error);
+      })
+
+   },
 
 	 getPlantsForAUser: function(req, res) {
 		 console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETPLANTSFORAUSER');
@@ -60,5 +84,32 @@ module.exports = {
          console.log(error, 'ERROR INSIDE GETPLANT HANDLER');
          res.status(404).send(error);
        })
+     },
+
+    getUserGardens: function(req, res) {
+      console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETUSERGARDENSHANDLER');
+      var userData = req.body;
+      helper.getGardensFromUser(userData)
+        .then(function(results) {
+          console.log(results, 'SUCCESS IN GETUSERGARDENS HANDLER');
+          res.status(200).send(results);
+        })
+        .catch(function(error) {
+          console.log(error, 'ERROR INSIDE GETUSERGARDENS HANDLER');
+          res.status(404).send(error);
+        })
+    },
+    getGardenPlants: function(req, res) {
+      console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETGARDENPLANTSHANDLER');
+      var gardenData = req.body;
+      helper.getGardenPlants(gardenData)
+        .then(function(results) {
+          console.log(results, 'SUCCESS IN GETGARDENPLANTS HANDLER');
+          res.status(200).send(results);
+        })
+        .catch(function(error) {
+          console.log(error, 'ERROR INSIDE GETGARDEN PLANTS HANDLER');
+          res.status(404).send(error);
+        })
     }
 }
