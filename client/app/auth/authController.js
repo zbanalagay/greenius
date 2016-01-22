@@ -28,7 +28,7 @@ auth.controller('authController', ['$scope', 'Users', function($scope, Users){
       }
       
       Users.addUser(userData);
-
+      
       // Once complete, clear the form (except location)
       $scope.formData.username = '';
       $scope.formData.password = '';
