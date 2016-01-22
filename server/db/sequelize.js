@@ -19,9 +19,9 @@ models.Users = sequelize.define('User', {
   email: {
     type: Sequelize.STRING
   },
-  location: {
-    type: Sequelize.STRING
-  },
+  // location: {
+  //   type: Sequelize.STRING
+  // },
   userPic: {
     type: Sequelize.STRING
   },
