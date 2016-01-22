@@ -112,8 +112,8 @@ services.factory('Users', ['$http', function($http){
       return response.config.data;
     }).catch(function(error) {
       console.log('ERROR FOR ADDUSER', error);
-    });
-  }
+    })
+  };
 
   return {
     addUser: addUser
