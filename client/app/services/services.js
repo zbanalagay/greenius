@@ -57,7 +57,7 @@ services.factory('Plants', ['$http', function($http){
       data: plant
     }).then(function(response) {
         console.log(response.data, 'SUCCESS GETPLANT PLANTS FACTORY');
-        return response.datal //TODO: find what we need on the response.data
+        return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
     })
