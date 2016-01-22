@@ -1,5 +1,5 @@
 var auth = angular.module('auth', []);
-auth.controller('authController', ['$scope', 'Users', function($scope, Plants){
+auth.controller('authController', ['$scope', 'Users', function($scope, Users){
 
     // Initializes Variables
     // ----------------------------------------------------------------------------
@@ -26,6 +26,7 @@ auth.controller('authController', ['$scope', 'Users', function($scope, Plants){
           userPic: $scope.formData.userPic,
           // htmlverified: $scope.formData.htmlverified,
       }
+      
       Users.addUser(userData);
 
       // Once complete, clear the form (except location)
