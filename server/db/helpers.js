@@ -232,13 +232,14 @@ var helpers = {
   getPlantByNickname : function(plant) {
     //Check for nickname in Plants table
     return db.Plants.findOne({
-     where : {nickname: nickname}
+     where : {nickname: plant.nickname}
     })
     .then(function(plantResult) {
          if(!userResult) {
             throw ERROR ('Plant nickname does not exist');
         }
         console.log ('Plant exists: ' , plantResult);
+        return plantResult;
     })
   },
 
@@ -265,6 +266,7 @@ var helpers = {
           throw ERROR('Plants do not exists');
         }
         console.log('Plants associated with this user ', plantResult);
+        return plantResult;
       })
       .catch(function(error) {
         console.log('Error, retrieving plantsResult: ', error);
