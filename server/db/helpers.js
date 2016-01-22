@@ -254,24 +254,28 @@ var helpers = {
       if(!userResult) {
         throw ERROR('User does not exist');
       }
-      console.log('User associated with this plant: ', error);
       //set userId variable for future use
+      console.log(userResult.id, "oHAYHWHWHWEJFJH@#$(_#$)")
       userId = userResult.id;
+      console.log('User associated with this plant: ', userId);
       //findAll plants in the Plants table with specified userId
       return db.Plants.findAll({
         where: {idOfUser: userId}
       })
       .then(function(plantsResult) {
-        if(plantsResult) {
+        if(!plantsResult) {
           throw ERROR('Plants do not exists');
         }
-        console.log('Plants associated with this user ', plantResult);
-        return plantResult;
+        console.log('Plants associated with this user WERREREWEREWRWEREWR ', plantsResult);
+        return plantsResult;
       })
       .catch(function(error) {
         console.log('Error, retrieving plantsResult: ', error);
       })
     })
+    // .catch(function(error) {
+    //   console.log('ERROR, RETRIEVING GETUSERPLANTS', error)
+    // })
   },
 
   //garden is an object with gardenName
