@@ -78,6 +78,15 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 				}
 			}
 		})
+		.state('logout', {
+			url: '/logout',
+			views: {
+				'indexPage': {
+					templateUrl: './app/auth/signupView.html',
+					controller: 'authController'
+				}
+			}
+		})
 		.state('browsePlant', {
 			url: '/browseplant',
 			views: {
