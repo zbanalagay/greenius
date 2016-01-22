@@ -22,15 +22,24 @@ module.exports = {
      console.log(req.body, 'THIS IS THE REQ.BODY INSIDE ADDGARDEN');
      var gardenData = req.body;
      var userData = req.body;
-     helper.addUserToGarden(userData, gardenData)
+     helper.addGarden(gardenData)
       .then(function(results) {
-        console.log('SUCCESS IN ADDGARDEN HANDLER');
-        res.status(200).send(results);
+        console.log(results, 'SUCCCESSSSSS')
+        helper.addUserToGarden(gardenData, userData)
+         .then(function(results) {
+           console.log('SUCCESS IN ADDGARDEN HANDLER');
+           res.status(200).send(results);
+         })
+         .catch(function(error) {
+           console.log(error, 'ERROR INSIDE ADDGARDEN HANDLER');
+           res.status(404).send(error);
+         })
       })
       .catch(function(error) {
-        console.log(error, 'ERROR INSIDE ADDGARDEN HANDLER');
+        console.log(error, 'ERROR INSIDE ADDGARDENGARDEN HANDLER');
         res.status(404).send(error);
       })
+
    },
 
 	 getPlantsForAUser: function(req, res) {
@@ -79,11 +88,21 @@ module.exports = {
 
     getUserGardens: function(req, res) {
       console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETUSERGARDENSHANDLER');
+      var userData = req.body;
+      helper.getGardensFromUser(userData)
+        .then(function(results) {
+          console.log(results, 'SUCCESS IN GETUSERGARDENS HANDLER');
+          res.status(200).send(results);
+        })
+        .catch(function(error) {
+          console.log(error, 'ERROR INSIDE GETUSERGARDENS HANDLER');
+          res.status(404).send(error);
+        })
     },
     getGardenPlants: function(req, res) {
       console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETGARDENPLANTSHANDLER');
       var gardenData = req.body;
-      helper.getGardensFromUser(gardenData)
+      helper.getGardenPlants(gardenData)
         .then(function(results) {
           console.log(results, 'SUCCESS IN GETGARDENPLANTS HANDLER');
           res.status(200).send(results);
