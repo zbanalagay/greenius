@@ -299,51 +299,103 @@ var helpers = {
         console.log('Error, retrieving plantsResult: ', error);
       })
     })
+  },
+
+  //garden is an object with gardenName
+  //user is an object with username
+  addUserToGarden : function(garden, user) {
+    var data = {};
+    //Check for gardenName in Gardens table
+    return db.Gardens.findOne({
+      where: {gardenName: garden.gardenName}
+    })
+    .then(function(gardenResult) {
+      if(!gardenResult) {
+        throw ERROR('Garden does not exist');
+      }
+      data.gardenId = gardenResult.id;
+      console.log('gardenId associated with this gardenName: ', data.gardenId);
+      //Check for username in Users table
+      return db.Users.findOne({
+        where: {username: user.username}
+      })
+      .then(function(userResult) {
+        if(!userResult) {
+          throw ERROR('Plants do not exists');
+        }
+        data.userId = userResult.id;
+        console.log('userId associated with this username: ', data.userId);
+        // Insert a user/garden join into UsersGardens table
+        return db.UsersGardens.create({
+          userId: data.userId,
+          gardenId: data.gardenId
+        })
+        .then(function(userGardenResult) {
+          console.log('Join user to garden successful', userGardenResult);
+        })
+        .catch(function(error) {
+          console.log('Error, retrieving plantsResult: ', error);
+        })
+      })
+    }) 
+  },
+
+  // user is an object with username
+  getGardensFromUser : function(user) {
+    //Check for username in Users table
+    return db.Users.findOne({
+      where: {username: user.username}
+    })
+    .then(function(userResult) {
+      if(!userResult) {
+        throw Error('User does not exist');
+      }
+      console.log('UserId associated with this username: ', userResult);
+      return userResult.getGardens()
+      .then(function(gardenResults) {
+        if(!gardenResults) {
+          throw Error('Gardens do not exist');
+        }
+        console.log('Gardens associated with user: ', gardenResults[0].dataValues.gardenName);
+      })
+      .catch(function(error) {
+        console.log('Error, retrieving gardens: ', error);
+      })
+    })
   }
-
-  //garden is an object with username
-  // getAllGardenFromUser : function(garden) { // TODO: Needs to be completed(Robert)
-  //   var data = {};
-  //   return db.Users.findOne({
-  //     where: {username: garden.username}
-  //   })
-  //   .then(function(userResult) {
-  //     if(!userResult) {
-  //       throw Error('User does not exist');
-  //     }
-  //     console.log('UserId associated with this username: ', userResult.id);
-  //     data.userId = userResult.id;
-  //     //Check for plants where userId exists and Garden is not null in Plants table
-  //     return db.Plants.findAll({
-  //       where: {idOfUser: data.userId,
-  //               idOfGarden: {$not: null,}}
-  //     })
-  //     .then(function(plantResults) {
-  //       if(!plantResults) {
-  //         throw ERROR('No gardens exist for user')
-  //       }
-  //       console.log('GardenId associated with user: ', plantResults);
-  //       return db.Gardensfind({ 
-  //       })
-  //       .then(function(gardenResults) {
-  //       if(!plantResults) {
-  //         throw ERROR('No gardens exist for user')
-  //       }
-  //       console.log('Gardens associated with user: ', gardenResults);
-  //     })
-  //     .catch(function(error) {
-  //       console.log('Error, retrieving plantsResult: ', error);
-  //     })
-  //   })
-  // }
-
+   
 };
 
-// var userNameRob = {username: 'Robert'};
+    // // Use to add a new garden /////////////////
+  // var garden1 = {
+  //   gardenName: 'Flower Power'
+  // };
+  // helpers.addGarden(garden1);
 
-// helpers.getAllGardenFromUser(userNameRob);
+    // // Use to add a new user ////////////////////
+  // var profile1 = {
+  //   username: 'Brandon',
+  //   password: 'NOPE',
+  //   email: 'brandon.goodfliesh@me.com',
+  //   location: '',
+  //   userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
+  //   createdAt: '',
+  //   updatedAt: ''
+  // };
+  // helpers.addUser(profile1);
 
-  // // Use to add a new plant
+  //   var profile2 = {
+  //   username: 'Robert',
+  //   password: 'SWISS',
+  //   email: 'robertstuartcardiff@gmail.com',
+  //   location: '',
+  //   userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
+  //   createdAt: '',
+  //   updatedAt: ''
+  // };
+  // helpers.addUser(profile2);
+
+    // // Use to add a new plant ///////////////////
   // var plant1 = {
   //   username: 'Robert',
   //   commonName: 'Sunflowers',
@@ -354,16 +406,28 @@ var helpers = {
   // };
   // helpers.addPlant(plant1);
 
-  // // Use to add a new user
-  // var profile1 = {
-  //   username: 'Robert',
-  //   password: 'SWISS',
-  //   email: 'robertstuartcardiff@gmail.com',
-  //   location: '',
-  //   userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
-  //   createdAt: '',
-  //   updatedAt: ''
+  // var plant2 = {
+  //   username: 'Brandon',
+  //   commonName: 'Apples',
+  //   gardenName: 'Flower Power',
+  //   plantDate: '',
+  //   nickname: 'TommyFlowers',
+  //   plantStatus: 'Nursery'
   // };
-  // helpers.addUser(profile1);
+  // helpers.addPlant(plant2);
+
+    // // Use to add user to garden ///////////////////
+  // var gardenNameTest1 = {
+  //   gardenName: 'Flower Power'
+  // };
+
+  // var usernameTest1 = {
+  //   username: 'Robert'
+  // }
+  // helpers.addUserToGarden(gardenNameTest1, usernameTest1);
+
+    // // Use to get gardens from user ///////////////////
+  // var userNameRob = {username: 'Robert'};
+  // helpers.getGardensFromUser(userNameRob);
 
 module.exports = helpers;
