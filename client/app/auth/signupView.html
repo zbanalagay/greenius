@@ -31,7 +31,7 @@
                     <input type="text" class="form-control" id="userPic" placeholder="userPic" ng-model="formData.userPic" required>
                 </div>
 
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label for="latitude">Latitude</label>
                     <input type="text" class="form-control" id="latitude" value="39.500" ng-model="formData.latitude" readonly>
                 </div>
@@ -44,7 +44,7 @@
                         </span>
                     </label>
                     <input type="text" class="form-control" id="verified" placeholder="Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>
-                </div> -->
+                </div>
                 <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
 
                 <button type="submit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
