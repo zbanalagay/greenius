@@ -19,6 +19,7 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
     $scope.data.gardenName = '';
     $scope.data.usersGardenArray = [];
     $scope.data.plantArray = [];
+     $scope.showModal= false;
 
     //TODO: TEST WHEN WE HAVE users in our database
 
@@ -76,6 +77,7 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
         //TODO put back this if statement and its closing bracket once users can have multiple gardens
         // if($scope.data.usersGardenArray.indexOf($scope.data.gardenName) === -1){
           //addGarden
+          //TODO check that user only inputed in one field
           Plants.addGarden($scope.data)
             .then(function(results) {
               console.log(results, 'SUCCESS IN SELECTGARDEN');
