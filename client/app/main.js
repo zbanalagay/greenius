@@ -1,11 +1,60 @@
 var main = angular.module('greeniusApp',
-	['browsePlant',
+	['auth0', 
+	'angular-storage', 
+	'angular-jwt',
+	'browsePlant',
 	'auth',
 	'dashboard',
 	'myPlants',
 	'plantProfile',
 	'services',
 	'ui.router']);
+
+main.run(function($rootScope, auth, store, jwtHelper, $location) {
+  // This events gets triggered on refresh or URL change
+  $rootScope.$on('$locationChangeStart', function() {
+    var token = store.get('token');
+    if (token) {
+      if (!jwtHelper.isTokenExpired(token)) {
+        if (!auth.isAuthenticated) {
+          auth.authenticate(store.get('profile'), token);
+        }
+      } else {
+        // Either show the login page or use the refresh token to get a new idToken
+        $location.path('/');
+      }
+    }
+  });
+});
+
+main.config(function (authProvider) {
+  authProvider.init({
+    domain: 'greenius.auth0.com',
+    clientID: 'x87d9BN59ICCQlQGpKg1A83bmCXSr9te'
+  });
+})
+.run(function(auth) {
+  auth.hookEvents();
+});
+
+
+
+// //jwt security
+
+// main.config(function (authProvider, $routeProvider, $httpProvider, jwtInterceptorProvider) {
+//   // ...
+
+//   // We're annotating this function so that the `store` is injected correctly when this file is minified
+//   jwtInterceptorProvider.tokenGetter = ['store', function(store) {
+//     // Return the saved token
+//     return store.get('token');
+//   }];
+
+//   $httpProvider.interceptors.push('jwtInterceptor');
+//   // ...
+// });
+
+
 
 main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
 	$urlRouterProvider.otherwise('dashboard');
@@ -66,6 +115,8 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		});
 }]);
+
+
 // .run(function($cookies){
 //    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
 //      if(toState.name === 'myPlants' && toParams.username === undefined){
