@@ -44,8 +44,7 @@ module.exports = {
 
 	 getPlantsForAUser: function(req, res) {
 		 console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETPLANTSFORAUSER');
-		 var userData = req.body //TODO: find the user object on the req.body
-		//  var plantData = req.body //TODO: find the plant object on the req.body
+		 var userData = req.body;
 		 helper.getUserPlants(userData)
 		   .then(function(results) {
 					console.log(results, 'SUCCESS IN GETPLANTSFORAUSER HANDLER');
