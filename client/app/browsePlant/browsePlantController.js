@@ -47,8 +47,12 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
     // invoke immediately when controller is loaded
     $scope.getExistingGardens();
 
-    $scope.goToPlant = function(plant){
+    var changeToPlantProfile = function(plant){
       $state.go('plantProfile', {nickname: plant});
+    }
+    $scope.goToPlant = function(){
+      changeToPlantProfile($scope.data.nickname)
+
     };
 
     // this will query the speciesInfo to get the plant they are interested in
