@@ -1,5 +1,7 @@
+//[refactor] added auth0 login and logout functions in authController.js
+
 var auth = angular.module('auth', []);
-auth.controller('authController', ['$scope', 'Users', function($scope, Users){
+auth.controller('authController', ['$scope', 'Users', 'auth', 'store', '$location', function($scope, Users, auth, store, $location){
 
     // Initializes Variables
     // ----------------------------------------------------------------------------
@@ -28,7 +30,7 @@ auth.controller('authController', ['$scope', 'Users', function($scope, Users){
       }
       
       Users.addUser(userData);
-
+      
       // Once complete, clear the form (except location)
       $scope.formData.username = '';
       $scope.formData.password = '';
@@ -36,5 +38,33 @@ auth.controller('authController', ['$scope', 'Users', function($scope, Users){
       $scope.formData.userPic = '';
 
     };
+
+
+    $scope.login = function () {
+      auth.signin({}, function (profile, token) {
+        console.log('THIS IS AUTHCONTROLLER GOOGLE LOGIN', profile)
+        store.set('profile', profile);
+        store.set('token', token);
+        $location.path('/');
+      }, function (error) {
+        console.log('THIS IS AUTHCONTROLLER GOOGLE ERROR', error)
+        });
+    };
+
+    $scope.logout = function() {
+      auth.signout();
+      store.remove('profile');
+      store.remove('token');
+    }
+
+    function UserInfoCtrl($scope, auth) {
+      $scope.auth = auth;
+    }
+
+
+
+
+
+
 
 }]);
