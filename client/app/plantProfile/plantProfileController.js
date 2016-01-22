@@ -7,6 +7,9 @@ plantProfile.controller('plantProfileController',['$scope', 'Plants', '$state', 
     $scope.data.specificPlantInfo;
     $scope.data.generalPlantInfo;
 
+    // TODO once i get plant info back then set commonName to call getSpecieInfoOfPlant
+    $scope.data.commonName ;
+
     // TODO probably will need only either getPlant or getSpecieInfoOfPlant but just see what each returns
     $scope.getPlant = function(){
       Plants.getPlant($scope.data)

@@ -1,5 +1,5 @@
 var myPlants = angular.module('myPlants',[]);
-myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'ProfileInfo',  function($scope, Plants, $stateParams, ProfileInfo){
+myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'ProfileInfo',  function($scope, Plants, $state, ProfileInfo){
   $scope.data = {};
   // $scope.data.username = $state.params.username;
   // make sure to do state.go
@@ -27,6 +27,7 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
 
 
   $scope.getUserPlants = function(){
+    console.log($scope.data, "GETETETETTET")
     Plants.getUsersPlants($scope.data)
           .then(function(results) {
             console.log(results, 'SUCCESS IN GETUSERPLANTS CONTROLLER');

@@ -36,7 +36,7 @@
         <div ng-if= 'tracker === true'>
           <h2>Plants in {{data.gardenName}}:</h2>
           <div>
-            <h3 ng-click = 'goToPlant()' ng-repeat='name in nicknameArray track by $index'> {{name}} </h3>
+            <div  ng-repeat='name in nicknameArray track by $index'> <a ng-click = 'goToPlant()'>{{name}} </a></div>
             <!-- <h4 ng-repeat = 'date in plantDateArray'>{{date}} </h4>
             <h4 ng-repeat = 'status in plantStatusArray'>{{status}}</h4> -->
         </div>

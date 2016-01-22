@@ -26,12 +26,12 @@ services.factory('Plants', ['$http', function($http){
   }
   var getUsersPlants = function(user){
     return $http({
-      method: 'GET',
+      method: 'POST',
       url: '/api/plants/loadPlants',
       data: user
     }).then(function(response) {
         console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY')
-        return response.data; //TODO: find what we need on the response.data
+        return response; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
     })
@@ -56,8 +56,8 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadPlantInfo',
       data: plant
     }).then(function(response) {
-        console.log(response.data, 'SUCCESS GETPLANT PLANTS FACTORY');
-        return response.data; //TODO: find what we need on the response.data
+        console.log(response, 'SUCCESS GETPLANT PLANTS FACTORY');
+        return response; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
     })
