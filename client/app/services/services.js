@@ -82,7 +82,7 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadGardenPlants',
       data: garden
     }).then(function(response) {
-        console.log(response.data, 'SUCCESS GETGARDENPLANTS PLANTS FACTORY');
+        console.log(response, 'SUCCESS GETGARDENPLANTS PLANTS FACTORY');
         return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETGARDENPLANTS PLANTS FACTORY');
