@@ -57,7 +57,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			}
 		})
 		.state('plantProfile', {
-			url: '/plantprofile/:commonname',
+			url: '/plantprofile/:nickname',
 			views: {
 				'indexPage': {
 					templateUrl: './app/plantProfile/plantProfileView.html',
