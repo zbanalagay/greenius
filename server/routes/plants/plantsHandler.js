@@ -21,7 +21,8 @@ module.exports = {
    addGarden: function(req, res){
      console.log(req.body, 'THIS IS THE REQ.BODY INSIDE ADDGARDEN');
      var gardenData = req.body;
-     helper.addGarden(gardenData)
+     var userData = req.body;
+     helper.addUserToGarden(userData, gardenData)
       .then(function(results) {
         console.log('SUCCESS IN ADDGARDEN HANDLER');
         res.status(200).send(results);
@@ -82,7 +83,7 @@ module.exports = {
     getGardenPlants: function(req, res) {
       console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETGARDENPLANTSHANDLER');
       var gardenData = req.body;
-      helper.getGardenPlants(gardenData)
+      helper.getGardensFromUser(gardenData)
         .then(function(results) {
           console.log(results, 'SUCCESS IN GETGARDENPLANTS HANDLER');
           res.status(200).send(results);
