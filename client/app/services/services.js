@@ -105,11 +105,11 @@ services.factory('Users', ['$http', function($http){
   var addUser = function(userObj) {
     return $http({
       method: 'POST',
-      url: 'api/users/addUser',
+      url: '/api/users/addUser',
       data: userObj
     }).then(function(response) {
-      console.log('SUCCESSFUL POST FOR ADDUSER');
-
+      console.log('services.js SUCCESSFUL POST FOR ADDUSER');
+      return response.config.data;
     }).catch(function(error) {
       console.log('ERROR FOR ADDUSER', error);
     });
