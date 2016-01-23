@@ -30,7 +30,7 @@ main.run(function($rootScope, auth, store, jwtHelper, $location) {
 main.config(function (authProvider) {
   authProvider.init({
     domain: 'greenius.auth0.com',
-    clientID: 'x87d9BN59ICCQlQGpKg1A83bmCXSr9te'
+    //clientID
   });
 })
 .run(function(auth) {
