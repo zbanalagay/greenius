@@ -14,8 +14,9 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
     $state.go('plantProfile', {nickname: plant});
   };
 
-  $scope.goToPlant = function(){
-    // console.log($scope.data.nickname, "IWEJIJOWROJEIRWEOIRJWEOJ#@")
+  $scope.goToPlant = function(name){
+    console.log(name, "IWEJIJOWROJEIRWEOIRJWEOJ#@")
+    $scope.data.nickname = name;
     changeState($scope.data.nickname);
   };
 
@@ -40,8 +41,10 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
           .then(function(results) {
             console.log(results.data, 'SUCCESS IN GETUSERPLANTS CONTROLLER');
             for(var i = 0 ; i < results.data.length; i++){
-              var plant = results.data[i];
-              tempArray.push(plant.nickname);
+              var obj = {};
+              obj.nickname = results.data[i].nickname;
+              console.log(obj, "OH HAY")
+              tempArray.push(obj);
             }
             $scope.resultPlants = tempArray;
 

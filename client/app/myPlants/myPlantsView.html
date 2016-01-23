@@ -10,7 +10,7 @@
       <input type='submit' value = 'Garden me'>
     </form>
     <div ng-repeat= 'plant in resultPlants' >
-      <a  ng-click= 'goToPlant()'>{{plant}}</a>
+      <a  ng-click= 'goToPlant(plant.nickname)'>{{plant.nickname}}</a>
     </div>
   </div>
 </div>
