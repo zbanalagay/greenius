@@ -9,8 +9,8 @@
       </select>
       <input type='submit' value = 'Garden me'>
     </form>
-    <div ng-repeat= 'plant in data.resultPlants'>
-      <div ng-click= 'goToPlant()'>{{plant}}</div>
+    <div ng-repeat= 'plant in resultPlants'>
+      <a ng-click= 'goToPlant()'>{{plant}}</a>
     </div>
   </div>
 </div>
