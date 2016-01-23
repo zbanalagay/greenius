@@ -22,19 +22,20 @@ services.factory('Plants', ['$http', function($http){
         console.log(response, 'SUCCESS ADDGARDEN PLANTS FACTORY');
     }).catch(function(error) {
         console.log(error, 'ERROR IN ADDGARDEN FACTORY');
-    })
-  }
+    });
+  };
+
   var getUsersPlants = function(user){
     return $http({
       method: 'POST',
       url: '/api/plants/loadPlants',
       data: user
     }).then(function(response) {
-        console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY')
+        console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY');
         return response;
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
-    })
+    });
   };
 
   var getSpecieInfo = function (plant){
@@ -47,7 +48,7 @@ services.factory('Plants', ['$http', function($http){
         return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETSPECIEINFO FACTORY');
-    })
+    });
   };
 
   var getPlant = function (plant) {
@@ -60,7 +61,7 @@ services.factory('Plants', ['$http', function($http){
         return response; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
-    })
+    });
   };
 
   var getUserGardens = function(user) {
@@ -73,7 +74,7 @@ services.factory('Plants', ['$http', function($http){
       return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
-    })
+    });
   };
 
   var getGardenPlants = function(garden) {
@@ -86,21 +87,22 @@ services.factory('Plants', ['$http', function($http){
         return response.data; //TODO: find what we need on the response.data
     }).catch(function(error) {
         console.log(error, 'ERROR IN GETGARDENPLANTS PLANTS FACTORY');
-    })
+    });
   };
 
-    var getSpecieById = function (id){
-      return $http({
-        method: 'POST',
-        url: '/api/plants/loadSpecieInfoById',
-        data: id
-      }).then(function(response) {
-          console.log(response, 'SUCCESS IN GETSPECIEBYID PLANTS FACTORY');
-          return response;
-      }).catch(function(error) {
-          console.log(error, 'ERROR IN GETSPECIEBYID PLANTS FACTORY');
-      })
-    }
+  var getSpecieById = function (id){
+    return $http({
+      method: 'POST',
+      url: '/api/plants/loadSpecieInfoById',
+      data: id
+    }).then(function(response) {
+        console.log(response, 'SUCCESS IN GETSPECIEBYID PLANTS FACTORY');
+        return response;
+    }).catch(function(error) {
+        console.log(error, 'ERROR IN GETSPECIEBYID PLANTS FACTORY');
+    });
+  };
+
   return {
     addPlant: addPlant,
     addGarden: addGarden,
@@ -110,7 +112,8 @@ services.factory('Plants', ['$http', function($http){
     getUserGardens: getUserGardens,
     getGardenPlants: getGardenPlants,
     getSpecieById: getSpecieById
-  }
+  };
+
 }]);
 
 services.factory('Users', ['$http', function($http){
@@ -125,12 +128,13 @@ services.factory('Users', ['$http', function($http){
       return response.config.data;
     }).catch(function(error) {
       console.log('ERROR FOR ADDUSER', error);
-    })
+    });
   };
 
   return {
     addUser: addUser
-  }
+  };
+
 }]);
 
 //populate once we have our cookie (and once our cookies are figured out)
@@ -170,6 +174,6 @@ services.factory('ProfileInfo', ['$http', function($http){
     setProfile: setProfile,
   // Below is for MVP testing purposes
     profile: profile
-  }
+  };
 
 }]);

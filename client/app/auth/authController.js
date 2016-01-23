@@ -1,5 +1,3 @@
-//[refactor] added auth0 login and logout functions in authController.js
-
 var auth = angular.module('auth', []);
 auth.controller('authController', ['$scope', 'Users', 'auth', 'store', '$location', function($scope, Users, auth, store, $location){
 
@@ -27,7 +25,7 @@ auth.controller('authController', ['$scope', 'Users', 'auth', 'store', '$locatio
           location: [$scope.formData.longitude, $scope.formData.latitude],
           userPic: $scope.formData.userPic,
           // htmlverified: $scope.formData.htmlverified,
-      }
+      };
       
       Users.addUser(userData);
       
@@ -42,12 +40,12 @@ auth.controller('authController', ['$scope', 'Users', 'auth', 'store', '$locatio
 
     $scope.login = function () {
       auth.signin({}, function (profile, token) {
-        console.log('THIS IS AUTHCONTROLLER GOOGLE LOGIN', profile)
+        console.log('THIS IS AUTHCONTROLLER GOOGLE LOGIN', profile);
         store.set('profile', profile);
         store.set('token', token);
         $location.path('/');
       }, function (error) {
-        console.log('THIS IS AUTHCONTROLLER GOOGLE ERROR', error)
+        console.log('THIS IS AUTHCONTROLLER GOOGLE ERROR', error);
         });
     };
 
@@ -55,16 +53,10 @@ auth.controller('authController', ['$scope', 'Users', 'auth', 'store', '$locatio
       auth.signout();
       store.remove('profile');
       store.remove('token');
-    }
+    };
 
     function UserInfoCtrl($scope, auth) {
       $scope.auth = auth;
     }
-
-
-
-
-
-
 
 }]);
