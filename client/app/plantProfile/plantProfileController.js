@@ -5,8 +5,8 @@ plantProfile.controller('plantProfileController',['$scope', 'Plants', '$state','
     $scope.data.generalPlantInfo;
     console.log($scope.data.nickname, 'NICKNAME') //TODO: Make sure this is what we want
     $scope.data.specificPlantInfo;
-    $scope.data.generalPlantInfo;
-    $scope.data.botanicalName = $state.params.botanicalName;
+    // $scope.data.generalPlantInfo;
+    $scope.data.botanicalName;
     $scope.data.id;
     // $scope.data.commonName ;
 
@@ -15,8 +15,8 @@ plantProfile.controller('plantProfileController',['$scope', 'Plants', '$state','
       console.log($scope.data.botanicalName, 'oh hello ')
       Plants.getPlant($scope.data)
         .then(function(getPlantData) {
-          // console.log(getPlantData.data.idOfSpecies, 'TODO GET WHAT YOU NEED FROM THE DATA GETPLANT');
-          $scope.data.id = getPlantData.data.idOfSpecies;
+          console.log(getPlantData, 'TODO GET WHAT YOU NEED FROM THE DATA GETPLANT');
+          // $scope.data.id = getPlantData.data.idOfSpecies;
           $scope.getSpecieInfoOfPlant();
 
         })
@@ -30,7 +30,10 @@ plantProfile.controller('plantProfileController',['$scope', 'Plants', '$state','
       Plants.getSpecieById($scope.data)
         .then(function(getSpecieInfoOfPlantdata) {
           console.log(getSpecieInfoOfPlantdata, '#@@#TODO GET WHAT YOU NEED FROM THE DATA GETSPECIEINFOOFPLANT');
-          $scope.data.generalPlantInfo = getSpecieInfoOfPlantdata;
+          // TODO returns the appropriate data, but figure out best way to display itt
+          // $scope.data.generalPlantInfo = getSpecieInfoOfPlantdata;
+          // $scope.data.botanicalName = getSpecieInfoOfPlantdata.data.botanicalName;
+
         })
         .catch(function(error) {
           console.log(error, 'ERROR IN GETSPECIEINFOOFPLANT CONTROLLER');
