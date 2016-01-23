@@ -2,7 +2,7 @@ var dashboard = angular.module('dashboard', []);
 dashboard.controller('dashboardController', ['$scope', 'Plants', 'ProfileInfo', function($scope, Plants, ProfileInfo){
   $scope.data = {};
   $scope.data.username = ProfileInfo.profile.username;
-  $scope.data.plants;
+  $scope.data.plants = [];
   $scope.totalFlowers = 0;
   $scope.totalHousePlants = 0;
   $scope.totalFruits = 0;
@@ -23,13 +23,13 @@ dashboard.controller('dashboardController', ['$scope', 'Plants', 'ProfileInfo', 
           .catch(function(error) {
             console.log(error, 'ERROR IN GETSPECIESINFO CONTROLLER');
           });
-  }
+  };
 
   $scope.getAllPlantsSpeciesInfo = function(array) {
     for(var i = 0; i < array.length; i++) {
       $scope.getSpecieInfo(i, array[i]);
     }    
-  }
+  };
   
   $scope.getUserPlants = function(){
     Plants.getUsersPlants($scope.data)
@@ -41,35 +41,34 @@ dashboard.controller('dashboardController', ['$scope', 'Plants', 'ProfileInfo', 
           .catch(function(error) {
             console.log(error, 'ERROR IN GETUSERPLANTS CONTROLLER');
           });
-  }
+  };
 
   $scope.getPlantStats = function(){
     for(var i = 0; i < $scope.data.plants.length; i++) {
       var curSpeciesType = $scope.data.plants[i].speciesInfo;
-      console.log('This is the species type: ', curSpeciesType.typeOf);
-      if(curSpeciesType.typeOf === 'Flowers') {
+      if(curSpeciesType.typeOf === 'Flower') {
         $scope.totalFlowers++;
       }
       if (curSpeciesType.typeOf === 'Houseplant') {
         $scope.totalHousePlants++;
       } 
-      if (curSpeciesType.typeOf === 'Fruits') {
+      if (curSpeciesType.typeOf === 'Fruit') {
         $scope.totalFruits++;
       } 
-      if (curSpeciesType.typeOf === 'Vegetables') { 
+      if (curSpeciesType.typeOf === 'Vegetable') { 
         $scope.totalVegetables++;
       } 
-      if (curSpeciesType.typeOf === 'Herbs') {
+      if (curSpeciesType.typeOf === 'Herb') {
         $scope.totalHerbs++;
       } 
-      if (curSpeciesType.typeOf === 'Shrubs') {
+      if (curSpeciesType.typeOf === 'Shrub') {
         $scope.totalShrubs++;
       } 
     }
     $scope.total_Flowers_HousePlant = $scope.totalFlowers + $scope.totalHousePlants;
     $scope.total_Fruits_Vegetables = $scope.totalFruits + $scope.totalVegetables;
     $scope.total_Herbs_Shrubs = $scope.totalHerbs + $scope.totalShrubs;
-  }
+  };
 
   // immediately calls this function when controller loads
   $scope.getUserPlants();
