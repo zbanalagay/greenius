@@ -3,12 +3,12 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
   $scope.data = {};
   // $scope.data.username = $state.params.username;
   // make sure to do state.go
-  $scope.data.usersGardenArray = [];
   $scope.data.username = ProfileInfo.profile.username;
   $scope.data.gardenName = '';
   $scope.data.nickname;
-
+  $scope.gardenArray=[];
   // $scope.data.plants;
+  $scope.count = 0;
 
   var changeState = function (plant){
     $state.go('plantProfile', {nickname: plant});
@@ -26,6 +26,7 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
         .then(function(results) {
           console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
           $scope.resultPlants = results;
+          $scope.count++;
         })
         .catch(function(error) {
           console.log(error, 'ERROR IN getSpecifcGardenPlants CONTROLLER');
@@ -33,6 +34,21 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
     }
   };
 
+  $scope.getUsersGardens = function(){
+    Plants.getUserGardens($scope.data)
+      .then(function(results) {
+        console.log(results, 'SUCCES IN GETUSERSGARDENS CONTROLLER');
+        for(var i = 0; i< results.length; i++){
+          var temp = results[i].gardenName;
+          if($scope.gardenArray.indexOf(temp)===-1){
+            $scope.gardenArray.push(temp);
+          }
+        }
+      })
+      .catch(function(error) {
+        console.log(error, 'ERROR IN GETUSERSGARDENS CONTROLLER');
+      })
+  }
 
   $scope.getUserPlants = function(){
     var tempArray = [];
@@ -43,7 +59,6 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
             for(var i = 0 ; i < results.data.length; i++){
               var obj = {};
               obj.nickname = results.data[i].nickname;
-              console.log(obj, "OH HAY")
               tempArray.push(obj);
             }
             $scope.resultPlants = tempArray;
@@ -56,7 +71,7 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
 
   // immediately calls this function when controller loads
  $scope.getUserPlants();
-
+  $scope.getUsersGardens();
 
  //TODO show all the users Plants, but then be able to filter by garden (dropdown)
 
