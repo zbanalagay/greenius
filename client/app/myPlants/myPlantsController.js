@@ -6,6 +6,7 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
   $scope.data.usersGardenArray = [];
   $scope.data.username = ProfileInfo.profile.username;
   $scope.data.gardenName = '';
+  $scope.data.nickname;
 
   // $scope.data.plants;
 
@@ -14,6 +15,7 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
   };
 
   $scope.goToPlant = function(){
+    // console.log($scope.data.nickname, "IWEJIJOWROJEIRWEOIRJWEOJ#@")
     changeState($scope.data.nickname);
   };
 
