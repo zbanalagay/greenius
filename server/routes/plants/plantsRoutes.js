@@ -8,4 +8,5 @@ module.exports = function(app) {
  app.post('/loadPlantInfo', plantsHandler.getPlant);
  app.post('/loadUserGardens', plantsHandler.getUserGardens);
  app.post('/loadGardenPlants', plantsHandler.getGardenPlants);
+ app.post('/loadSpecieInfoById', plantsHandler.getSpecieInfoById);
 };

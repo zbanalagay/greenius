@@ -235,7 +235,7 @@ var helpers = {
      where : {nickname: plant.nickname}
     })
     .then(function(plantResult) {
-         if(!userResult) {
+         if(!plantResult) {
             throw ERROR ('Plant nickname does not exist');
         }
         console.log ('Plant exists: ' , plantResult);
@@ -347,6 +347,22 @@ var helpers = {
     })
   },
 
+  // specieId is an object with an id key
+  getSpecieInfoById : function(specieId){
+    return db.SpeciesInfos.findOne({
+      where: {id: specieId.id}
+    })
+    .then(function(specieResult) {
+      if(!specieResult) {
+        throw Error('Specie does not exist');
+      }
+      console.log(specieResult, "HEWOWERREIOROWIEURIOWE902$)(#$U)(#)")
+      return specieResult;
+    })
+    .catch(function(error) {
+      console.log('Error, retrieving species', error);
+    })
+  },
   // user is an object with username
   getGardensFromUser : function(user) {
     //Check for username in Users table

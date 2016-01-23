@@ -6,10 +6,15 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
   $scope.data.usersGardenArray = [];
   $scope.data.username = ProfileInfo.profile.username;
   $scope.data.gardenName = '';
+
   // $scope.data.plants;
 
-  $scope.goToPlant = function(plant){
+  var changeState = function (plant){
     $state.go('plantProfile', {nickname: plant});
+  };
+
+  $scope.goToPlant = function(){
+    changeState($scope.data.nickname);
   };
 
   $scope.getSpecifcGardenPlants= function(){
@@ -17,7 +22,7 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
       Plants.getGardenPlants($scope.data)
         .then(function(results) {
           console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
-          $scope.data.resultPlants = results;
+          $scope.resultPlants = results;
         })
         .catch(function(error) {
           console.log(error, 'ERROR IN getSpecifcGardenPlants CONTROLLER');
@@ -27,11 +32,17 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
 
 
   $scope.getUserPlants = function(){
+    var tempArray = [];
     console.log($scope.data, "GETETETETTET")
     Plants.getUsersPlants($scope.data)
           .then(function(results) {
-            console.log(results, 'SUCCESS IN GETUSERPLANTS CONTROLLER');
-            $scope.data.resultPlants = results;
+            console.log(results.data, 'SUCCESS IN GETUSERPLANTS CONTROLLER');
+            for(var i = 0 ; i < results.data.length; i++){
+              var plant = results.data[i];
+              tempArray.push(plant.nickname);
+            }
+            $scope.resultPlants = tempArray;
+
           })
           .catch(function(error) {
             console.log(error, 'ERROR IN GETUSERPLANTS CONTROLLER');
