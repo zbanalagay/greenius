@@ -7,9 +7,9 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/addPlants',
       data: plant
     }).then(function(response) {
-        console.log(response, 'SUCCESS ADDPLANT PLANTS FACTORY');
+        // console.log(response);
     }).catch(function(error) {
-        console.log(error, 'ERROR IN ADDPLANT FACTORY');
+        console.log(error);
     });
   };
 
@@ -19,9 +19,9 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/addGarden',
       data: garden
     }).then(function(response) {
-        console.log(response, 'SUCCESS ADDGARDEN PLANTS FACTORY');
+        // console.log(response);
     }).catch(function(error) {
-        console.log(error, 'ERROR IN ADDGARDEN FACTORY');
+        console.log(error);
     });
   };
 
@@ -31,10 +31,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadPlants',
       data: user
     }).then(function(response) {
-        console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY');
+        // console.log(response, 'SUCCESS GETUSERSPLANTS PLANTS FACTORY');
         return response;
     }).catch(function(error) {
-        console.log(error, 'ERROR IN GETUSERSPLANTS FACTORY');
+        console.log(error);
     });
   };
 
@@ -44,10 +44,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadSpecieInfo',
       data: plant
     }).then(function(response) {
-        console.log(response.data,'SUCCESS GETSPECIEINFO PLANTS FACTORY');
-        return response.data; //TODO: find what we need on the response.data
+        // console.log(response.data,'SUCCESS GETSPECIEINFO PLANTS FACTORY');
+        return response.data;
     }).catch(function(error) {
-        console.log(error, 'ERROR IN GETSPECIEINFO FACTORY');
+        console.log(error);
     });
   };
 
@@ -57,10 +57,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadPlantInfo',
       data: plant
     }).then(function(response) {
-        console.log(response, 'SUCCESS GETPLANT PLANTS FACTORY');
-        return response; //TODO: find what we need on the response.data
+        // console.log(response, 'SUCCESS GETPLANT PLANTS FACTORY');
+        return response;
     }).catch(function(error) {
-        console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
+        console.log(error);
     });
   };
 
@@ -70,10 +70,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadUserGardens',
       data: user
     }).then(function(response) {
-      console.log(response.data, 'SUCCESS GETUSERGARDENS PLANTS FACTORY');
-      return response.data; //TODO: find what we need on the response.data
+      // console.log(response.data, 'SUCCESS GETUSERGARDENS PLANTS FACTORY');
+      return response.data;
     }).catch(function(error) {
-        console.log(error, 'ERROR IN GETPLANT PLANTS FACTORY');
+        console.log(error);
     });
   };
 
@@ -83,10 +83,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadGardenPlants',
       data: garden
     }).then(function(response) {
-        console.log(response, 'SUCCESS GETGARDENPLANTS PLANTS FACTORY');
-        return response.data; //TODO: find what we need on the response.data
+        // console.log(response, 'SUCCESS GETGARDENPLANTS PLANTS FACTORY');
+        return response.data;
     }).catch(function(error) {
-        console.log(error, 'ERROR IN GETGARDENPLANTS PLANTS FACTORY');
+        console.log(error);
     });
   };
 
@@ -96,10 +96,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadSpecieInfoById',
       data: id
     }).then(function(response) {
-        console.log(response, 'SUCCESS IN GETSPECIEBYID PLANTS FACTORY');
+        // console.log(response, 'SUCCESS IN GETSPECIEBYID PLANTS FACTORY');
         return response;
     }).catch(function(error) {
-        console.log(error, 'ERROR IN GETSPECIEBYID PLANTS FACTORY');
+        console.log(error);
     });
   };
 

@@ -31,7 +31,7 @@ plantProfile.controller('plantProfileController',['$scope', 'Plants', '$state','
           $scope.data.typeOf = results.data.typeOf;
         })
         .catch(function(error) {
-          console.log(error, 'ERROR IN GETSPECIEINFOOFPLANT CONTROLLER');
+          console.log(error);
         })
     };
 

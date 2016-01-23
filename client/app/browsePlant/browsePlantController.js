@@ -141,8 +141,12 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
             $scope.specificPlantInfoPrompts();
             $scope.userChoseGarden();
             $scope.userWantsToAddPlant();
+            $scope.getExistingGardens();
             $scope.plantsInGardenTracker();
             $scope.data.botanicalName = '';
+            $scope.data.commonName = '';
+            $scope.data.nickname = '';
+            $scope.data.plantDate = '';
           })
           .catch(function(error) {
             console.log(error);
