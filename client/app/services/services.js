@@ -89,6 +89,18 @@ services.factory('Plants', ['$http', function($http){
     })
   };
 
+    var getSpecieById = function (id){
+      return $http({
+        method: 'POST',
+        url: '/api/plants/loadSpecieInfoById',
+        data: id
+      }).then(function(response) {
+          console.log(response, 'SUCCESS IN GETSPECIEBYID PLANTS FACTORY');
+          return response;
+      }).catch(function(error) {
+          console.log(error, 'ERROR IN GETSPECIEBYID PLANTS FACTORY');
+      })
+    }
   return {
     addPlant: addPlant,
     addGarden: addGarden,
@@ -96,7 +108,8 @@ services.factory('Plants', ['$http', function($http){
     getSpecieInfo: getSpecieInfo,
     getPlant: getPlant,
     getUserGardens: getUserGardens,
-    getGardenPlants: getGardenPlants
+    getGardenPlants: getGardenPlants,
+    getSpecieById: getSpecieById
   }
 }]);
 
@@ -143,9 +156,12 @@ services.factory('ProfileInfo', ['$http', function($http){
 
   var getProfile = function() {
     // TODO: FINISH THIS
+    return profile;
   };
 
-  var setProfile = function() {
+  var setProfile = function(key, value) {
+    profile[key] = value;
+    return profile;
     // TODO: FINISH THIS
   };
 
