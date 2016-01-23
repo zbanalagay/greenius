@@ -1,6 +1,4 @@
-<div class="container-fluid">
-  <div class="row">
-  	<div class="container-fluid" ng-controller="authController">
+<div class="container-fluid" ng-controller="authController">
   <div class="row">
 
     <div class="panel panel-default">
@@ -53,7 +51,22 @@
         </div>
     </div>
 
-  </div>
-</div>
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h2 class="panel-title text-center">DELETE USER</h2>
+        </div>
+        <div class="panel-body">
+            <form name="addForm" novalidate>
+                <div class="form-group">
+                    <label for="username">Username to delete </label>
+                    <input type="text" class="form-control" id="username" placeholder="DELETEME" ng-model="formData.deleteUsername" required>
+                </div>
+
+                <button type="submit" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-disabled="addForm.$invalid">Submit</button>
+
+            </form>
+        </div>
+    </div>
+
   </div>
 </div>
