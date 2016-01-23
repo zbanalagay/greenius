@@ -2,6 +2,10 @@ module.exports = function(config) {
   config.set({
     browsers: ['Chrome'],
     frameworks: ['jasmine'],
+    plugins: [
+      'karma-jasmine',
+      'karma-chrome-launcher'
+    ],
     //list of files to load in browser, pay attn to order
     files: [
       //source files
@@ -12,21 +16,24 @@ module.exports = function(config) {
       './client/lib/angular-ui-router/release/angular-ui-router.min.js',
       './client/lib/jquery/dist/jquery.min.js',
       './client/lib/bootstrap/dist/js/bootstrap.min.js',
+      // './node_modules/requirejs/require.js',
+      // './node_modules/karma-requirejs/lib/adapter.js',
+      './node_modules/sequelize/lib/sequelize.js',
+
+
+
 
       //app code
-      './client/app/**/*.js',
+      './client/**/**/*.js',
+      './server/db/*.js',
 
       //spec files
-      './spec/*.js'
+      './spec/specs.js'
     ],
 
 
     /*
     port: 3000,
-    
-    plugins: [
-
-    ],
     preprocessors: {
 
     },
