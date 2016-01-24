@@ -2,7 +2,22 @@ var db = require('./sequelize.js');
 
 var helpers = {
 
-  //user is an object with keys: username, password, email, location, userPic, nickname
+
+  //adding deleteUser, deletePlant, deleteGarden
+  deleteUser : function(userData) {
+  return db.Users.destroy({
+   where: {username: userData.username} 
+  })
+  .then(function(userResult) {
+    if(!userResult){
+      throw Error('username not doesnt exist! cant be deleted')
+    }
+  })
+  .catch(function(error) {
+    console.log('Error adding user to the database', error);
+  })
+  },
+
   addUser : function(user) {
     // Check for commonName in Users table
     return db.Users.findOne({

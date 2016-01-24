@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var app = express();
 var helper = require('./../../db/helpers.js');
@@ -16,5 +18,23 @@ module.exports = {
 			      res.status(404);
 			      res.send(error);
 			  })
+	},
+
+	deleteUser: function(req, res){
+		console.log('GEGEGEGEGEGEGE', req.body);
+		var userData = req.body;
+		helper.deleteUser(userData)
+			.then(function(results) {
+				res.status(200);
+				res.send(results);
+			})
+			.catch(function(error) {
+				console.log(error, 'ERROR GEGEGEGEGEG');
+				res.status(404);
+				res.send(error);
+			})
+
 	}
+
+
 };

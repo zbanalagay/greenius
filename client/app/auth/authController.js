@@ -59,4 +59,12 @@ auth.controller('authController', ['$scope', 'Users', 'auth', 'store', '$locatio
       $scope.auth = auth;
     }
 
+
+    $scope.deleteUser = function() {
+      var deleteUserData = {
+        username: $scope.formData.deleteUsername
+      }
+      Users.deleteUser(deleteUserData);
+    };
+
 }]);

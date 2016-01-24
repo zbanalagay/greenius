@@ -131,10 +131,24 @@ services.factory('Users', ['$http', function($http){
     });
   };
 
-  return {
-    addUser: addUser
+  var deleteUser = function(userObj) {
+    console.log('MEMEMMMEMMEMME')
+    return $http({
+      method: 'POST',
+      url: '/api/users/deleteUser',
+      data: userObj
+    }).then(function(response) {
+      return response;
+      console.log('KEKEKEKEKEKEKE', response);
+      return response.config.data;
+    }).catch(function(error) {
+      console.log('KEKEKKEKE', error);
+    })
   };
-
+  return {
+    addUser: addUser,
+    deleteUser: deleteUser
+  }
 }]);
 
 //populate once we have our cookie (and once our cookies are figured out)
