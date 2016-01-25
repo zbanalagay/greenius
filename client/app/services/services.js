@@ -131,20 +131,19 @@ services.factory('Users', ['$http', function($http){
     });
   };
 
-  var deleteUser = function(userObj) {
-    console.log('MEMEMMMEMMEMME')
+ var deleteUser = function(userObj) {
     return $http({
       method: 'POST',
       url: '/api/users/deleteUser',
       data: userObj
     }).then(function(response) {
-      return response;
-      console.log('KEKEKEKEKEKEKE', response);
+      console.log('SUCCESSFUL POST FOR DELETEUSER, services.js', response.config.data);
       return response.config.data;
     }).catch(function(error) {
-      console.log('KEKEKKEKE', error);
-    })
+      console.log('ERROR FOR DELETE USER, services.js', error);
+    });
   };
+
   return {
     addUser: addUser,
     deleteUser: deleteUser
