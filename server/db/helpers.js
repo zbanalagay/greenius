@@ -5,17 +5,18 @@ var helpers = {
 
   //adding deleteUser, deletePlant, deleteGarden
   deleteUser : function(userData) {
-  return db.Users.destroy({
-   where: {username: userData.username} 
-  })
-  .then(function(userResult) {
-    if(!userResult){
-      throw Error('username not doesnt exist! cant be deleted')
-    }
-  })
-  .catch(function(error) {
-    console.log('Error adding user to the database', error);
-  })
+    console.log('userData in helpers.js', userData)
+    return db.Users.destroy({
+     where: {username: userData.usernameDelete} 
+    })
+    .then(function(userResult) {
+      if(!userResult){
+        throw Error('username not doesnt exist! cant be deleted')
+      }
+    })
+    .catch(function(error) {
+      console.log('Error adding user to the database', error);
+    })
   },
 
   addUser : function(user) {

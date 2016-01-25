@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var app = express();
 var helper = require('./../../db/helpers.js');
@@ -20,8 +18,9 @@ module.exports = {
 			  })
 	},
 
+
 	deleteUser: function(req, res){
-		console.log('GEGEGEGEGEGEGE', req.body);
+		console.log('REQ.BODY FOR DELETEUSER IN usersHandler.js', req.body);
 		var userData = req.body;
 		helper.deleteUser(userData)
 			.then(function(results) {
@@ -29,12 +28,11 @@ module.exports = {
 				res.send(results);
 			})
 			.catch(function(error) {
-				console.log(error, 'ERROR GEGEGEGEGEG');
 				res.status(404);
 				res.send(error);
 			})
-
 	}
+
 
 
 };

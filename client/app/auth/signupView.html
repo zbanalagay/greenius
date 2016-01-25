@@ -59,7 +59,7 @@
             <form name="addForm" novalidate>
                 <div class="form-group">
                     <label for="username">Username to delete </label>
-                    <input type="text" class="form-control" id="username" placeholder="DELETEME" ng-model="formData.deleteUsername" required>
+                    <input type="text" class="form-control" id="username" placeholder="DELETEME" ng-model="formData.usernameDelete" required>
                 </div>
 
                 <button type="submit" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-disabled="addForm.$invalid">Submit</button>
