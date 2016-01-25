@@ -6,6 +6,7 @@ var main = angular.module('greeniusApp',
 	'auth',
 	'dashboard',
 	'myPlants',
+  'myGarden',
 	'plantProfile',
 	'services',
 	'ui.router']);
@@ -114,6 +115,15 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 				}
 			}
 		})
+    .state('myGarden', {
+      url: '/mygarden',
+      views: {
+        'indexPage': {
+          templateUrl: './app/myGarden/myGardenView.html',
+          controller: 'myGardenController'
+        }
+      }
+    })
 		.state('plantProfile', {
 			url: '/plantprofile/:nickname',
 			views: {
