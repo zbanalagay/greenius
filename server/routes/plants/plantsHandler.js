@@ -3,8 +3,22 @@ var app = express();
 var helper = require('./../../db/helpers.js');
 
 module.exports = {
+  deleteGarden: function(req, res){
+    console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEGARDEN');
+    var gardenData = req.body;
+    helper.deleteGarden(gardenData)
+      .then(function(results) {
+        console.log(results, 'SUCCESS INSIDE DELETE GARDEN');
+        res.status(200).send(results);
+      })
+      .catch(function(error) {
+        console.log(error, 'ERROR INSIDE DELETEGARDEN');
+        res.status(404).send(error);
+      })
+  },  
+
   deletePlant: function(req, res){
-     console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEPLANT');
+    console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEPLANT');
     var plantData = req.body;
     helper.deletePlant(plantData)
       .then(function(results) {
@@ -16,6 +30,7 @@ module.exports = {
         res.status(404).send(error);
       })
   },
+
 	 addPlants: function(req, res) {
 		 // console.log(req.body, 'THIS IS THE REQ.BODY INSIDE ADDPLANT');
 		 var plantData = req.body;

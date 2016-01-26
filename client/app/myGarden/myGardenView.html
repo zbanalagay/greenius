@@ -1,1 +1,20 @@
+<div class='container-fluid'>
+  <div class='row'>
+  	<div class="panel panel-danger">
+      <div class="panel-heading">
+          <h2 class="panel-title text-center">Delete Garden</h2>
+      </div>
+      <div class="panel-body">
+          <form name="addForm" novalidate>
+              <div class="form-group">
+                  <label for="garden">garden to delete </label>
+                  <input type="text" class="form-control" id="garden" placeholder="DELETEME" ng-model="data.gardenDelete" required>
+              </div>
 
+              <button type="submit" class="btn btn-danger btn-block" ng-click="deleteGarden()" ng-disabled="addForm.$invalid">Submit</button>
+
+          </form>
+      </div> 
+    </div>
+ </div>
+</div>

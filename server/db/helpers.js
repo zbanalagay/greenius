@@ -92,8 +92,22 @@ var helpers = {
     })
   },
 
+  deleteGarden: function(gardenData) {
+    return db.Gardens.destroy({
+      where: {gardenName : gardenData.gardenDelete}
+    })
+    .then(function(gardenResult) {
+      if(!gardenResult){
+        throw Error('Garden does not exist, cannot be deleted', error);
+      }
+      return gardenResult;
+    })
+    .catch(function(error) {
+      console.log('Error deleting garden', error);
+    })
+  },
+
   deletePlant: function(plantData) {
-    console.log('i made to the helpers')
     return db.Plants.destroy({
       where: {nickname: plantData.plantDelete}
     })

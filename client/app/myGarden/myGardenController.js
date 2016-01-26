@@ -56,6 +56,18 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
           });
   };
 
+  $scope.deleteGarden = function(){
+    if($scope.data.gardenDelete){
+      Plants.deleteGarden($scope.data)
+      .then(function(results) {
+        console.log(results, 'RESULTS IN DELETE GARDEN CONTROLLER');
+      })
+      .catch(function(error){
+        console.log(error, 'ERROR IN DELETE GARDEN CONTROLLER');
+      })
+    }
+  };
+
   $scope.getUserPlants();
   $scope.getUsersGardens();
   $scope.getSpecifcGardenPlants();
