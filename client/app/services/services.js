@@ -1,6 +1,19 @@
 var services = angular.module('services', []);
 services.factory('Plants', ['$http', function($http){
 
+  var deletePlant = function(plant) {
+    return $http({
+      method: 'POST',
+      url: '/api/plants/deletePlant',
+      data: plant
+    }).then(function(response) {
+      console.log('RESPONSE IN DELETE PLANT FACTORY', response)
+      return response;
+    }).catch(function(error) {
+      console.log(error, 'ERROR IN DELETE PLANT FACTORY');
+    })
+  };
+
   var addPlant = function(plant) {
     return $http({
       method: 'POST',
@@ -111,7 +124,8 @@ services.factory('Plants', ['$http', function($http){
     getPlant: getPlant,
     getUserGardens: getUserGardens,
     getGardenPlants: getGardenPlants,
-    getSpecieById: getSpecieById
+    getSpecieById: getSpecieById,
+    deletePlant: deletePlant
   };
 
 }]);
