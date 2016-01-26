@@ -9,4 +9,5 @@ module.exports = function(app) {
  app.post('/loadUserGardens', plantsHandler.getUserGardens);
  app.post('/loadGardenPlants', plantsHandler.getGardenPlants);
  app.post('/loadSpecieInfoById', plantsHandler.getSpecieInfoById);
+ app.post('/deletePlant', plantsHandler.deletePlant);
 };
