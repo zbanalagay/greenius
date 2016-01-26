@@ -10,8 +10,8 @@ module.exports = function(app, express){
 	var plantsRouter = express.Router();
 	var usersRouter = express.Router();
 
-	app.use('/api/plants',authenticate, plantsRouter);
-	app.use('/api/users', authenticate, usersRouter);
+	app.use('/api/plants', plantsRouter);
+	app.use('/api/users', usersRouter);
 
 	require('./../routes/plants/plantsRoutes.js')(plantsRouter);
 	require('./../routes/users/usersRoutes.js')(usersRouter);
