@@ -4,7 +4,7 @@ var helper = require('./../../db/helpers.js');
 
 module.exports = {
   deleteGarden: function(req, res){
-    console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEGARDEN');
+    // console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEGARDEN');
     var gardenData = req.body;
     helper.deleteGarden(gardenData)
       .then(function(results) {
@@ -18,7 +18,7 @@ module.exports = {
   },  
 
   deletePlant: function(req, res){
-    console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEPLANT');
+    // console.log(req.body, 'THIS IS THE REQ.BODY INSIDE DELETEPLANT');
     var plantData = req.body;
     helper.deletePlant(plantData)
       .then(function(results) {

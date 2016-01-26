@@ -96,7 +96,7 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/loadUserGardens',
       data: user
     }).then(function(response) {
-      // console.log(response.data, 'SUCCESS GETUSERGARDENS PLANTS FACTORY');
+      console.log(response.data, 'SUCCESS GETUSERGARDENS PLANTS FACTORY');
       return response.data;
     }).catch(function(error) {
         console.log(error);
