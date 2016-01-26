@@ -6,12 +6,11 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">List of {{list.label}} </h3>
                 </div>
-    <ul dnd-list="list.people">
-
-        <li ng-repeat="plant in list.people"
+    <ul dnd-list="list.plants">
+        <li ng-repeat="plant in list.plants"
             dnd-draggable="plant"
             dnd-type="plant.type"
-            dnd-moved="list.people.splice($index, 1)"
+            dnd-moved="list.plants.splice($index, 1)"
             dnd-effect-allowed="move"
             class="background-{{plant.type}}"
             >
@@ -20,12 +19,8 @@
                 <input type="text" ng-model="plant.name" class="background-{{plant.name}} form-control input-sm">
             </div>
         </li>
-
-
     </ul>
-            </div>
         </div>
-
     </div>
 </div>
 
