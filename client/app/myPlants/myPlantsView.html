@@ -13,4 +13,21 @@
       <a  ng-click= 'goToPlant(plant.nickname)'>{{plant.nickname}}</a>
     </div>
   </div>
+  <div class = 'row'>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+          <h2 class="panel-title text-center">Delete Plant</h2>
+      </div>
+      <div class="panel-body">
+          <form name="addForm" novalidate>
+              <div class="form-group">
+                  <label for="plant">plant to delete </label>
+                  <input type="text" class="form-control" id="plant" placeholder="DELETEME" ng-model="data.plantDelete" required>
+              </div>
+
+              <button type="submit" class="btn btn-danger btn-block" ng-click="deletePlant()" ng-disabled="addForm.$invalid">Submit</button>
+
+          </form>
+      </div> 
+  </div>
 </div>
