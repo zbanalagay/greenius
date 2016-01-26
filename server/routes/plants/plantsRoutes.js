@@ -10,4 +10,5 @@ module.exports = function(app) {
  app.post('/loadGardenPlants', plantsHandler.getGardenPlants);
  app.post('/loadSpecieInfoById', plantsHandler.getSpecieInfoById);
  app.post('/deletePlant', plantsHandler.deletePlant);
+ app.post('/deleteGarden', plantsHandler.deleteGarden);
 };
