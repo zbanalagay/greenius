@@ -92,6 +92,24 @@ var helpers = {
     })
   },
 
+  deletePlant: function(plantData) {
+    console.log('i made to the helpers')
+    return db.Plants.destroy({
+      where: {nickname: plantData.plantDelete}
+    })
+    .then(function(plantResult) {
+      if(!plantResult){
+        throw Error('Plant does not exist, cannot be deleted', error);
+      }
+      console.log(plantResult, 'RESULT INSIDE DELETE PLANT HELPER')
+      return plantResult;
+    })
+    .catch(function(error) {
+      console.log('Error deleting plant from database', error)
+    })
+  },
+
+
   //garden is an object with gardenName
   addGarden : function(garden) {
     //Check for gardenName in Gardens table
