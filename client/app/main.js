@@ -2,6 +2,8 @@ var main = angular.module('greeniusApp',
 	['auth0', 
 	'angular-storage', 
 	'angular-jwt',
+	'landingPage',
+	'navbar',
 	'browsePlant',
 	'auth',
 	'dashboard',
@@ -55,18 +57,27 @@ main.config(function (authProvider) {
 //   // ...
 // });
 
-
-
 main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider){
-	$urlRouterProvider.otherwise('dashboard');
+	$urlRouterProvider.otherwise('landingPage');
 
 	$stateProvider
+		.state('landingPage', {
+			url: '/landingPage',
+			views: {
+				'indexPage': {
+					templateUrl: './app/landingPage/landingPageView.html',
+					controller: 'landingPageController',
+					controllerAs: 'ldp'
+				}
+			}
+		})
 		.state('login', {
 			url: '/login',
 			views: {
 				'indexPage': {
 					templateUrl: './app/auth/loginView.html',
-					controller: 'authController'
+					controller: 'authController',
+					controllerAs: 'lgp'
 				}
 			}
 		})
@@ -75,7 +86,8 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			views: {
 				'indexPage': {
 					templateUrl: './app/auth/signupView.html',
-					controller: 'authController'
+					controller: 'authController',
+					controllerAs: 'sup'
 				}
 			}
 		})
@@ -83,56 +95,73 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/logout',
 			views: {
 				'indexPage': {
-					templateUrl: './app/auth/signupView.html',
-					controller: 'authController'
+					templateUrl: './app/landingPage/landingPageView.html',
+					controller: 'landingPageController',
+					controllerAs: 'ltp'
 				}
 			}
 		})
-		.state('browsePlant', {
-			url: '/browseplant',
+		.state('navbar', {
+			url: '/navbar',
 			views: {
 				'indexPage': {
-					templateUrl: './app/browsePlant/browsePlantView.html',
-					controller: 'browsePlantController'
+					templateUrl: './app/navbar/navbarView.html',
+					controller: 'navbarController',
+					controllerAs: 'nvp'
 				}
 			}
 		})
-		.state('dashboard', {
+		.state('navbar.dashboard', {
 			url: '/dashboard',
 			views: {
-				'indexPage': {
+				'subView': {
 					templateUrl: './app/dashboard/dashboardView.html',
-					controller: 'dashboardController'
-				}
+					controller: 'dashboardController',
+					controllerAs: 'dbp'
+				}	
 			}
 		})
-		.state('myPlants', {
+		.state('navbar.browsePlant', {
+			url: '/browseplant',
+			views: {
+				'subView': {
+					templateUrl: './app/browsePlant/browsePlantView.html',
+					controller: 'browsePlantController',
+					controllerAs: 'bpp'
+				}	
+			}
+		})
+		.state('navbar.myPlants', {
 			url: '/myplants',
 			views: {
-				'indexPage': {
+				'subView': {
 					templateUrl: './app/myPlants/myPlantsView.html',
-					controller: 'myPlantsController'
-				}
+					controller: 'myPlantsController',
+					controllerAs: 'mpp'
+				}	
 			}
 		})
-    .state('myGarden', {
+    .state('navbar.myGarden', {
       url: '/mygarden',
       views: {
-        'indexPage': {
+				'subView': {      	
           templateUrl: './app/myGarden/myGardenView.html',
-          controller: 'myGardenController'
-        }
+          controller: 'myGardenController',
+          controllerAs: 'mgp'
+        }  
       }
     })
-		.state('plantProfile', {
+		.state('navbar.plantProfile', {
 			url: '/plantprofile/:nickname',
 			views: {
-				'indexPage': {
+				'subView': {				
 					templateUrl: './app/plantProfile/plantProfileView.html',
-					controller: 'plantProfileController'
-				}
+					controller: 'plantProfileController',
+					controllerAs: 'ppp'
+				}	
 			}
 		});
+
 }]);
 
 
