@@ -1,17 +1,7 @@
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var utils = require('./utils.js');
-var jwt = require('express-jwt');
-
-var CLIENT_SECRET = process.env.CLIENT_SECRET || 'kOz_1h4y3KBLguvKsMweGHes_AppueMCuIprGoNHj0l1-f47KLLyot-OLhPnpqUA';
-var CLIENT_ID = process.env.CLIENT_ID || '909iKBxjdoJbblSUwtwFKFwfkqZss09d';
 
 module.exports = function(app, express){
-
-	var authenticate = jwt({
-  	secret: new Buffer( CLIENT_SECRET, 'base64'),
-  	audience: CLIENT_ID
-	});
 
 	app.use(morgan('dev'));
 	app.use(bodyParser.json());
@@ -25,6 +15,5 @@ module.exports = function(app, express){
 
 	require('./../routes/plants/plantsRoutes.js')(plantsRouter);
 	require('./../routes/users/usersRoutes.js')(usersRouter);
-
 
 };
