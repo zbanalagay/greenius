@@ -62,6 +62,7 @@ browsePlant.controller('browsePlantController', ['$scope', 'Plants','ProfileInfo
           })
           .catch(function(err) {
             console.log(err);
+            alert('Plant not found');
           })
       }
     };
