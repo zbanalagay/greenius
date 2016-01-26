@@ -7,9 +7,22 @@ myPlants.controller('myPlantsController', ['$scope', 'Plants', '$state', 'Profil
   $scope.data.nickname;
   $scope.gardenArray=[];
   $scope.count = 0;
+  $scope.data.plantDelete = '';
 
   var changeState = function (plant){
     $state.go('plantProfile', {nickname: plant});
+  };
+
+  $scope.deletePlant = function(){
+    if($scope.data.plantDelete){
+      Plants.deletePlant($scope.data)
+        .then(function(results){
+          console.log(results, 'RESULTS IN DELETE PLANT CONTROLLER');
+        })
+        .catch(function(error){
+          console.log(error, 'ERROR IN DELETE PLANT CONTROLLER');
+        })
+    }
   };
 
   $scope.goToPlant = function(name){
