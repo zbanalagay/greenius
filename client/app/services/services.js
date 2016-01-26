@@ -14,6 +14,19 @@ services.factory('Plants', ['$http', function($http){
     })
   };
 
+  var deleteGarden = function(garden){
+    return $http({
+      method: 'POST',
+      url: '/api/plants/deleteGarden',
+      data: garden
+    }).then(function(response) {
+      console.log('RESPONSE IN DELETE GARDEN FACTORY', response)
+      return response;
+    }).catch(function(error) {
+      console.log(error, 'ERROR IN DELETE GARDEN PLANT FACTORY');
+    })
+  };
+
   var addPlant = function(plant) {
     return $http({
       method: 'POST',
@@ -125,7 +138,8 @@ services.factory('Plants', ['$http', function($http){
     getUserGardens: getUserGardens,
     getGardenPlants: getGardenPlants,
     getSpecieById: getSpecieById,
-    deletePlant: deletePlant
+    deletePlant: deletePlant,
+    deleteGarden: deleteGarden
   };
 
 }]);
