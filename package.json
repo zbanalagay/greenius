@@ -4,7 +4,7 @@
   "description": "A smarter way to plant.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "karma start",
     "start": "server/server.js",
     "postinstall": "bower install"
   },
