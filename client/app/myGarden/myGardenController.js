@@ -13,27 +13,16 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
       {
           label: "To Plant",
           plants: [
-              {name: "Flower"},
-              {name: "Shrub"},
-              {name: "Tree"}
           ]
       },
       {
           label: "Garden 1",
           plants: [
-              {name: "Tree"},
-              {name: "Bush"},
-              {name: "Flower"}
           ]
       },
       {
           label: "Garden 2",
           plants: [
-              {name: "Grass"},
-              {name: "Tree"},
-              {name: "Shrub"},
-              {name: "Flower"},
-              {name: "Berry"}
           ]
       }
   ];
@@ -42,6 +31,7 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     if($scope.data.gardenName){
       Plants.getGardenPlants($scope.data)
         .then(function(results) {
+          console.log('hi')
           // console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
           $scope.resultPlants = results;
           $scope.count++;
@@ -52,16 +42,19 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     }
   };
 
+
   $scope.getUsersGardens = function(){
     Plants.getUserGardens($scope.data)
       .then(function(results) {
-        // console.log(results, 'SUCCES IN GETUSERSGARDENS CONTROLLER');
         for(var i = 0; i< results.length; i++){
           var temp = results[i].gardenName;
           if($scope.gardenArray.indexOf(temp)===-1){
             $scope.gardenArray.push(temp);
           }
         }
+
+        $scope.formatGardenForSandbox();
+
       })
       .catch(function(error) {
         console.log(error);
@@ -95,6 +88,12 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
         console.log(error, 'ERROR IN DELETE GARDEN CONTROLLER');
       })
     }
+  };
+
+  $scope.formatGardenForSandbox = function(){
+     $scope.resultPlants.forEach(function(element){
+        $scope.lists[0].plants.push({name: element.nickname})
+      })
   };
 
   $scope.getUserPlants();
