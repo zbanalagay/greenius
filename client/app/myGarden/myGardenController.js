@@ -20,7 +20,6 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     if($scope.data.gardenName){
       Plants.getGardenPlants($scope.data)
         .then(function(results) {
-          console.log('hi')
           // console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
           $scope.resultPlants = results;
           $scope.count++;
