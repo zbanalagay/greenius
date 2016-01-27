@@ -46,7 +46,7 @@ main.config(function (authProvider) {
 
 // //jwt security
 
-main.config(function (authProvider, $routeProvider, $httpProvider, jwtInterceptorProvider) {
+main.config(function (authProvider, $httpProvider, jwtInterceptorProvider) {
   // ...
 
   // We're annotating this function so that the `store` is injected correctly when this file is minified
@@ -95,7 +95,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/login',
 			views: {
 				'indexPage': {
-					templateUrl: './app/auth/loginView.html',
+					templateUrl: './app/landingPage/loginView.html',
 					controller: 'landingPageController',
 					controllerAs: 'ldp'
 				}
@@ -105,7 +105,7 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			url: '/signup',
 			views: {
 				'indexPage': {
-					templateUrl: './app/auth/signupView.html',
+					templateUrl: './app/landingPage/signupView.html',
 					controller: 'landingPageController',
 					controllerAs: 'ldp'
 				}
