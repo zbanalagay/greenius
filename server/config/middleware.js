@@ -13,7 +13,7 @@ module.exports = function(app, express){
 	app.use('/api/plants', plantsRouter);
 	app.use('/api/users', usersRouter);
 
-	require('./../routes/plants/plantsRoutes.js')(plantsRouter);
+	require('./../routes/plants/plantsRoutes.js', jwtCheck)(plantsRouter);
 	require('./../routes/users/usersRoutes.js')(usersRouter);
 
 };
