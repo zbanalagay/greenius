@@ -6,7 +6,6 @@ var main = angular.module('greeniusApp',
 	'navbar',
   'dndLists',
 	'browsePlant',
-	// 'auth',
 	'dashboard',
 	'myPlants',
   'myGarden',
@@ -42,24 +41,13 @@ main.config(function (authProvider) {
   auth.hookEvents();
 });
 
-
-
-// //jwt security
-
 main.config(function (authProvider, $httpProvider, jwtInterceptorProvider) {
-  // ...
-
-  // We're annotating this function so that the `store` is injected correctly when this file is minified
   jwtInterceptorProvider.tokenGetter = ['store', function(store) {
     // Return the saved token
     var token = store.get('token');
-    console.log('HEY THIS IS THE token INSIDE THE JWTINTERCEPTOR', token)
     return token;
-    // return store.get('token');
   }];
-
   $httpProvider.interceptors.push('jwtInterceptor');
-  // ...
 });
 
 main.run(['$rootScope', 'auth', 'store', 'jwtHelper', '$location', function($rootScope, auth, store, jwtHelper, $location){
@@ -187,21 +175,4 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 			},
       data: {requiresLogin : true}
 		});
-
 }]);
-
-
-// .run(function($cookies){
-//    $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-//      if(toState.name === 'myPlants' && toParams.username === undefined){
-//        evt.preventDefault();
-//        var username = $cookies.get('myUser');
-//        if(username){
-//          $state.go('myPLants', {username: username});
-//        }else{
-//          $state.go('login');
-//        }
-//
-//      }
-//    };
-// })
