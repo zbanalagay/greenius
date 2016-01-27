@@ -3,28 +3,28 @@
     <div id='sidebar-wrapper'>
       <ul class='sidebar-nav'>
         <li class='sidebar-brand'>
-          <img id='profile-image' ng-src={{nvp.userImage}} class='profile-image img-circle'></img><a href='#'>{{nvp.userName}}</a> <!-- TODO: add profile image & username -->
+          <img id='profile-image' ng-src={{nvp.userImage}} class='profile-image img-circle'></img><a>{{nvp.userName}}</a> <!-- TODO: add profile image & username -->
         </li>
         <li>
-            <a class="full-width" href='#/navbar/myplants'>My Plants</a>
+            <a class='full-width' href='#/navbar/myplants'>My Plants</a>
         </li>
         <li>
-            <a class="full-width" href='#/navbar/mygarden'>My Garden</a>
+            <a class='full-width' href='#/navbar/mygarden'>My Garden</a>
         </li>
         <li>
-            <a class="full-width" href='#/navbar/browseplant'>Browse Plants</a>
+            <a class='full-width' href='#/navbar/browseplant'>Browse Plants</a>
         </li>
         <li>
-            <a class="full-width" href='#/navbar/dashboard'>Calendar</a>
+            <a class='full-width' href='#/navbar/dashboard'>Calendar</a>
         </li>
         <li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle full-width" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Dropdown<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Reset Location</a></li>
-              <li><a href="#/logout">Logout</a></li>
+          <li class='dropdown'>
+            <a href='#' class='dropdown-toggle full-width' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='true'>Dropdown<span class='caret'></span></a>
+            <ul class='dropdown-menu'>
+              <li><a href='#'>Reset Location</a></li>
+              <li><a href='#/logout' ng-click='nvp.logout()'>Logout</a></li>
             </ul>
-          </li>  
+          </li>
         </li>
       </ul>
     </div>
@@ -37,7 +37,7 @@
               <a href='#menu-toggle' class='btn btn-default next' id='menu-toggle'>
                 <i class='fa fa-bars'></i>
               </a>
-            </div>  
+            </div>
                 <div ui-view='subView'></div>
           </div>
         </div>
