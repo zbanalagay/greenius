@@ -1,2 +1,2 @@
 // Google API Key
-var GOOGLE_API_KEY = 'Parse-GOOGLE-API-Key';
+var AUTH0_CLIENT_ID = 'AUTH0_CLIENT_ID';
