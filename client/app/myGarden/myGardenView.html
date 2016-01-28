@@ -14,9 +14,9 @@
             dnd-effect-allowed="move"
             class="background-{{plant.type}}"
             >
-            <div class="handle">:::</div>
+            <div class="handle">::: </div>
             <div class="name" dnd-nodrag>
-                <input type="text" ng-model="plant.name" class="background-{{plant.name}} form-control input-sm">
+                {{ plant.name }}
             </div>
         </li>
     </ul>
@@ -25,6 +25,7 @@
 </div>
 
 <div>{{ resultPlants }}</div>
+<div>{{ gardens }} </div>
 
 <!-- <div class='container-fluid'>
   <div class='row'>

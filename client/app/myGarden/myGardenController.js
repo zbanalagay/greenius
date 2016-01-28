@@ -10,7 +10,7 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.data.idOfGarden;
 
 
-  $scope.gardenArray=[];
+  $scope.gardens = {};
   $scope.count = 0;
   $scope.resultPlants;
 
@@ -34,11 +34,9 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.getUsersGardens = function(){
     Plants.getUserGardens($scope.data)
       .then(function(results) {
+
         for(var i = 0; i< results.length; i++){
-          var temp = results[i].gardenName;
-          if($scope.gardenArray.indexOf(temp)===-1){
-            $scope.gardenArray.push(temp);
-          }
+          $scope.gardens[results[i].id] = results[i].gardenName
         }
         
         $scope.lists = $scope.setList($scope.resultPlants)
@@ -89,7 +87,7 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     var res = arr.reduce(function(obj, cur, i, array) {
         if (cur.idOfGarden === '' || obj[cur.idOfGarden]) { return obj } //if theres no garden id or that gardens been seen already, continue
 
-        obj[cur.idOfGarden] = { label: "garden #" + cur.idOfGarden,
+        obj[cur.idOfGarden] = { label: "garden " + $scope.gardens[cur.idOfGarden],
                                 plants: []
                               }
         return obj
