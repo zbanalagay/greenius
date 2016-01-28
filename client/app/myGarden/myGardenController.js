@@ -87,11 +87,11 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     var res = arr.reduce(function(obj, cur, i, array) {
         if (cur.idOfGarden === '' || obj[cur.idOfGarden]) { return obj } //if theres no garden id or that gardens been seen already, continue
 
-        obj[cur.idOfGarden] = { label: "garden " + $scope.gardens[cur.idOfGarden],
+        obj[cur.idOfGarden] = { label: $scope.gardens[cur.idOfGarden],
                                 plants: []
                               }
         return obj
-        }, { 0: { label: "to plant", plants: [] }} //object to reduce to starts with area for unplanted plants
+        }, { 0: { label: "To Plant!", plants: [] }} //object to reduce to starts with area for unplanted plants
       );
       return res;
     };
