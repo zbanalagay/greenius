@@ -1,14 +1,15 @@
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-  var jwt = require('express-jwt');
-var config = require('./../env/config.js')
+var jwt = require('express-jwt');
+var config = require('./../env/config.js');
+
 module.exports = function(app, express){
 
-
   var jwtCheck = jwt({
-    secret: new Buffer(config.AUTH0_CLIENT_SECRET),
-    audience: config.AUTH0_CLIENT_ID
+    secret: new Buffer( config.AUTH0_CLIENT_SECRET),
+    audience: '909iKBxjdoJbblSUwtwFKFwfkqZss09d'
   });
+
 	app.use(morgan('dev'));
 	app.use(bodyParser.json());
 	app.use(express.static(__dirname + './../../client'));
