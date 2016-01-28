@@ -6,7 +6,7 @@ var config = require('./../env/config.js');
 module.exports = function(app, express){
 
   var jwtCheck = jwt({
-    secret: new Buffer( config.AUTH0_CLIENT_SECRET),
+    secret: new Buffer( process.env.AUTH0_CLIENT_SECRET || config.AUTH0_CLIENT_SECRET),
     audience: '909iKBxjdoJbblSUwtwFKFwfkqZss09d'
   });
 
