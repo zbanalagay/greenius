@@ -33,7 +33,7 @@ main.run(function($rootScope, auth, store, jwtHelper, $location) {
 main.config(function (authProvider) {
   authProvider.init({
     domain: 'greenius.auth0.com',
-    clientID: GOOGLE_API_KEY,
+    clientID: AUTH0_CLIENT_ID,
     loginState: 'landingPage'
   });
 })
