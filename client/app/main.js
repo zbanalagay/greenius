@@ -82,6 +82,16 @@ main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($
 				}
 			}
 		})
+		.state('settings', {
+			url: '/settings',
+			views: {
+				'indexPage': {
+					templateUrl: './app/landingPage/userSettingsView.html',
+					controller: 'landingPageController',
+					controllerAs: 'ldp'
+				}
+			}
+		})
 		.state('logout', {
 			url: '/logout',
 			views: {
