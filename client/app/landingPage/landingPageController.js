@@ -1,5 +1,5 @@
 var landingPage = angular.module('landingPage', []);
-landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$location', 'Users', function($http, auth, store, $location, Users){
+landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$location', 'Users', '$window', function($http, auth, store, $location, Users, $window){
 	var that = this;
   that.formData = {};
   // var coords = {};
@@ -12,9 +12,6 @@ landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$loc
 
   that.login = function(){
       auth.signin({}, function(profile, token){
-
-
-
         store.set('profile', profile);
         store.set('token', token);
 
@@ -26,18 +23,21 @@ landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$loc
         Users.getUser(that.data)
         .then(function(results){
           //TODOpopulate factory
+          console.log(results, 'SUCCESS INSIDE LOGIN CONTROLLER');
 
-          console.log(results, 'SUCCESS INSIDE LOGIN CONTROLLER')
+
           if(results === undefined){
             Users.addUser(that.data)
               .then(function(results){
 
                 console.log(results, 'SUCCESS INSIDE ADDUSERS CONTROLLER');
+                $window.localStorage.setItem('username', results.username);
               })
               .catch(function(error){
                 console.log(error, 'ERROR INSIDE ADDUSERS CONTROLLER');
               })
           }
+          $window.localStorage.setItem('username', results.data.username);
             $location.path('/navbar/dashboard');
         })
         .catch(function(error){
