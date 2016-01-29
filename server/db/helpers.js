@@ -176,14 +176,14 @@ var helpers = {
     })
   },
 
-  //plant is an object with plantId, commonName
+  //plant is an object with plantId
   //garden is an object with gardenName
   addGardenToPlant : function(plant, garden) {
     var plantObj = {};
     // Check for Gardens gardenName
     return db.Gardens.findOne({
       where: {gardenName: garden.gardenName}
-    })
+    }) 
     .then(function(gardenResult) {
       if(!gardenResult) {
         throw ERROR('Garden name does not exist');
@@ -206,6 +206,7 @@ var helpers = {
         })
         .then(function(addPlantToGardenResult) {
           console.log('Add plant to garden successful');
+          return addPlantToGardenResult;
         })
         .catch(function(error) {
            console.log('Error adding plant to the database ', error);
@@ -361,6 +362,8 @@ var helpers = {
     })
   },
 
+ 
+  
   //garden is an object with gardenName
   //user is an object with username
   addUserToGarden : function(garden, user) {
