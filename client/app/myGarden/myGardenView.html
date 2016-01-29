@@ -6,15 +6,19 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">{{list.label}} </h3>
                 </div>
-    <ul dnd-list="list.plants">
+
+    <ul dnd-list="list.plants"  
+    dnd-inserted="dropCallback(event, index, item, external, type, 'itemType')" >
+
     <!-- Make dnd moved call a function that plants the plant -->
         <li ng-repeat="plant in list.plants"
             dnd-draggable="plant"
             dnd-disable-if="plant.gardenId !== ''"
             dnd-type="plant.type"
-            dnd-moved="movedCallback()"
-            dnd-dragend="list.plants.splice($index, 1)"
+            dnd-moved="movedCallback(); list.plants.splice($index, 1)"
+            dnd-dragend=""
             dnd-canceled="console.log(event)"
+           
             class="background-{{plant.type}}" >
             
             <div class="handle">:::</div>

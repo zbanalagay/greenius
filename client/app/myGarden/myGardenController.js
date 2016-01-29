@@ -13,10 +13,20 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.resultPlants;
   $scope.lists;
   //figure out how to lock down certain gardens
+  $scope.dropCallback = function(event, index, item, external, type){
+    console.log(event, index, item, external, type)
+  }
 
   $scope.movedCallback = function(){
+    // console.log()
     //if the plant is unplanted (which it should be) move plant to right in database
-    alert('hello')
+    // alert(JSON.stringify(event))
+    var plant = { plantId: /**/null,
+                  commonName: /**/null
+                };
+    var garden = { gardenName: /**/ null}
+
+    Plants.addGardenToPlant(plant, garden)
   }
   
   $scope.getSpecifcGardenPlants = function(){
@@ -55,14 +65,15 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     var tempArray = [];
     Plants.getUsersPlants($scope.data)
           .then(function(results) {
-            console.log(results, 'SUCCESS IN GETUSERPLANTS CONTROLLER');
+            // console.log(results, 'SUCCESS IN GETUSERPLANTS CONTROLLER');
             for(var i = 0 ; i < results.data.length; i++){
               var obj = {};
-              obj.nickname = results.data[i].nickname;
-              obj.plantDate = results.data[i].plantDate;
+              obj.nickname    = results.data[i].nickname;
+              obj.plantDate   = results.data[i].plantDate;
               obj.plantStatus = results.data[i].plantStatus;
-              obj.idOfGarden = results.data[i].idOfGarden;
-              // obj.gardenName = results.data[i].gardenName;
+              obj.idOfGarden  = results.data[i].idOfGarden;
+              obj.plantId     = results.data[i].id;
+              obj.speciesId   = results.data[i].idOfSpecies;
               tempArray.push(obj);
             }
             $scope.resultPlants = tempArray;
@@ -103,9 +114,19 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
     $scope.resultPlants.forEach(function(element){
       // console.log(element)
       if(element.idOfGarden === ""){
-        $scope.lists[0].plants.push({name: element.nickname,gardenId: element.idOfGarden})
+        $scope.lists[0].plants.push({
+                                      name: element.nickname,
+                                      gardenId: element.idOfGarden,
+                                      plantId: element.plantId,
+                                      speciesId: element.speciesId
+                                    })
       } else{
-        $scope.lists[element.idOfGarden].plants.push({name: element.nickname,gardenId: element.idOfGarden})
+        $scope.lists[element.idOfGarden].plants.push({
+                                      name: element.nickname,
+                                      gardenId: element.idOfGarden,
+                                      plantId: element.plantId,
+                                      speciesId: element.speciesId
+                                                     })
       }
     })
   };
