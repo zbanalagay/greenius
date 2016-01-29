@@ -150,6 +150,19 @@ services.factory('Users', ['$http', function($http){
     });
   };
 
+  var getUser = function(userObj){
+      return $http({
+        method: 'POST',
+        url: 'api/users/getUser',
+        data: userObj
+      }).then(function(response){
+        return response;
+      }).catch(function(error){
+        console.log(error);
+      });
+    };
+
+
  var deleteUser = function(userObj){
     return $http({
       method: 'POST',
@@ -164,6 +177,7 @@ services.factory('Users', ['$http', function($http){
 
   return {
     addUser: addUser,
+    getUser: getUser,
     deleteUser: deleteUser
   };
 
