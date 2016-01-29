@@ -1,6 +1,6 @@
-<div id='wrapper'>
+<div id='wrapper' ng-class="nvp.isOpen ? 'toggled' : ''">
     <!-- Sidebar -->
-    <div id='sidebar-wrapper'>
+    <div id='sidebar-wrapper' ng-class="nvp.isOpen ? 'toggled' : ''">
       <ul class='sidebar-nav'>
         <li class='sidebar-brand'>
           <img id='profile-image' ng-src={{nvp.userImage}} class='profile-image img-circle'></img><a>{{nvp.userName}}</a> <!-- TODO: add profile image & username -->
@@ -33,7 +33,7 @@
         <div class='row'>
           <div class='col-lg-12'>
             <div id='menu-btn-container'>
-              <a href='#menu-toggle' class='btn btn-default next' id='menu-toggle'>
+              <a ng-click='nvp.toggleSideBar()' class='btn btn-default next' id='menu-toggle'>
                 <i class='fa fa-bars'></i>
               </a>
             </div>
