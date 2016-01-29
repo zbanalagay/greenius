@@ -1,5 +1,5 @@
 var dashboard = angular.module('dashboard', []);
-dashboard.controller('dashboardController', ['Plants', 'auth', '$window', function(Plants, auth, $window){
+dashboard.controller('dashboardController', ['Plants', 'auth', '$window', '$q', function(Plants, auth, $window, $q){
   var that = this;
   that.data = {};
     that.data.username = $window.localStorage.getItem('username');
@@ -15,20 +15,22 @@ dashboard.controller('dashboardController', ['Plants', 'auth', '$window', functi
   that.total_Herbs_Shrubs = 0;
 
   that.getSpecieInfo = function(index, plant){
-    Plants.getSpecieById(plant)
+    return Plants.getSpecieById(plant)
       .then(function(speciesResult){
         that.data.plants[index].speciesInfo = speciesResult.data;
-        that.getPlantStats();
       })
-      .catch(function(error){
-        console.log(error);
-      });
+      .catch(function(){   
+      });  
   };
 
   that.getAllPlantsSpeciesInfo = function(array){
-    for(var i = 0; i < array.length; i++){
-      that.getSpecieInfo(i, array[i]);
+    var myPromises = [];
+    for(var i = 0; i < that.data.plants.length; i++){
+       myPromises[i] = that.getSpecieInfo(i, that.data.plants[i]);
     }
+    $q.all(myPromises).then(function(){
+      that.getPlantStats();
+    })
   };
 
   that.getUserPlants = function(){
@@ -42,33 +44,33 @@ dashboard.controller('dashboardController', ['Plants', 'auth', '$window', functi
       });
   };
 
-  that.getUserPlants();
-
   that.getPlantStats = function(){
-    for(var i = 0; i < that.data.plants.length; i++){
-      var curSpeciesType = that.data.plants[i].speciesInfo;
-      if(curSpeciesType.typeOf === 'Flower'){
+    for(var i = 0; i < that.data.plants.length; i++) {
+      var curSpeciesType = that.data.plants[i].speciesInfo.typeOf;
+      if(curSpeciesType === 'Flower'){
         that.totalFlowers++;
       }
-      if (curSpeciesType.typeOf === 'Houseplant'){
+      if (curSpeciesType === 'Houseplant'){
         that.totalHousePlants++;
       }
-      if (curSpeciesType.typeOf === 'Fruit'){
+      if (curSpeciesType === 'Fruit'){
         that.totalFruits++;
       }
-      if (curSpeciesType.typeOf === 'Vegetable'){
+      if (curSpeciesType === 'Vegetable'){
         that.totalVegetables++;
       }
-      if (curSpeciesType.typeOf === 'Herb'){
+      if (curSpeciesType === 'Herb'){
         that.totalHerbs++;
       }
-      if (curSpeciesType.typeOf === 'Shrub'){
+      if (curSpeciesType === 'Shrub'){
         that.totalShrubs++;
-      }
+      } 
     }
     that.total_Flowers_HousePlant = that.totalFlowers + that.totalHousePlants;
     that.total_Fruits_Vegetables = that.totalFruits + that.totalVegetables;
     that.total_Herbs_Shrubs = that.totalHerbs + that.totalShrubs;
   };
+
+  that.getUserPlants();
 
 }]);
