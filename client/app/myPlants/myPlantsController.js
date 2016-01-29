@@ -14,17 +14,20 @@ myPlants.controller('myPlantsController', ['Plants', '$state', 'ProfileInfo', fu
     $state.go('navbar.plantProfile', {nickname: plant});
   };
 
-  // TODO: FIX THIS--refresh plant list and input
   that.deletePlant = function(){
     if(that.data.plantDelete){
       Plants.deletePlant(that.data)
         .then(function(results){
-          return results;
+          if(that.data.gardenName){
+            that.getSpecifcGardenPlants();
+          } else{
+            that.getUserPlants();
+          }
         })
         .catch(function(error){
           console.log(error);
         });
-     }
+    }
   };
 
   that.goToPlant = function(name){

@@ -1,7 +1,6 @@
 
 <div class='container-fluid'>
   <div class='row'>
-    <!-- TODO: MATCH INPUT TO DATABASE -->
     <form ng-submit='mpp.getSpecifcGardenPlants()'>
       <select placeholder='Filter by Garden:' ng-model='mpp.data.gardenName'>
         <option value='' disabled selected>Select garden</option>
@@ -9,11 +8,25 @@
       </select>
       <input type='submit' value='Garden me'>
     </form>
+    <h5> My Plants: </h5>
     <div ng-repeat='plant in mpp.resultPlants'>
       <a  ng-click='mpp.goToPlant(plant.nickname)'>{{plant.nickname}}</a>
     </div>
+    <div>
+      <h5>Wish to Delete a Plant?</h5>
+      <form ng-submit='mpp.deletePlant()'>
+        <select placeholder='Delete Plant' ng-model='mpp.data.plantDelete'>
+          <option value='' disabled selected></option>
+          <option ng-repeat='plant in mpp.resultPlants'>{{plant.nickname}}</option>
+        </select>
+        <input type='submit' value='Delete'>
+      </form>
+    </div>
   </div>
-  <div class='row'>
+
+
+
+  <!-- <div class='row'>
     <div class='panel panel-danger'>
       <div class='panel-heading'>
           <h2 class='panel-title text-center'>Delete Plant</h2>
@@ -28,5 +41,5 @@
           </form>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
