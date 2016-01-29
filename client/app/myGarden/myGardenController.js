@@ -8,13 +8,16 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.data.plantDate;
   $scope.data.plantStatus;
   $scope.data.idOfGarden;
-
-
   $scope.gardens = {};
   $scope.count = 0;
   $scope.resultPlants;
-
   $scope.lists;
+  //figure out how to lock down certain gardens
+
+  $scope.movedCallback = function(){
+    //if the plant is unplanted (which it should be) move plant to right in database
+    alert('hello')
+  }
   
   $scope.getSpecifcGardenPlants = function(){
     if($scope.data.gardenName){
@@ -34,7 +37,6 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.getUsersGardens = function(){
     Plants.getUserGardens($scope.data)
       .then(function(results) {
-
         for(var i = 0; i< results.length; i++){
           $scope.gardens[results[i].id] = results[i].gardenName
         }
@@ -100,7 +102,11 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.formatGardenForSandbox = function(){
     $scope.resultPlants.forEach(function(element){
       // console.log(element)
-      $scope.lists[element.idOfGarden].plants.push({name: element.nickname})
+      if(element.idOfGarden === ""){
+        $scope.lists[0].plants.push({name: element.nickname,gardenId: element.idOfGarden})
+      } else{
+        $scope.lists[element.idOfGarden].plants.push({name: element.nickname,gardenId: element.idOfGarden})
+      }
     })
   };
 

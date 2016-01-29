@@ -10,9 +10,11 @@
     <!-- Make dnd moved call a function that plants the plant -->
         <li ng-repeat="plant in list.plants"
             dnd-draggable="plant"
+            dnd-disable-if="plant.gardenId !== ''"
             dnd-type="plant.type"
-            dnd-moved="list.plants.splice($index, 1)"
-            dnd-effect-allowed="move"
+            dnd-moved="movedCallback()"
+            dnd-dragend="list.plants.splice($index, 1)"
+            dnd-canceled="console.log(event)"
             class="background-{{plant.type}}" >
             
             <div class="handle">:::</div>
