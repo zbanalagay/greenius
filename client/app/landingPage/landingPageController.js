@@ -19,13 +19,15 @@ landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$loc
             Users.addUser(that.data)
               .then(function(results){
                 $window.localStorage.setItem('username', results.username);
+                $location.path('/navbar/dashboard');
               })
               .catch(function(error){
                 console.log(error);
               })
+          }else{
+            $window.localStorage.setItem('username', results.data.username);
+            $location.path('/navbar/dashboard');
           }
-          $window.localStorage.setItem('username', results.data.username);
-          $location.path('/navbar/dashboard');
         })
         .catch(function(error){
           console.log(error)
