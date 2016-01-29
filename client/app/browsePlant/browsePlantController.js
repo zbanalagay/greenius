@@ -1,14 +1,14 @@
 var browsePlant = angular.module('browsePlant', []);
-browsePlant.controller('browsePlantController', ['Plants', 'ProfileInfo', '$state', function(Plants, ProfileInfo, $state) {
+browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', function(Plants, $state, $window) {
   var that = this;
   that.data = {};
     that.data.commonName = '';
     that.data.specieResults;
     that.data.nickname = '';
-    that.data.username = ProfileInfo.profile.username;
+    that.data.username = $window.localStorage.getItem('username');
     that.data.botanicalName = '';
     // TODO MAKE SURE PLANTDATE MATCHES CALENDAR AND DB
-    that.data.plantDate = ProfileInfo.profile.plantDate;
+    that.data.plantDate = '';
     that.data.gardenName = '';
     that.data.plantArray = [];
     that.usersGardenArray = [];

@@ -1,8 +1,8 @@
 var dashboard = angular.module('dashboard', []);
-dashboard.controller('dashboardController', ['Plants', 'ProfileInfo', function(Plants, ProfileInfo){
+dashboard.controller('dashboardController', ['Plants', 'auth', '$window', function(Plants, auth, $window){
   var that = this;
   that.data = {};
-    that.data.username = ProfileInfo.profile.username;
+    that.data.username = $window.localStorage.getItem('username');
     that.data.plants = [];
   that.totalFlowers = 0;
   that.totalHousePlants = 0;
