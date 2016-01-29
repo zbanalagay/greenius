@@ -49,6 +49,20 @@ services.factory('Plants', ['$http', function($http){
     });
   };
 
+  var addGardenToPlant = function(plant, garden){
+    var data = {plant: plant, garden: garden }
+    return $http({
+        method: 'POST',
+        url: '/api/plants/addGardenToPlant',
+        data: data
+      }).then(function(response) {
+          console.log(response, 'SUCCESS addGardenToPlant PLANTS FACTORY');
+          // return response.data;
+      }).catch(function(error) {
+          console.log(error);
+      });    
+  };
+
   var getUsersPlants = function(user){
     return $http({
       method: 'POST',
@@ -90,14 +104,24 @@ services.factory('Plants', ['$http', function($http){
       method: 'POST',
       url: '/api/plants/loadUserGardens',
       data: user
+<<<<<<< cec873d38c986db9d223902faa7883234018212a
     }).then(function(response){
+=======
+    }).then(function(response) {
+      // console.log(response.data, 'SUCCESS GETUSERGARDENS PLANTS FACTORY');
+>>>>>>> [refactor] Added add garden to plant service in services.js
       return response.data;
     }).catch(function(error){
         console.log(error);
     });
   };
 
+<<<<<<< cec873d38c986db9d223902faa7883234018212a
   var getGardenPlants = function(garden){
+=======
+
+  var getGardenPlants = function(garden) {
+>>>>>>> [refactor] Added add garden to plant service in services.js
     return $http({
       method: 'POST',
       url: '/api/plants/loadGardenPlants',
@@ -124,6 +148,7 @@ services.factory('Plants', ['$http', function($http){
   return {
     addPlant: addPlant,
     addGarden: addGarden,
+    addGardenToPlant: addGardenToPlant,
     getUsersPlants: getUsersPlants,
     getSpecieInfo: getSpecieInfo,
     getPlant: getPlant,
