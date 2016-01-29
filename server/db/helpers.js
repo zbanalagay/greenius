@@ -7,7 +7,7 @@ var helpers = {
   deleteUser : function(userData) {
     console.log('userData in helpers.js', userData)
     return db.Users.destroy({
-     where: {username: userData.usernameDelete} 
+     where: {username: userData.usernameDelete}
     })
     .then(function(userResult) {
       if(!userResult){
@@ -22,7 +22,7 @@ var helpers = {
   addUser : function(user) {
     // Check for commonName in Users table
     return db.Users.findOne({
-      where: {username: user.username}
+      where: {email: user.email}
     })
     .then(function(userResult) {
        if(userResult){
@@ -35,6 +35,7 @@ var helpers = {
        console.log('Error adding user to the database ', error);
     })
   },
+
 
   //plant is an object with username, commonName, gardenName, plantDate nickname, plantStatus
   addPlant : function(plant) {
@@ -218,17 +219,21 @@ var helpers = {
 
   //user is an object with username
   getUser : function(user) {
-    //Check for username in Users table
-    return db.Users.findOne({
-      where: {username: user.username}
-    })
-    .then(function(userResult) {
-      if(!userResult) {
-        throw ERROR('Username does not exist');
-      }
-      console.log('Username exists: ', userResult.username);
-    })
-  },
+      //Check for username in Users table
+      return db.Users.findOne({
+        where: {username: user.username}
+      })
+      .then(function(userResult) {
+        if(!userResult) {
+          throw ERROR('Username does not exist');
+        }
+        console.log('Username exists: ', userResult.username);
+        return userResult;
+      })
+      // .catch(function(error){
+      //   console.log(error, 'ERROR INSIDE GET USER HELPER');
+      // })
+    },
 
   //garden is an object with gardenName
   getGarden : function(garden) {

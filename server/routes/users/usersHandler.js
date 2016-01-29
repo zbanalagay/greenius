@@ -18,6 +18,19 @@ module.exports = {
 			  })
 	},
 
+  getUser: function(req, res){
+     console.log(req.body, 'THIS IS THE REQ.BODY INSIDE GETUSER HANDLER');
+     var userData = req.body;
+     helper.getUser(userData)
+       .then(function(results){
+         console.log(results, 'SUCCESS INSIDE GETUSER HANDLER');
+         res.status(200).send(results);
+       })
+       .catch(function(error){
+         console.log(error, 'ERROR INSIDE GETUSER HANDLER');
+         res.status(404).send(error);
+       })
+   },
 
 	deleteUser: function(req, res){
 		console.log('REQ.BODY FOR DELETEUSER IN usersHandler.js', req.body);
