@@ -2,13 +2,13 @@ var landingPage = angular.module('landingPage', []);
 landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$location', function($http, auth, store, $location){
 	var that = this;
   that.formData = {};
-  var coords = {};
-  var lat = 0;
-  var long = 0;
+  // var coords = {};
+  // var lat = 0;
+  // var long = 0;
 
-  // Set initial coordinates to the center of the US
-  that.formData.latitude = 39.500;
-  that.formData.longitude = -98.350;
+  // // Set initial coordinates to the center of the US
+  // that.formData.latitude = 39.500;
+  // that.formData.longitude = -98.350;
 
   that.login = function(){
     auth.signin({}, function(profile, token){
