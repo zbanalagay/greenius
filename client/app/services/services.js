@@ -166,46 +166,79 @@ services.factory('Users', ['$http', function($http){
     addUser: addUser,
     deleteUser: deleteUser
   };
-  
+
 }]);
 
-//populate once we have our cookie (and once our cookies are figured out)
-//this will make it easy to remember info about the user, so you can just pass around this factory
 services.factory('ProfileInfo', ['$http', function($http){
   var profile = {
-    // Below is for MVP testing purposes
-    username: 'Robert',
-    password: 'SWISS',
-    email: 'robertstuartcardiff@gmail.com',
-    location: '',
-    userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
-    createdAt: '',
-    updatedAt: '',
-    gardenName: 'Eden',
-    plantDate: ''
-
     // Real one to populate
-    // username: undefined,
-    // gardenName: undefined
-    // TODO: FINISH THIS
+    username: undefined,
+    password: undefined,
+    profilePhoto: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined
+
+    // The following is for dummy data for testing purposes
+    // username: 'Robert',
+    // password: 'SWISS',
+    // email: 'robertstuartcardiff@gmail.com',
+    // location: '',
+    // userPic: 'http://facebookcraze.com/wp-content/uploads/2009/12/funny_profile_pic_for_facebook_rape.jpg',
+    // createdAt: '',
+    // updatedAt: '',
+    // gardenName: 'Eden',
+    // plantDate: ''
+
   };
 
-  var getProfile = function() {
-    // TODO: FINISH THIS
-    return profile;
+  var getProfile = function(requestedInfo) {
+    if(requestedInfo === undefined) {
+      return profile;
+    }
+    if(angular.isArray(requestedInfo)) {
+      var resultsObj = {};
+      for(var i = 0; i < requestedInfo.length; i++){
+        var key = requestedInfo[i];
+        if(key in profile){
+          resultsObj[key] = profile[key];
+        } else{
+          resultsObj[key] = null;
+        }
+      }
+      return resultsObj;
+    }
+    if (angular.isString(requestedInfo)){
+      if (requestedInfo in profile){
+        return profile[requestedInfo];
+      }
+    }
+    return null;
   };
 
-  var setProfile = function(key, value) {
-    profile[key] = value;
-    return profile;
-    // TODO: FINISH THIS
+  var setProfile = function(obj) {
+    if(!angular.isObject(obj)){
+      return null;
+    }
+    var keysOfObjAreValid = true;
+      for(var key in obj){
+        if(key in profile){
+          profile[key] = obj[key];
+        } else{
+          keysOfObjAreValid = false;
+        }
+      }
+      return keysOfObjAreValid;
   };
 
   return{
     getProfile: getProfile,
-    setProfile: setProfile,
-  // Below is for MVP testing purposes
-    profile: profile
+    setProfile: setProfile
+
+  // Below is for testing purposes
+    // profile: profile
   };
+
+
 
 }]);
