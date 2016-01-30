@@ -4,7 +4,10 @@ landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$loc
   that.data = {};
 
   that.login = function(){
-      auth.signin({}, function(profile, token){
+      auth.signin({
+        connections : ['google-oauth2'],
+        icon: 'http://s8.postimg.org/pmmaghi29/leaf.png'
+      }, function(profile, token){
         store.set('profile', profile);
         store.set('token', token);
 
