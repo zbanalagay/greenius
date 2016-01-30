@@ -2,7 +2,7 @@ var myGarden = angular.module('myGarden',[]);
 myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'ProfileInfo',  function($scope, Plants, $state, ProfileInfo){
   $scope.data = {};
   $scope.data.username = $state.params.username;
-  $scope.data.username = ProfileInfo.profile.username;
+  $scope.data.username = ProfileInfo.profile.username || 'Robert';
   $scope.data.gardenName = '';
   $scope.data.nickname;
   $scope.data.plantDate;
@@ -12,23 +12,14 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
   $scope.count = 0;
   $scope.resultPlants;
   $scope.lists;
+  
   //figure out how to lock down certain gardens
   $scope.dropCallback = function(event, index, item, external, type){
-    console.log(event, index, item, external, type)
-  }
-
-  $scope.movedCallback = function(){
-    // console.log()
-    //if the plant is unplanted (which it should be) move plant to right in database
-    // alert(JSON.stringify(event))
-    var plant = { plantId: /**/null,
-                  commonName: /**/null
-                };
-    var garden = { gardenName: /**/ null}
-
+    var plant = {plantId: item.plantId};
+    var garden = {gardenName: item.bucket};
     Plants.addGardenToPlant(plant, garden)
   }
-  
+
   $scope.getSpecifcGardenPlants = function(){
     if($scope.data.gardenName){
       Plants.getGardenPlants($scope.data)
