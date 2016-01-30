@@ -19,7 +19,8 @@ dashboard.controller('dashboardController', ['Plants', 'auth', '$window', '$q', 
       .then(function(speciesResult){
         that.data.plants[index].speciesInfo = speciesResult.data;
       })
-      .catch(function(){   
+      .catch(function(error){
+        console.log(error);   
       });  
   };
 
