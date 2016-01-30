@@ -73,7 +73,7 @@ myGarden.controller('myGardenController', ['$scope', 'Plants', '$state', 'Profil
           .catch(function(error) {
             console.log(error);
           });
-  };
+  }; 
 
   $scope.deleteGarden = function(){
     if($scope.data.gardenDelete){
