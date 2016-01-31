@@ -3,16 +3,16 @@ var db = require('./sequelize.js');
 var helpers = {
 
 
-  //adding deleteUser, deletePlant, deleteGarden
-  deleteUser : function(userData) {
-    console.log('userData in helpers.js', userData)
+  //user is an object with username
+  deleteUser : function(user) {
     return db.Users.destroy({
-     where: {username: userData.usernameDelete}
+     where: {username: user.username} 
     })
     .then(function(userResult) {
       if(!userResult){
         throw Error('username not doesnt exist! cant be deleted')
       }
+      return userResult;
     })
     .catch(function(error) {
       console.log('Error adding user to the database', error);
