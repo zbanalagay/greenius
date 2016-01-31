@@ -29,6 +29,7 @@
     "gulp-karma": "0.0.4",
     "gulp-nodemon": "^1.0.5",
     "gulp-shell": "^0.2.11",
+    "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "jshint": "^2.9.1",
     "jshint-stylish": "^0.2.0",
@@ -40,6 +41,7 @@
     "sqlite3": "^3.1.1"
   },
   "dependencies": {
+    "auth0-angular": "^4.1.0",
     "auth0-lock": "^8.2.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.4.3",
