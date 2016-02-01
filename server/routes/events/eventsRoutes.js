@@ -5,4 +5,5 @@ module.exports = function(app){
   app.post('/removePlantEvent', eventsHandler.removePlantEvent);
   app.post('/getPlantEvent', eventsHandler.getPlantEvent);
   app.post('/getUserEvents', eventsHandler.getUserEvents);
+  app.post('/postToGoogleCalendar', eventsHandler.postToGoogleCalendar);
 };
