@@ -2,20 +2,20 @@
     <!-- Sidebar -->
     <div id='sidebar-wrapper' ng-class="nvp.isOpen ? 'toggled' : ''">
       <ul class='sidebar-nav'>
-        <li class='sidebar-brand'>
+        <li class='sidebar-brand' style='margin: 2% 0% 0% 0%;'>
           <img id='profile-image' ng-src={{nvp.userImage}} class='profile-image img-circle'></img><a>{{nvp.userName}}</a> <!-- TODO: add profile image & username -->
         </li>
         <li>
-            <a class='full-width' href='#/navbar/myplants'>My Plants</a>
+          <a class='full-width' href='#/navbar/dashboard'>Dashboard</a>
         </li>
         <li>
-            <a class='full-width' href='#/navbar/mygarden'>My Garden</a>
+          <a class='full-width' href='#/navbar/myplants'>My Plants</a>
         </li>
         <li>
-            <a class='full-width' href='#/navbar/browseplant'>Browse Plants</a>
+          <a class='full-width' href='#/navbar/mygarden'>My Garden</a>
         </li>
         <li>
-            <a class='full-width' href='#/navbar/dashboard'>Calendar</a>
+          <a class='full-width' href='#/navbar/browseplant'>Browse Plants</a>
         </li>
         <li>
           <li class='dropdown'>
@@ -38,7 +38,7 @@
                 <i class='fa fa-bars'></i>
               </a>
             </div>
-                <div ui-view='subView'></div>
+              <div ui-view='subView'></div>
           </div>
         </div>
       </div>
