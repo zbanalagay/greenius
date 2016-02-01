@@ -34,13 +34,13 @@ models.Users = sequelize.define('User', {
 });
 
 models.Plants = sequelize.define('Plant', {
-  idOfUser:{
+  idOfUser: {
     type: Sequelize.INTEGER
   },
-  idOfSpecies:{
+  idOfSpecies: {
     type: Sequelize.INTEGER
   },
-  plantDate:{
+  plantDate: {
     type: Sequelize.INTEGER
   },
   nickname: {
@@ -51,6 +51,24 @@ models.Plants = sequelize.define('Plant', {
   },
   idOfGarden: {
     type: Sequelize.INTEGER
+  },
+  createdAt: {
+    type: Sequelize.STRING
+  },
+  updatedAt: {
+    type: Sequelize.STRING
+  }
+});
+
+models.Events = sequelize.define('Event', {
+  idOfUser: {
+    type: Sequelize.INTEGER
+  },
+  idOfPlant: {
+    type: Sequelize.INTEGER
+  },
+  eventDate: {
+    type: Sequelize.STRING
   },
   createdAt: {
     type: Sequelize.STRING
@@ -131,6 +149,10 @@ models.UsersGardens = sequelize.define('UsersGarden', {
 
 //establish the relationships between the tables
 models.Users.hasMany(models.Plants);
+
+models.Users.hasMany(models.Events);
+models.Plants.hasMany(models.Events);
+
 models.Gardens.hasMany(models.Plants);
 models.SpeciesInfos.hasMany(models.Plants);
 models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
@@ -150,6 +172,11 @@ models.Plants.sync({force: false})
            .then(function() {
              console.log('Plant sync in sequelize.js');
            });
+
+models.Events.sync({force: false})
+            .then(function() {
+              console.log('Event syn in sequelize.js');
+            });
 
 models.SpeciesInfos.sync({force: false})
            .then(function() {
