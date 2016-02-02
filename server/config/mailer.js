@@ -1,11 +1,14 @@
 var nodemailer = require('nodemailer');
+if(!process.env.DEPLOYED) {
+	var config = require('./../env/config.js');
+}
 
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     //TODO put process.env variables
     user: 'greenius.thesis@gmail.com',
-    password: 'Ill put the real thing in later ha-ha'
+    password: process.env.NODEMAILER_PASSWORD || config.NODEMAILER_PASSWORD
   }
 });
 
