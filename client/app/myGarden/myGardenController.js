@@ -100,7 +100,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
   that.formatGardenForSandbox = function(){
     that.resultPlants.forEach(function(element){
       if(element.idOfGarden === ""){
-        that.lists[0].plants.push({
+        that.lists[0].plan=ts.push({
           name: element.nickname,
           gardenId: element.idOfGarden,
           plantId: element.plantId,
