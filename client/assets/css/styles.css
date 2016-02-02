@@ -96,6 +96,12 @@
   width: 100%;
 }
 
+.profile-image {
+  width: 100px;
+  border-radius: 50px;
+  border: 1px solid #3C763D;
+}
+
 #profile-image {
   height: 75px;
   width: auto;
@@ -144,11 +150,17 @@
     margin-right: 0;
   }
 
+  .profile-image {
+    width: 100px;
+    border-radius: 50px;
+    border: 1px solid #3C763D;
+  }
+
   #profile-image {
     height: 75px;
     width: auto;
   }
-  
+
   #menu-btn-container {
     width: 100%;
     margin-bottom: 20px;
@@ -162,7 +174,7 @@
 }
 
 .min-padding {
-  padding-right: 15px; 
+  padding-right: 15px;
   padding-left: 15px;
 }
 
@@ -242,7 +254,3 @@
     margin-top: 5px;
     margin-left: 20px;
 }
-
-
-
-

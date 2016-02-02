@@ -1,10 +1,15 @@
 var express = require('express');
 var app = express();
 var helper = require('./../../db/helpers.js');
+
+if(!process.env.DEPLOYED) {
+	var config = require('./../../env/config.js');
+}
+
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 //TODO: make process.env variables fro CLIENT_SECRET
-var oauth2Client = new OAuth2(process.env.CLIENT_ID,process.env.CLIENT_SECRET,"http://127.0.0.1:3000/auth/google/callback");
+var oauth2Client = new OAuth2(process.env.GOOGLE_CALENDAR_ID || config.GOOGLE_CALENDAR_ID, process.env.GOOGLE_CLIENT_SECRET || config.GOOGLE_CLIENT_SECRET, "http://127.0.0.1:3000/auth/google/callback");
 var mailer = require('./../../config/mailer.js');
 
 module.exports = {
