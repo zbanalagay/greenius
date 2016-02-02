@@ -12,7 +12,7 @@ var helpers = {
          throw Error('Username is already taken');
        }
        //Create a user in the Users table
-       Console.log('AddUser was successful');
+       console.log('AddUser was successful');
        return db.Users.create(user);
     })
     .catch(function(error) {
@@ -23,13 +23,13 @@ var helpers = {
   //user is an object with username
   deleteUser : function(user) {
     return db.Users.destroy({
-     where: {username: user.username} 
+     where: {username: user.username}
     })
     .then(function(userResult) {
       if(!userResult){
         throw Error('Username not doesnt exist! cant be deleted')
       }
-      Console.log('DeleteUser was successful');
+      console.log('DeleteUser was successful');
       return userResult;
     })
     .catch(function(error) {
@@ -97,7 +97,7 @@ var helpers = {
         Console.log('UpdatedPlantDate was successful');
         return updatedPlant;
       })
-    })  
+    })
     .catch(function(error) {
       console.log('Error updating plantDate ', error);
     })
@@ -112,7 +112,7 @@ var helpers = {
       if(!plantResult){
         throw Error('Plant does not exist, cannot be deleted', error);
       }
-      Console.log('DeletePlant was successful');
+      console.log('DeletePlant was successful');
       return plantResult;
     })
     .catch(function(error) {
@@ -134,8 +134,8 @@ var helpers = {
       idOfUser = userResult.id;
       // Check to see if event already exists
       return db.Events.findOne({
-        where: { 
-          idOfUser: idOfUser, 
+        where: {
+          idOfUser: idOfUser,
           idOfPlant: eventData.idOfPlant,
           eventDate: eventData.eventDate
         }
@@ -158,8 +158,8 @@ var helpers = {
         .catch(function(error) {
           console.log('Error adding event to database ', error);
         })
-      })  
-    }) 
+      })
+    })
   },
 
   // eventData is an object with idOfPlant
@@ -220,8 +220,8 @@ var helpers = {
       idOfUser = userResult.id;
       // Check to see if event already exists
       return db.Events.findOne({
-        where: { 
-          idOfUser: idOfUser, 
+        where: {
+          idOfUser: idOfUser,
           idOfPlant: eventData.idOfPlant,
           eventDate: eventData.eventDate
         }
@@ -246,8 +246,8 @@ var helpers = {
         .catch(function(error) {
           console.log('Error removing event from database ', error);
         })
-      })  
-    }) 
+      })
+    })
   },
 
   //garden is an object with gardenName
@@ -495,7 +495,7 @@ var helpers = {
       })
     })
   },
-  
+
   //garden is an object with gardenName
   //user is an object with username
   addUserToGarden : function(garden, user) {
@@ -583,11 +583,3 @@ var helpers = {
 };
 
 module.exports = helpers;
-
-
-
-
-
-
-
-
