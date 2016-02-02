@@ -14,8 +14,12 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
   that.resultPlants;
   that.lists;
   that.gardenArray = [];
+  that.data.gardenAdded = '';
 
-
+  //TODO FOR Brandon
+    //make browseplants appear in nursery
+    // and when addGarden is called refresh drag and drop list
+      
   that.dropCallback = function(event, index, item, external, type){
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
@@ -26,7 +30,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
     if(that.data.gardenName){
       Plants.getGardenPlants(that.data)
         .then(function(results) {
-          // console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
+          console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
           that.resultPlants = results;
           that.count++;
         })
@@ -44,6 +48,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
         }
         that.lists = that.setList(that.resultPlants)
         that.formatGardenForSandbox();
+        that.getUserPlants();
       })
       .catch(function(error) {
         console.log(error);
@@ -71,6 +76,25 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
         console.log(error);
       });
   };
+
+  that.addGarden = function(){
+    if(that.data.gardenAdded){
+      var gardenObj = {};
+      gardenObj.gardenName = that.data.gardenAdded;
+      gardenObj.username = that.data.username;
+      console.log('HELLO', gardenObj);
+      Plants.addGarden(gardenObj)
+        .then(function(results){
+          console.log(results, 'JWKELJR:WLKJR#_)($_)@#($(*!@#))')
+          that.getUsersGardens();
+          that.getUserPlants();
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+    }
+
+  }
 
   that.deleteGarden = function(){
     if(confirm('Are You sure you want to delete this garden and all its plants?')){
