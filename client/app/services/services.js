@@ -7,9 +7,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/deletePlant',
       data: plant
     }).then(function(response){
+      console.log(response, 'SUCCESS IN DELTE PLANT')
       return response;
     }).catch(function(error){
-      console.log(error);
+      console.log(error, 'ERROR IN DELTE PLANT');
     });
   };
 
@@ -19,9 +20,10 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/deleteGarden',
       data: garden
     }).then(function(response){
+      console.log('SUCCESS IN DELETEGARDEN FACTORY', response);
       return response;
     }).catch(function(error){
-      console.log(error);
+      console.log(error, 'ERROR in DELETEGARDEN Factory');
     });
   };
 
@@ -43,6 +45,7 @@ services.factory('Plants', ['$http', function($http){
       url: '/api/plants/addGarden',
       data: garden
     }).then(function(response){
+        console.log(response, 'THIS ADDGARDEN FACTORY')
         return response;
     }).catch(function(error){
         console.log(error);
@@ -138,11 +141,11 @@ services.factory('Plants', ['$http', function($http){
 
 services.factory('Users', ['$http', function($http){
 
-  var addUser = function(userObj){
+  var addUser = function(user){
     return $http({
       method: 'POST',
       url: '/api/users/addUser',
-      data: userObj
+      data: user
     }).then(function(response){
       return response.config.data;
     }).catch(function(error){
@@ -150,11 +153,11 @@ services.factory('Users', ['$http', function($http){
     });
   };
 
-  var getUser = function(userObj){
+  var getUser = function(user){
       return $http({
         method: 'POST',
         url: 'api/users/getUser',
-        data: userObj
+        data: user
       }).then(function(response){
         return response;
       }).catch(function(error){
@@ -163,11 +166,11 @@ services.factory('Users', ['$http', function($http){
     };
 
 
- var deleteUser = function(userObj){
+ var deleteUser = function(user){
     return $http({
       method: 'POST',
       url: '/api/users/deleteUser',
-      data: userObj
+      data: user
     }).then(function(response){
       return response.config.data;
     }).catch(function(error){
@@ -181,4 +184,80 @@ services.factory('Users', ['$http', function($http){
     deleteUser: deleteUser
   };
 
+}]);
+
+services.factory('Events', ['$http', function($http){
+
+  var addPlantEvent = function(plantEvent){
+    return $http({
+      method: 'POST',
+      url: '/api/events/addPlantEvent',
+      data: plantEvent
+    }).then(function(response){
+      console.log('SUCCESS INSIDE addPlantEvent FACTORY', response);
+      return response;
+    }).catch(function(error){
+      console.log(error, 'ERROR INSIDE ADDPLANTEVENTS FACTORY');
+    });
+  };
+
+  var getPlantEvent = function(plantEvent){
+    return $http({
+      method: 'POST',
+      url: '/api/events/getPlantEvent',
+      data: plantEvent
+    }).then(function(response){
+      console.log('SUCCESS INSIDE getPlantEvent FACTORY', response);
+      return response;
+    }).catch(function(error){
+      console.log(error, 'ERROR INSIDE GETPLANTEVENTS FACTORY');
+    });
+  };
+
+  var getUserEvents = function(user){
+    return $http({
+      method: 'POST',
+      url: '/api/events/getUserEvents',
+      data: user
+    }).then(function(response){
+      console.log('SUCCESS INSIDE GETUSEREVENTS', response);
+      return response;
+    }).catch(function(error){
+      console.log(error, 'ERROR INSIDE GETUSEREVENTS FACTORY');
+    });
+  };
+
+  var postToGoogleCalendar = function(plantEvent){
+    return $http({
+      method: 'POST',
+      url: '/api/events/postToGoogleCalendar',
+      data: plantEvent
+    }).then(function(response){
+      console.log('SUCCESS INSIDE POSTTOGOOGLECALENDAR FACTORY', response);
+      return response;
+    }).catch(function(error){
+      console.log(error, 'ERROR INSIDE POSTTOGOOGLECALENDAR FACTORY');
+    });
+  };
+
+  var removePlantEvent = function(plantEvent){
+    return $http({
+      method: 'POST',
+      url: '/api/events/removePlantEvent',
+      data: plantEvent
+    }).then(function(response){
+      console.log('SUCCESS INSIDE REMOVEPLANTEVENT FACTORY', response);
+      return response;
+    }).catch(function(error){
+      console.log(error, 'ERROR INSIDE REMOVEPLANTEVENTS FACTORY');
+    });
+  };
+
+  return{
+    addPlantEvent: addPlantEvent,
+    getPlantEvent: getPlantEvent,
+    getUserEvents: getUserEvents,
+    postToGoogleCalendar: postToGoogleCalendar,
+    removePlantEvent: removePlantEvent,
+  };
 }]);
