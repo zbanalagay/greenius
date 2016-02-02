@@ -149,10 +149,8 @@ models.UsersGardens = sequelize.define('UsersGarden', {
 
 //establish the relationships between the tables
 models.Users.hasMany(models.Plants);
-
 models.Users.hasMany(models.Events);
 models.Plants.hasMany(models.Events);
-
 models.Gardens.hasMany(models.Plants);
 models.SpeciesInfos.hasMany(models.Plants);
 models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
