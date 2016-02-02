@@ -21,7 +21,9 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
     Plants.addGardenToPlant(plant, garden)
-    that.getUserPlants()
+      .then(function(){
+        that.getUserPlants()
+      })
   };
 
   that.getUserPlants = function(){
