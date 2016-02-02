@@ -23,24 +23,10 @@ module.exports = {
       });
   },
 
-  removePlantEvent: function(req, res){
-    console.log(req.body, 'THIS IS REQ.BODY IN REMOVEPLANTEVENT HANDLER');
-    var plantEventData = req.body;
-    helper.removePlantEvent(plantEventData)
-      .then(function(results){
-        console.log('SUCCESS INSIDE REMOVEPLANTEVENT HANDLER');
-        res.status(200).send(results);
-      })
-      .catch(function(error){
-        console.log(error, 'ERROR INSIDE REMOVEPLANTEVENT HANDLER');
-        res.status(404).send(error);
-      });
-  },
-
   getPlantEvent: function(req, res){
     console.log(req.body, 'THIS IS REQ.BODY IN GETPLANTEVENT HANDLER');
     var plantEventData = req.body;
-    helper.getPlantEvent(plantEventData)
+    helper.getPlantEvents(plantEventData)
       .then(function(results){
         console.log('SUCCESS INSIDE GETPLANTEVENT HANDLER');
         res.status(200).send(results);
@@ -105,5 +91,19 @@ module.exports = {
      res.send(200).status(event.htmlLink);
 
    })
-  }
+ },
+
+ removePlantEvent: function(req, res){
+   console.log(req.body, 'THIS IS REQ.BODY IN REMOVEPLANTEVENT HANDLER');
+   var plantEventData = req.body;
+   helper.removePlantEvent(plantEventData)
+     .then(function(results){
+       console.log('SUCCESS INSIDE REMOVEPLANTEVENT HANDLER');
+       res.status(200).send(results);
+     })
+     .catch(function(error){
+       console.log(error, 'ERROR INSIDE REMOVEPLANTEVENT HANDLER');
+       res.status(404).send(error);
+     });
+ }
 };
