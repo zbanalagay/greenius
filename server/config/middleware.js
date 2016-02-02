@@ -23,7 +23,7 @@ module.exports = function(app, express){
 
 	app.use('/api/plants', plantsRouter);
 	app.use('/api/users', usersRouter);
-  app.user('/api/events', eventsRouter);
+  app.use('/api/events', eventsRouter);
 
 	require('./../routes/plants/plantsRoutes.js', jwtCheck)(plantsRouter);
   require('./../routes/events/eventsRoutes.js', jwtCheck)(eventsRouter);
