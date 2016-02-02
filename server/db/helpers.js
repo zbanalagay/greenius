@@ -2,23 +2,6 @@ var db = require('./sequelize.js');
 
 var helpers = {
 
-
-  //user is an object with username
-  deleteUser : function(user) {
-    return db.Users.destroy({
-     where: {username: user.username} 
-    })
-    .then(function(userResult) {
-      if(!userResult){
-        throw Error('username not doesnt exist! cant be deleted')
-      }
-      return userResult;
-    })
-    .catch(function(error) {
-      console.log('Error adding user to the database', error);
-    })
-  },
-
   addUser : function(user) {
     // Check for commonName in Users table
     return db.Users.findOne({
@@ -36,8 +19,23 @@ var helpers = {
     })
   },
 
+  //user is an object with username
+  deleteUser : function(user) {
+    return db.Users.destroy({
+     where: {username: user.username} 
+    })
+    .then(function(userResult) {
+      if(!userResult){
+        throw Error('username not doesnt exist! cant be deleted')
+      }
+      return userResult;
+    })
+    .catch(function(error) {
+      console.log('Error adding user to the database', error);
+    })
+  },
 
-  //plant is an object with username, commonName, gardenName, plantDate nickname, plantStatus
+  //plant is an object with username, commonName, plantDate nickname, plantStatus
   addPlant : function(plant) {
     var plantObj = {};
     //Check for username in Users Table
@@ -50,64 +48,61 @@ var helpers = {
       }
       console.log('User ID exists: ', userResults);
       plantObj.userResults = userResults;
-
         //Check for commonName in SpeciesInfos table
-        return db.SpeciesInfos.findOne({
-          where: {commonName: plant.commonName}
+      return db.SpeciesInfos.findOne({
+        where: {commonName: plant.commonName}
+      })
+      .then(function(speciesResults) {
+        if(!speciesResults) {
+          throw Error('Species does not exist');
+        }
+        console.log('Species exists: ', speciesResults);
+        plantObj.speciesResults = speciesResults;
+          // Insert plant into Plant table
+        return db.Plants.create({
+          idOfUser: plantObj.userResults.id,
+          idOfSpecies: plantObj.speciesResults.id,
+          plantDate: plant.plantDate,
+          nickname: plant.nickname,
+          plantStatus: plant.plantStatus
         })
-        .then(function(speciesResults) {
-          if(!speciesResults) {
-            throw Error('Species does not exist');
-          }
-          console.log('Species exists: ', speciesResults);
-          plantObj.speciesResults = speciesResults;
-
-            // Check for gardenName in Gardens table
-            return db.Gardens.findOne({
-              where: {gardenName: plant.gardenName}
-            })
-            .then(function(gardenResults) {
-              if(!gardenResults) {
-                throw Error('Garden does not exist');
-              }
-              console.log('Garden exists: ', gardenResults);
-              plantObj.gardenResults = gardenResults;
-
-                // Insert plant into Plant table
-                return db.Plants.create({
-                  idOfUser: plantObj.userResults.id,
-                  idOfSpecies: plantObj.speciesResults.id,
-                  plantDate: plant.plantDate,
-                  nickname: plant.nickname,
-                  plantStatus: plant.plantStatus,
-                  idOfGarden: plantObj.gardenResults.id
-                })
-                .then(function(plantResults) {
-                  console.log('Add plant successful');
-                })
-                .catch(function(error) {
-                   console.log('Error adding plant to the database ', error);
-                })
-            })
+        .then(function(plantResults) {
+          console.log('Add plant successful');
         })
+        .catch(function(error) {
+           console.log('Error adding plant to the database ', error);
+        })
+      })
     })
   },
 
-  deleteGarden: function(gardenData) {
-    return db.Gardens.destroy({
-      where: {gardenName : gardenData.gardenDelete}
+  //plant is an object with id, plantDate
+  updatePlantDate: function(plant) {
+     // Check for id in Plants table
+    return db.Plants.findOne({
+      where: {id: plant.id}
     })
-    .then(function(gardenResult) {
-      if(!gardenResult){
-        throw Error('Garden does not exist, cannot be deleted', error);
+    .then(function(plantResult) {
+      if(!plantResult) {
+        throw ERROR('Plant does not exist');
       }
-      return gardenResult;
-    })
+      // Update plantDate in Plant table
+      return plantResult.update({
+        plantDate: plant.plantDate
+      })
+      .then(function(updatedPlant) {
+        if(!updatedPlant) {
+          throw ERROR('Error updating plantDate');
+        }
+        console.log('This is the updated plant: ', updatedPlant);
+      })
+    })  
     .catch(function(error) {
-      console.log('Error deleting garden', error);
+      console.log('Error updating plantDate ', error);
     })
   },
 
+  // plantData is an object with plantDelete
   deletePlant: function(plantData) {
     return db.Plants.destroy({
       where: {nickname: plantData.plantDelete}
@@ -124,6 +119,100 @@ var helpers = {
     })
   },
 
+  // eventData is an object with username, idOfPlant, eventDate
+  addPlantEvent: function(eventData) {
+    var idOfUser;
+    //Check for username in Users Table
+    return db.Users.findOne({
+      where: {username: eventData.username}
+    })
+    .then(function(userResult) {
+      if(!userResult) {
+        throw Error('User does not exist, event cannot be added', error);
+      }
+      idOfUser = userResult.id;
+      // Check to see if event already exists
+      return db.Events.findOne({
+        where: { 
+          idOfUser: idOfUser, 
+          idOfPlant: eventData.idOfPlant,
+          eventDate: eventData.eventDate
+        }
+      })
+      .then(function(eventResult) {
+        if(eventResult) {
+          console.log('Event already exists in database ');
+          return;
+        }
+        // Insert event into Events table
+        return db.Events.create({
+          idOfUser: idOfUser,
+          idOfPlant: eventData.idOfPlant,
+          eventDate: eventData.eventDate
+        })
+        .then(function(eventsResult) {
+          console.log('Add event successful ', eventsResult);
+        })
+        .catch(function(error) {
+          console.log('Error adding event to database ', error);
+        })
+      })  
+    }) 
+  },
+
+  // var eventData = {username: 'Robert', idOfPlant: 2, eventDate: 'Mon Feb 01 2016 16:30:16 GMT-0800 (PST)'}; TODO: Takeout during code cleanup
+
+  getPlantEvents: function(eventData) {
+
+  },
+
+  getUserEvent: function(eventData) {
+
+  },
+
+  // eventData is an object with username, idOfPlant, eventDate
+  removePlantEvent: function(eventData) {
+    var idOfUser;
+    var idOfEvent;
+    //Check for username in Users Table
+    return db.Users.findOne({
+      where: {username: eventData.username}
+    })
+    .then(function(userResult) {
+      if(!userResult) {
+        throw Error('User does not exist, event cannot be added', error);
+      }
+      idOfUser = userResult.id;
+      // Check to see if event already exists
+      return db.Events.findOne({
+        where: { 
+          idOfUser: idOfUser, 
+          idOfPlant: eventData.idOfPlant,
+          eventDate: eventData.eventDate
+        }
+      })
+      .then(function(eventResult) {
+        if(!eventResult) {
+          throw Error('Event already exists in database ', error);
+          return;
+        }
+        // Insert event into Events table
+        idOfEvent = eventResult.id;
+        return db.Events.destroy({
+          where: {id: idOfEvent}
+        })
+        .then(function(eventsResult) {
+          if(!eventsResult) {
+            throw Error('Error deleting Event from database');
+          }
+          return eventsResult;
+        })
+        .catch(function(error) {
+          console.log('Error deleting event from database ', error);
+        })
+      })  
+    }) 
+  },
 
   //garden is an object with gardenName
   addGarden : function(garden) {
@@ -140,6 +229,22 @@ var helpers = {
     })
     .catch(function(error) {
       console.log('Error adding garden to database ', error);
+    })
+  },
+
+   // gardenData is an object with gardenDelete
+  deleteGarden: function(gardenData) {
+    return db.Gardens.destroy({
+      where: {gardenName : gardenData.gardenDelete}
+    })
+    .then(function(gardenResult) {
+      if(!gardenResult){
+        throw Error('Garden does not exist, cannot be deleted', error);
+      }
+      return gardenResult;
+    })
+    .catch(function(error) {
+      console.log('Error deleting garden', error);
     })
   },
 
@@ -198,6 +303,7 @@ var helpers = {
        if(!plantResult) {
          throw ERROR('Plant ID does not exist');
        }
+       // Update ifOfGarden in Plant table
        return plantResult.update({
         idOfGarden: plantObj.gardenId
        })
@@ -205,36 +311,29 @@ var helpers = {
         if(!plantResult) {
           throw ERROR('Error when adding garden to plant');
         }
-       console.log('This is the updatedPlant: ', updatedPlant);
-       })
-     })
-     .catch(function(error) {
+        console.log('This is the updatedPlant: ', updatedPlant);
+        })
+      })
+      .catch(function(error) {
         console.log('Error adding plant to the database ', error);
-     })
-   })
- },
-
-  //addGardenToUser : function(user, garden) {
-
-  // }, // future feature
+      })
+    })
+  },
 
   //user is an object with username
   getUser : function(user) {
-      //Check for username in Users table
-      return db.Users.findOne({
-        where: {username: user.username}
-      })
-      .then(function(userResult) {
-        if(!userResult) {
-          throw ERROR('Username does not exist');
-        }
-        console.log('Username exists: ', userResult.username);
-        return userResult;
-      })
-      // .catch(function(error){
-      //   console.log(error, 'ERROR INSIDE GET USER HELPER');
-      // })
-    },
+    //Check for username in Users table
+    return db.Users.findOne({
+      where: {username: user.username}
+    })
+    .then(function(userResult) {
+      if(!userResult) {
+        throw ERROR('Username does not exist');
+      }
+      console.log('Username exists: ', userResult.username);
+      return userResult;
+    })
+  },
 
   //garden is an object with gardenName
   getGarden : function(garden) {
@@ -250,7 +349,7 @@ var helpers = {
       console.log('Garden name: ', gardenResult.gardenName);
       gardenObj.gardenId = gardenResult.id;
       //Check for idOfGarden in Plants table
-      return db.Plants.getOne({
+      return db.Plants.findOne({
         where: {idOfGarden: gardenObj.gardenId}
       })
       .then(function(plantResult) {
@@ -361,8 +460,6 @@ var helpers = {
       })
     })
   },
-
- 
   
   //garden is an object with gardenName
   //user is an object with username
@@ -450,3 +547,11 @@ var helpers = {
 };
 
 module.exports = helpers;
+
+
+
+
+
+
+
+
