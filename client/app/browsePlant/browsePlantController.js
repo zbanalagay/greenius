@@ -17,7 +17,7 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
     that.showModal = false;
     that.tracker = false;
 
-    that.phones = ['Jade', 'Peaches', 'Radishes', 'Shasta Daisies', 'Daffodils', 'Thyme', 'Coriander and Cilantro', 'Crocuses', 'Brussels Sprouts',
+    that.plants = ['Jade', 'Peaches', 'Radishes', 'Shasta Daisies', 'Daffodils', 'Thyme', 'Coriander and Cilantro', 'Crocuses', 'Brussels Sprouts',
                     'Dill', 'Beans', 'Cabbage', 'Tomatoes', 'Grapes', 'Carrots', 'Corn', 'Sweet Peas', 'Lilies', 'Aster', 'Watermelon', 'Blueberries', 'Rosemary', 'Bell Peppers', 'Chives',
                     'Veronica', 'Tulips', 'Lettuce', 'Rhododendrons', 'Turnips', 'African Violets', 'Cannas', 'Sage', 'Cucumbers', 'Peace Lily', 'Zinnias', 'Plums', 'Marigolds',
                     'Jasmine', 'Geraniums', 'Chard', 'Peas', 'Onions', 'Irises', 'Ponytail Palm', 'Cosmos', 'Wandering Jew', 'Strawberries', 'Tarragon', 'Nasturtium',
@@ -151,7 +151,7 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
             console.log(error);
           });
       } else{
-        alert('You must enter a plant');
+        alert('You must enter a plant name.');
       }
     };
 }]);
