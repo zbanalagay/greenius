@@ -9,50 +9,19 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
   that.data.plantDate;
   that.data.plantStatus;
   that.data.idOfGarden;
-  that.gardens = {};
+  that.gardens = {"0": "The Nursery"};
   that.count = 0;
   that.resultPlants;
   that.lists;
   that.gardenArray = [];
   that.data.gardenAdded = '';
-
-  //TODO FOR Brandon
-    //make browseplants appear in nursery
-    // and when addGarden is called refresh drag and drop list
       
   that.dropCallback = function(event, index, item, external, type){
+    console.log(item)
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
     Plants.addGardenToPlant(plant, garden)
-  };
-
-  that.getSpecifcGardenPlants = function(){
-    if(that.data.gardenName){
-      Plants.getGardenPlants(that.data)
-        .then(function(results) {
-          console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
-          that.resultPlants = results;
-          that.count++;
-        })
-        .catch(function(error) {
-          console.log(error);
-        })
-    }
-  };
-
-  that.getUsersGardens = function(){
-    Plants.getUserGardens(that.data)
-      .then(function(results) {
-        for(var i = 0; i < results.length; i++){
-          that.gardens[results[i].id] = results[i].gardenName
-        }
-        that.lists = that.setList(that.resultPlants)
-        that.formatGardenForSandbox();
-        that.getUserPlants();
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
+    that.getUserPlants()
   };
 
   that.getUserPlants = function(){
@@ -65,16 +34,48 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
           obj.nickname    = results.data[i].nickname;
           obj.plantDate   = results.data[i].plantDate;
           obj.plantStatus = results.data[i].plantStatus;
-          obj.idOfGarden  = results.data[i].idOfGarden;
+          obj.idOfGarden  = results.data[i].idOfGarden || '';
           obj.plantId     = results.data[i].id;
           obj.speciesId   = results.data[i].idOfSpecies;
           tempArray.push(obj);
         }
         that.resultPlants = tempArray;
+        that.getUsersGardens();
       })
       .catch(function(error) {
         console.log(error);
       });
+  };
+
+  that.getUsersGardens = function(){
+    Plants.getUserGardens(that.data)
+      .then(function(results) {
+        for(var i = 0; i < results.length; i++){
+          that.gardens[results[i].id] = results[i].gardenName
+        }
+        that.lists = that.setList(that.gardens)
+        that.getSpecifcGardenPlants();
+        that.formatGardenForSandbox();
+        // that.getUserPlants();
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+  };
+
+  that.getSpecifcGardenPlants = function(){
+    if(that.data.gardenName){
+      Plants.getGardenPlants(that.data)
+        .then(function(results) {
+          // console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
+          that.resultPlants = results;
+          that.count++;
+          // that.formatGardenForSandbox();
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+    }
   };
 
   that.addGarden = function(){
@@ -82,18 +83,16 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
       var gardenObj = {};
       gardenObj.gardenName = that.data.gardenAdded;
       gardenObj.username = that.data.username;
-      console.log('HELLO', gardenObj);
+      // console.log('HELLO', gardenObj);
       Plants.addGarden(gardenObj)
         .then(function(results){
-          console.log(results, 'JWKELJR:WLKJR#_)($_)@#($(*!@#))')
-          that.getUsersGardens();
+          // console.log(results, 'JWKELJR:WLKJR#_)($_)@#($(*!@#))')
           that.getUserPlants();
         })
         .catch(function(error){
           console.log(error);
         });
     }
-
   }
 
   that.deleteGarden = function(){
@@ -105,7 +104,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
           .then(function(results){
             console.log(results, 'RESULTS IN GETGARDENPLANTSDELETEGAREDJFKLN');
             for(var i = 0; i<results.length; i++){
-              console.log(results[i].nickname, 'BITCHES GET STICHES')
+              console.log(results[i].nickname, 'nickname')
               var temp = {};
               temp.plantDelete = results[i].nickname;
               console.log(temp, "jlkajfsalkjklewiouriowne")
@@ -115,7 +114,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
             Plants.deleteGarden(that.data)
             .then(function(results) {
               console.log(results, 'RESULTS IN DELETE GARDEN CONTROLLER');
-              that.getUsersGardens();
+              that.getUserPlants();
 
             })
             .catch(function(error){
@@ -130,25 +129,22 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
     }
   };
 
-  that.setList = function(arr) {
-    var res = arr.reduce(function(obj, cur, i, array) {
-      //if theres no garden id or that gardens been seen already, continue
-      if (cur.idOfGarden === '' || obj[cur.idOfGarden]) { return obj }
-        obj[cur.idOfGarden] = {
-          label: that.gardens[cur.idOfGarden],
-          plants: []
+  that.setList = function(gardens) {
+    //return array of objects
+    var res = { 0: { label: "The Nursery", plants: [] }}
+    for(var garden in gardens){
+      if(res[garden] === undefined){
+            res[garden] = {label: gardens[garden], plants: []}
         }
-        return obj
-        //object to reduce to starts with area for unplanted plants
-      }, { 0: { label: "The Nursery", plants: [] }}
-    );
+    }
     return res;
   };
 
   that.formatGardenForSandbox = function(){
+
     that.resultPlants.forEach(function(element){
       if(element.idOfGarden === ""){
-        that.lists[0].plan=ts.push({
+        that.lists[0].plants.push({
           name: element.nickname,
           gardenId: element.idOfGarden,
           plantId: element.plantId,
@@ -166,7 +162,5 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
   };
 
   that.getUserPlants();
-  that.getUsersGardens();
-  that.getSpecifcGardenPlants();
 
 }]);
