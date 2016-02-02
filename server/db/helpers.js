@@ -37,7 +37,7 @@ var helpers = {
     })
   },
 
-  //plant is an object with username, commonName, plantDate nickname, plantStatus
+  //plant is an object with username, commonName, nickname, plantStatus
   addPlant : function(plant) {
     var plantObj = {};
     //Check for username in Users Table
@@ -48,7 +48,7 @@ var helpers = {
       if(!userResults) {
         throw Error('Username does not exist');
       }
-      plantObj.userResults = userResults;
+      plantObj.userId = userResults.id;
         //Check for commonName in SpeciesInfos table
       return db.SpeciesInfos.findOne({
         where: {commonName: plant.commonName}
@@ -57,17 +57,17 @@ var helpers = {
         if(!speciesResults) {
           throw Error('Species does not exist');
         }
-        plantObj.speciesResults = speciesResults;
+        plantObj.speciesId = speciesResults.id;
           // Insert plant into Plant table
         return db.Plants.create({
-          idOfUser: plantObj.userResults.id,
-          idOfSpecies: plantObj.speciesResults.id,
-          plantDate: plant.plantDate,
+          idOfUser: plantObj.userId,
+          idOfSpecies: plantObj.speciesId,
           nickname: plant.nickname,
           plantStatus: plant.plantStatus
         })
         .then(function(plantResults) {
           console.log('Add plant successful');
+          return plantResults;
         })
         .catch(function(error) {
            console.log('Error adding plant to the database ', error);
