@@ -48,9 +48,12 @@
     "bower": "^1.7.2",
     "express": "^4.4.5",
     "express-jwt": "^3.3.0",
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^2.1.7",
     "gulp-sqlite3": "0.0.1",
     "jshint": "^2.9.1",
     "morgan": "^1.1.1",
+    "nodemailer": "^2.1.0",
     "pg": "^4.4.3",
     "request": "^2.36.0",
     "sequelize": "^3.17.3"

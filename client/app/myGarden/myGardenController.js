@@ -13,7 +13,13 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
   that.count = 0;
   that.resultPlants;
   that.lists;
-  
+  that.gardenArray = [];
+  that.data.gardenAdded = '';
+
+  //TODO FOR Brandon
+    //make browseplants appear in nursery
+    // and when addGarden is called refresh drag and drop list
+      
   that.dropCallback = function(event, index, item, external, type){
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
@@ -24,7 +30,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
     if(that.data.gardenName){
       Plants.getGardenPlants(that.data)
         .then(function(results) {
-          // console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
+          console.log(results, 'SUCCESS IN getSpecifcGardenPlants CONTROLLER');
           that.resultPlants = results;
           that.count++;
         })
@@ -39,9 +45,10 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
       .then(function(results) {
         for(var i = 0; i < results.length; i++){
           that.gardens[results[i].id] = results[i].gardenName
-        } 
+        }
         that.lists = that.setList(that.resultPlants)
         that.formatGardenForSandbox();
+        that.getUserPlants();
       })
       .catch(function(error) {
         console.log(error);
@@ -68,31 +75,72 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
       .catch(function(error) {
         console.log(error);
       });
-  }; 
+  };
+
+  that.addGarden = function(){
+    if(that.data.gardenAdded){
+      var gardenObj = {};
+      gardenObj.gardenName = that.data.gardenAdded;
+      gardenObj.username = that.data.username;
+      console.log('HELLO', gardenObj);
+      Plants.addGarden(gardenObj)
+        .then(function(results){
+          console.log(results, 'JWKELJR:WLKJR#_)($_)@#($(*!@#))')
+          that.getUsersGardens();
+          that.getUserPlants();
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+    }
+
+  }
 
   that.deleteGarden = function(){
-    if(that.data.gardenDelete){
-      Plants.deleteGarden(that.data)
-      .then(function(results) {
-        console.log(results, 'RESULTS IN DELETE GARDEN CONTROLLER');
-      })
-      .catch(function(error){
-        console.log(error, 'ERROR IN DELETE GARDEN CONTROLLER');
-      })
+    if(confirm('Are You sure you want to delete this garden and all its plants?')){
+      if(that.data.gardenDelete){
+        var gardenObj= {};
+        gardenObj.gardenName = that.data.gardenDelete
+        Plants.getGardenPlants(gardenObj)
+          .then(function(results){
+            console.log(results, 'RESULTS IN GETGARDENPLANTSDELETEGAREDJFKLN');
+            for(var i = 0; i<results.length; i++){
+              console.log(results[i].nickname, 'BITCHES GET STICHES')
+              var temp = {};
+              temp.plantDelete = results[i].nickname;
+              console.log(temp, "jlkajfsalkjklewiouriowne")
+              Plants.deletePlant(temp);
+              that.getUserPlants();
+            }
+            Plants.deleteGarden(that.data)
+            .then(function(results) {
+              console.log(results, 'RESULTS IN DELETE GARDEN CONTROLLER');
+              that.getUsersGardens();
+
+            })
+            .catch(function(error){
+              console.log(error, 'ERROR IN DELETE GARDEN CONTROLLER');
+            })
+          })
+          .catch(function(error){
+            console.log(error, 'ERROR IN DELETING PLANTS OF A GARDEN CONTROLLER');
+          })
+
+      }
     }
   };
 
   that.setList = function(arr) {
     var res = arr.reduce(function(obj, cur, i, array) {
       //if theres no garden id or that gardens been seen already, continue
-      if (cur.idOfGarden === '' || obj[cur.idOfGarden]) { return obj } 
-        obj[cur.idOfGarden] = { 
+      if (cur.idOfGarden === '' || obj[cur.idOfGarden]) { return obj }
+        obj[cur.idOfGarden] = {
           label: that.gardens[cur.idOfGarden],
           plants: []
         }
         return obj
         //object to reduce to starts with area for unplanted plants
-      }, { 0: { label: "To Plant!", plants: [] }} 
+      }, { 0: { label: "The Nursery", plants: [] }}
     );
     return res;
   };
