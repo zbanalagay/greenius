@@ -15,11 +15,11 @@
       <h4>{{bpp.data.botanicalName}}</h4>
 
 
-      <form ng-submit='bpp.userChoseGarden()' ng-if="bpp.promptToAddPlant === true" novalidate>
-        <input type='submit' value='Do you want to Plant?'></input>
+      <form ng-submit='bpp.specificPlantInfoPrompts();' ng-if="bpp.promptToAddPlant === true" novalidate>
+        <input type='submit' value='Do you want to build a snowman?'></input>
       </form>
 
-
+<!-- 
 
       <form ng-submit='bpp.selectGarden()' name='selectGardenForm' ng-if='bpp.gardenPrompt === true' novalidate>
         <h4>Select Your Garden :</h4>
@@ -30,7 +30,7 @@
            or
           <input type='text' placeholder='Create a New Garden' ng-model='bpp.data.gardenName'>
         <input type='submit' value='Next'>
-      </form>
+      </form> -->
 
 
 
@@ -40,7 +40,7 @@
         <input type='submit' value='Add Plant to My Plants'></input>
       </form>
 
-
+<!-- 
 
       <div ng-if='bpp.tracker === true'>
           <h2>Plants in {{bpp.data.gardenName}}:</h2>
@@ -51,7 +51,7 @@
                </a>
              </div>
          </div>
-      </div>
+      </div> -->
     </div>
 
   <!-- 
