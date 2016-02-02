@@ -12,6 +12,7 @@ var helpers = {
          throw Error('Username is already taken');
        }
        //Create a user in the Users table
+       Console.log('AddUser was successful');
        return db.Users.create(user);
     })
     .catch(function(error) {
@@ -26,8 +27,9 @@ var helpers = {
     })
     .then(function(userResult) {
       if(!userResult){
-        throw Error('username not doesnt exist! cant be deleted')
+        throw Error('Username not doesnt exist! cant be deleted')
       }
+      Console.log('DeleteUser was successful');
       return userResult;
     })
     .catch(function(error) {
@@ -46,7 +48,6 @@ var helpers = {
       if(!userResults) {
         throw Error('Username does not exist');
       }
-      console.log('User ID exists: ', userResults);
       plantObj.userResults = userResults;
         //Check for commonName in SpeciesInfos table
       return db.SpeciesInfos.findOne({
@@ -56,7 +57,6 @@ var helpers = {
         if(!speciesResults) {
           throw Error('Species does not exist');
         }
-        console.log('Species exists: ', speciesResults);
         plantObj.speciesResults = speciesResults;
           // Insert plant into Plant table
         return db.Plants.create({
@@ -94,7 +94,8 @@ var helpers = {
         if(!updatedPlant) {
           throw ERROR('Error updating plantDate');
         }
-        console.log('This is the updated plant: ', updatedPlant);
+        Console.log('UpdatedPlantDate was successful');
+        return updatedPlant;
       })
     })  
     .catch(function(error) {
@@ -111,7 +112,7 @@ var helpers = {
       if(!plantResult){
         throw Error('Plant does not exist, cannot be deleted', error);
       }
-      console.log(plantResult, 'RESULT INSIDE DELETE PLANT HELPER')
+      Console.log('DeletePlant was successful');
       return plantResult;
     })
     .catch(function(error) {
@@ -141,7 +142,7 @@ var helpers = {
       })
       .then(function(eventResult) {
         if(eventResult) {
-          console.log('Event already exists in database ');
+          console.log('Event already exists in database');
           return;
         }
         // Insert event into Events table
@@ -151,7 +152,8 @@ var helpers = {
           eventDate: eventData.eventDate
         })
         .then(function(eventsResult) {
-          console.log('Add event successful ', eventsResult);
+          console.log('AddPlantEvent was successful');
+          return eventsResult;
         })
         .catch(function(error) {
           console.log('Error adding event to database ', error);
@@ -160,14 +162,47 @@ var helpers = {
     }) 
   },
 
-  // var eventData = {username: 'Robert', idOfPlant: 2, eventDate: 'Mon Feb 01 2016 16:30:16 GMT-0800 (PST)'}; TODO: Takeout during code cleanup
-
+  // eventData is an object with idOfPlant
   getPlantEvents: function(eventData) {
-
+    return db.Events.findAll({
+      where: {idOfPlant: eventData.idOfPlant}
+    })
+    .then(function(eventResults) {
+      if(!eventResults) {
+        throw Error('IdOfPlant does not exist in Events table ', error);
+      }
+      console.log('GetPlantEvents was successful');
+      return eventResults;
+    })
   },
 
-  getUserEvent: function(eventData) {
-
+  // eventData is an object with username
+  getUserEvents: function(eventData) {
+    var idOfUser;
+    // check for username in Users table
+    return db.Users.findOne({
+      where: {username: eventData.username}
+    })
+    .then(function(userResult) {
+      if(!userResult) {
+        throw Error('Username does not exist in Users table', error);
+      }
+      idOfUser = userResult.id;
+      // findAll events associated with username
+      return db.Events.findAll({
+        where: {idOfUser: idOfUser}
+      })
+      .then(function(eventsResult) {
+        if(!eventsResult) {
+          throw Error('No events exist in the database', error);
+        }
+        console.log('GetUserEvents');
+        return eventsResult;
+      })
+    })
+    .catch(function(error) {
+      console.log('Error finding events in database ', error);
+    })
   },
 
   // eventData is an object with username, idOfPlant, eventDate
@@ -205,10 +240,11 @@ var helpers = {
           if(!eventsResult) {
             throw Error('Error deleting Event from database');
           }
+          Console.log('RemovePlantEvent was successful');
           return eventsResult;
         })
         .catch(function(error) {
-          console.log('Error deleting event from database ', error);
+          console.log('Error removing event from database ', error);
         })
       })  
     }) 
@@ -225,6 +261,7 @@ var helpers = {
         throw Error('Garden name is already taken');
       }
       //Insert garden into Garden table
+      console.log('AddGarden was successful');
       return db.Gardens.create(garden);
     })
     .catch(function(error) {
@@ -241,6 +278,7 @@ var helpers = {
       if(!gardenResult){
         throw Error('Garden does not exist, cannot be deleted', error);
       }
+      console.log('Deletegarden was successful');
       return gardenResult;
     })
     .catch(function(error) {
@@ -274,6 +312,9 @@ var helpers = {
       })
     })
     .then(function(speciesResult) {
+      if(!speciesResult) {
+        throw Error('Error when adding species info ', error)
+      }
       console.log('add species successful');
     })
     .catch(function(error) {
@@ -293,7 +334,6 @@ var helpers = {
      if(!gardenResult) {
        throw ERROR('Garden name does not exist');
      }
-     console.log('Garden name exists: ', gardenResult.gardenName);
      plantObj.gardenId = gardenResult.id;
      // Check for Plants gardenId
      return db.Plants.findOne({
@@ -311,7 +351,7 @@ var helpers = {
         if(!plantResult) {
           throw ERROR('Error when adding garden to plant');
         }
-        console.log('This is the updatedPlant: ', updatedPlant);
+        console.log('AddGardenToPlant was successful ');
         })
       })
       .catch(function(error) {
@@ -328,9 +368,9 @@ var helpers = {
     })
     .then(function(userResult) {
       if(!userResult) {
-        throw ERROR('Username does not exist');
+        throw ERROR('Username does not exist', error);
       }
-      console.log('Username exists: ', userResult.username);
+      console.log('GetUser was successful');
       return userResult;
     })
   },
@@ -344,9 +384,8 @@ var helpers = {
     })
     .then(function(gardenResult) {
       if(!gardenResult) {
-        throw ERROR('Garden name does not exist');
+        throw ERROR('GardenName does not exist');
       }
-      console.log('Garden name: ', gardenResult.gardenName);
       gardenObj.gardenId = gardenResult.id;
       //Check for idOfGarden in Plants table
       return db.Plants.findOne({
@@ -356,7 +395,7 @@ var helpers = {
         if(!plantResult) {
           throw ERROR('No plants associated with this garden');
         }
-        console.log('Plants associated with this garden ', plantResult);
+        console.log('Plants associated with this garden ');
       })
       .catch(function(error) {
       console.log('Error, retrieving garden ', error);
@@ -374,6 +413,7 @@ var helpers = {
       if(!specieResult) {
         throw ERROR('Species does not exist');
       }
+      console.log('getSpeciesInfo was successful');
       return specieResult;
     })
     .catch(function(error) {
@@ -388,11 +428,11 @@ var helpers = {
      where : {nickname: plant.nickname}
     })
     .then(function(plantResult) {
-         if(!plantResult) {
-            throw ERROR ('Plant nickname does not exist');
-        }
-        console.log ('Plant exists: ' , plantResult);
-        return plantResult;
+      if(!plantResult) {
+        throw ERROR ('Plant nickname does not exist');
+      }
+      console.log ('Plant exists: ' , plantResult);
+      return plantResult;
     })
   },
 
@@ -408,9 +448,7 @@ var helpers = {
         throw ERROR('User does not exist');
       }
       //set userId variable for future use
-      console.log(userResult.id, "oHAYHWHWHWEJFJH@#$(_#$)")
       userId = userResult.id;
-      console.log('User associated with this plant: ', userId);
       //findAll plants in the Plants table with specified userId
       return db.Plants.findAll({
         where: {idOfUser: userId}
@@ -419,16 +457,13 @@ var helpers = {
         if(!plantsResult) {
           throw ERROR('Plants do not exists');
         }
-        console.log('Plants associated with this user WERREREWEREWRWEREWR ', plantsResult);
+        console.log('GetUserPlants was successful');
         return plantsResult;
       })
       .catch(function(error) {
         console.log('Error, retrieving plantsResult: ', error);
       })
     })
-    // .catch(function(error) {
-    //   console.log('ERROR, RETRIEVING GETUSERPLANTS', error)
-    // })
   },
 
   //garden is an object with gardenName
@@ -516,6 +551,7 @@ var helpers = {
       console.log('Error, retrieving species', error);
     })
   },
+
   // user is an object with username
   getGardensFromUser : function(user) {
     //Check for username in Users table
