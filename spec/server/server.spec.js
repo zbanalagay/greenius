@@ -1,7 +1,7 @@
 var helpers = require('../../server/db/helpers.js');
 var sequelize = require('sequelize');
 
-// run test in command line wit: $jasmine
+// run test in command line with: jasmine
 var dbConnection;
 beforeAll(function() {
   //create our database
@@ -32,12 +32,25 @@ var plant = {
 var plantDelete = {
   plantDelete : 'Lil Peachy'
 }
+
+var garden = {
+  gardenDelete: 'Happy',
+  gardenName: 'Happy',
+  createdAt: '10/08/2015',
+  updatedAt: '02/01/2016'
+}
+
+var species = {
+  botanicalName: 'rooroo',
+  plantPic: 'picture',
+  wateringInformation: '1'
+}
+
 describe('addUser()', function() {
 
   it('addUser should be a function', function() {
     expect(helpers.addUser).toEqual(jasmine.any(Function));
   })
-
   it('addUser should add a user to the database', function(done) {
     helpers
       .addUser(user)
@@ -111,7 +124,8 @@ describe('getUser()', function() {
             done();
           });
     });
-  })
+  });
+
   describe('deletePlant()', function() {
     it('deletePlant should be a function', function() {
       expect(helpers.deletePlant).toEqual(jasmine.any(Function));
@@ -131,6 +145,72 @@ describe('getUser()', function() {
     });
   });
 
+  describe('addGarden()', function() {
+    it('addGarden should be a function', function() {
+      expect(helpers.addGarden).toEqual(jasmine.any(Function));
+    });
+    it('addGarden should add a garden to the database', function(done) {
+      helpers
+        .addGarden(garden)
+        .then(function(gardenResult) {
+          expect(gardenResult.gardenName).toBe('Happy');
+          done();
+        });
+    });
+  });
+
+  describe('addUserToGarden()', function() {
+    it('addUserToGarden() should be a function', function() {
+      expect(helpers.addUserToGarden).toEqual(jasmine.any(Function));
+    });
+    it('addUserToGarden should add a user to a specific garden', function() {
+      helpers
+        .addUserToGarden(user)
+        .then(function(userResult) {
+          expect(userResult)
+        })
+    })
+  });
+
+  describe('deleteGarden()', function() {
+    it('deleteGarden should be a function', function() {
+      expect(helpers.deleteGarden).toEqual(jasmine.any(Function));
+    });
+    it('deleteGarden should delete a garden from the database', function(done) {
+      helpers
+        .deleteGarden(garden)
+        .then(function(gardenResult) {
+          expect(gardenResult).toBe(1);
+          done();
+        });
+    });
+  });
+
+  describe('addSpeciesInfo()', function() {
+    it('addSpeciesInfo should be a function', function() {
+      expect(helpers.addSpeciesInfo).toEqual(jasmine.any(Function));
+    });
+    it('addSpeciesInfo should add species info into the database', function() {
+      helpers
+        .addSpeciesInfo(species)
+        .then(function(speciesResult) {
+          expect(speciesResult.botanicalName).toBe('rooroo');
+        });
+    });
+  });
+
+  describe('getGardensFromUser()', function() {
+    it('getGardensFromUser should be a function', function() {
+      expect(helpers.getGardensFromUser).toEqual(jasmine.any(Function));
+    });
+    it('getGardensFromUser should add species info into the database', function() {
+      helpers
+        .getGardensFromUser(user)
+        .then(function(speciesResult) {
+          expect(speciesResult.username).toBe('Bob');
+        });
+    });
+  });
 
 
 });
