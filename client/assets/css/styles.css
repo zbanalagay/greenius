@@ -99,7 +99,7 @@
 .profile-image {
   width: 100px;
   border-radius: 50px;
-  border: 1px solid #3C763D;
+  border: 0px;
 }
 
 #profile-image {
@@ -148,12 +148,6 @@
   #wrapper.toggled #page-content-wrapper {
     position: relative;
     margin-right: 0;
-  }
-
-  .profile-image {
-    width: 100px;
-    border-radius: 50px;
-    border: 1px solid #3C763D;
   }
 
   #profile-image {
