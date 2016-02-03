@@ -221,7 +221,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   };
 
   // get current time and create reoccuring schedule
-  that.function findWaterTime(plantLife, waterSched) { 
+  that.indWaterTime = function(plantLife, waterSched) { 
     var currentDate = moment().valueOf();
     var plantDate = currentDate;
     var results = [];
@@ -236,7 +236,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
     return results;
   }
 
-  that.function formDate (dates) {
+  that.formDate = function(dates) {
     var results = [];
     for(var i = 0; i < dates.length; i++) {
       results.push(moment(dates[i]).format());
