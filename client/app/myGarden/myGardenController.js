@@ -9,12 +9,15 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   that.data.plantDate;
   that.data.plantStatus;
   that.data.idOfGarden;
+  that.data.gardenAdded = '';
   that.gardens = {"0": "The Nursery"};
   that.count = 0;
   that.resultPlants;
   that.lists;
   that.gardenArray = [];
-  that.data.gardenAdded = '';
+  that.durationOfPlantLife; // input for findWaterSched
+  that.plantWaterSched; // input for findWaterSched
+  
 
   // that.confirm = function(){
   //   if(confirm('Are you sure you want to plant this today?')){
@@ -25,45 +28,14 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   //       })
   //   }
   // }
-  var date = new Date(Date.now());
-  var year = date.getFullYear();
-  var month = function(){
-    if(date.getMonth()<10){
-     return '0' + date.getMonth();
-    } else{
-     return date.getMonth();
-    }
-  };
-  var day = function(){
-    if(date.getDate()<10){
-      return '0' + date.getDate();
-    } else{
-      return date.getDate();
-    }
-  };
-  var hour = date.getHours();
-  var minute = function(){
-    if(date.getMinutes()<10){
-      return '0' + date.getMinutes();
-    } else{
-      return date.getMinutes();
-    }
-  };
-  var second = function(){
-    if(date.getSeconds()<10){
-      return '0' + date.getSeconds();
-    } else{
-      return date.getSeconds();
-    }
-  };
-  var time = year+'-'+(month()+1)+'-'+day()+'T'+hour+':'+minute()+':'+second()+'Z';
+  
 
   that.dropCallback = function(event, index, item, external, type){
-    console.log(item)
+    console.log(item);
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
 
-    if(confirm('Are you sure you want to plant this today?')){
+    if(prompt('Are you sure you want to plant this today?')){
       Plants.addGardenToPlant(plant, garden)
         .then(function(results){
           that.getUserPlants()
@@ -79,10 +51,35 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
         })
     }
      else{
+      // return plant back to 'Nursery'
+    }
+  };
 
+  // get current time and create reoccuring schedule
+  that.findWaterSched = function(plantLife, waterSched) { 
+    var currentDate = moment().valueOf();
+    var plantDate = currentDate;
+    var results = [];
+    var theWaterSched = [604800000/1,604800000/2,604800000/3];
+    var endDate = moment().add(plantLife, 'days').valueOf();
+
+    while(plantDate < endDate) {
+      plantDate = plantDate + theWaterSched[waterSched - 1];
+      results.push(plantDate);
     }
 
-  };
+    return results;
+  }
+
+  // format date to google calendar specifications
+  that.formDate = function(dates) {
+    var results = [];
+    for(var i = 0; i < dates.length; i++) {
+      results.push(moment(dates[i]).format());
+    }
+    return results;
+  }
+  // console.log(that.formDate(that.findWaterSched(90, 1))); TODO: Remove before commit to master
 
   that.getUserPlants = function(){
     var tempArray = [];
@@ -219,33 +216,6 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
       }
     })
   };
-
-  // get current time and create reoccuring schedule
-  that.findWaterTime = function(plantLife, waterSched) { 
-    var currentDate = moment().valueOf();
-    var plantDate = currentDate;
-    var results = [];
-    var theWaterSched = [604800000/1,604800000/2,604800000/3];
-    var endDate = moment().add(plantLife, 'days').valueOf();
-
-    while(plantDate < endDate) {
-      plantDate = plantDate + theWaterSched[waterSched - 1];
-      results.push(plantDate);
-    }
-
-    return results;
-  }
-
-  that.formDate = function(dates) {
-    var results = [];
-    for(var i = 0; i < dates.length; i++) {
-      results.push(moment(dates[i]).format());
-    }
-    return results;
-  }
-
-  // that.formDate(that.findWaterTime(90, 1)));
-
 
   that.getUserPlants();
 
