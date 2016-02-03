@@ -14,8 +14,8 @@
               dnd-draggable="plant"
               dnd-disable-if="plant.gardenId !== ''"
               dnd-type="plant.type"
-              dnd-moved="list.plants.splice($index, 1)"
-              dnd-canceled="console.log(event)"
+              dnd-moved="mgp.confirm(); list.plants.splice($index, 1)"
+              dnd-canceled="list.plants.splice($index, 1)"
               ng-init="plant.bucket = list.label">
               <div class="handle" >:::</div> <!--different handle based on type?-->
               <div class="name" dnd-nodrag>{{plant.name}}</div>
