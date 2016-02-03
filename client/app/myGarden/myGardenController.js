@@ -1,5 +1,5 @@
 var myGarden = angular.module('myGarden',[]);
-myGarden.controller('myGardenController', ['Plants', '$state', '$window',  function(Plants, $state, $window){
+myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Events', function(Plants, $state, $window, Events){
   var that = this;
   that.data = {};
   that.data.username = $state.params.username;
@@ -15,15 +15,73 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window',  funct
   that.lists;
   that.gardenArray = [];
   that.data.gardenAdded = '';
-      
+
+  // that.confirm = function(){
+  //   if(confirm('Are you sure you want to plant this today?')){
+  //     Plants.addGardenToPlant(plant, garden)
+  //       .then(function(){
+  //         that.getUserPlants()
+  //         // Events.
+  //       })
+  //   }
+  // }
+  var date = new Date(Date.now());
+  var year = date.getFullYear();
+  var month = function(){
+    if(date.getMonth()<10){
+     return '0' + date.getMonth();
+    } else{
+     return date.getMonth();
+    }
+  };
+  var day = function(){
+    if(date.getDate()<10){
+      return '0' + date.getDate();
+    } else{
+      return date.getDate();
+    }
+  };
+  var hour = date.getHours();
+  var minute = function(){
+    if(date.getMinutes()<10){
+      return '0' + date.getMinutes();
+    } else{
+      return date.getMinutes();
+    }
+  };
+  var second = function(){
+    if(date.getSeconds()<10){
+      return '0' + date.getSeconds();
+    } else{
+      return date.getSeconds();
+    }
+  };
+  var time = year+'-'+(month()+1)+'-'+day()+'T'+hour+':'+minute()+':'+second()+'Z';
+
   that.dropCallback = function(event, index, item, external, type){
     console.log(item)
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
-    Plants.addGardenToPlant(plant, garden)
-      .then(function(){
-        that.getUserPlants()
-      })
+
+    if(confirm('Are you sure you want to plant this today?')){
+      Plants.addGardenToPlant(plant, garden)
+        .then(function(results){
+          that.getUserPlants()
+          var plantEvent = {};
+          plantEvent.username = that.data.username;
+          plantEvent.idOfPlant = plant.plantId;
+          plantEvent.eventDate = time;
+          // console.log(plantEvent, 'asjkdlfklasdfkljasfak;seiorwioeruweioruweioruioewuqeroiqurwer')
+          Events.addPlantEvent(plantEvent)
+            .then(function(results){
+              console.log(results, 'PLANTEventCONTROLLER')
+            })
+        })
+    }
+     else{
+
+    }
+
   };
 
   that.getUserPlants = function(){
