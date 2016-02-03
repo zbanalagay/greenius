@@ -1,11 +1,23 @@
+var pg = require('pg');
 var Sequelize = require('sequelize');
 
-// establish a connection
-var sequelize = new Sequelize('test', null, null,{
-  host: 'localhost',
-  dialect: 'sqlite',
-  storage: './db.sqlite'
-});
+  if(process.env.DEPLOYED){
+    var sequelize = new Sequelize('postgres://gkepgcetryiagb:gumSmA8e4HAkRR8x0cJ_BwW2tH@ec2-54-197-241-24.compute-1.amazonaws.com:5432/dbq8oko6l5h6q7', {
+      dialect: 'postgres',
+      protocol: 'postgres',
+      dialectOptions: {
+        ssl: true
+      }
+    });
+  } else {
+    var config = require('../env/config.js')
+    var sequelize = new Sequelize('test', null, null,{
+      host: 'localhost',
+      dialect: 'sqlite',
+      storage: './db.sqlite'
+    });
+  };
+
 
 var models = {};
 
@@ -34,13 +46,13 @@ models.Users = sequelize.define('User', {
 });
 
 models.Plants = sequelize.define('Plant', {
-  idOfUser: {
+  idOfUser:{
     type: Sequelize.INTEGER
   },
-  idOfSpecies: {
+  idOfSpecies:{
     type: Sequelize.INTEGER
   },
-  plantDate: {
+  plantDate:{
     type: Sequelize.INTEGER
   },
   nickname: {
@@ -51,24 +63,6 @@ models.Plants = sequelize.define('Plant', {
   },
   idOfGarden: {
     type: Sequelize.INTEGER
-  },
-  createdAt: {
-    type: Sequelize.STRING
-  },
-  updatedAt: {
-    type: Sequelize.STRING
-  }
-});
-
-models.Events = sequelize.define('Event', {
-  idOfUser: {
-    type: Sequelize.INTEGER
-  },
-  idOfPlant: {
-    type: Sequelize.INTEGER
-  },
-  eventDate: {
-    type: Sequelize.STRING
   },
   createdAt: {
     type: Sequelize.STRING
@@ -101,23 +95,23 @@ models.SpeciesInfos = sequelize.define('SpeciesInfo', {
     type: Sequelize.STRING
   },
   generalInformation: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   plantingGuide: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   pestsDiseases: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   careGuide: {
-    type: Sequelize.STRING
-  },
+    type: Sequelize.TEXT
+  }/*,
   createdAt: {
     type: Sequelize.STRING
   },
   updatedAt: {
     type: Sequelize.STRING
-  }
+  }*/
 });
 
 models.Gardens = sequelize.define('Garden', {
@@ -147,48 +141,52 @@ models.UsersGardens = sequelize.define('UsersGarden', {
   } 
 });
 
-//establish the relationships between the tables
-models.Users.hasMany(models.Plants);
-models.Users.hasMany(models.Events);
-models.Plants.hasMany(models.Events);
-models.Gardens.hasMany(models.Plants);
-models.SpeciesInfos.hasMany(models.Plants);
-models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
-models.Gardens.belongsToMany(models.Users, {through: 'Plants'});
-models.Users.hasMany(models.Gardens);
-models.Gardens.hasMany(models.Users);
-models.Users.belongsToMany(models.Gardens, {through: 'UsersGardens'});
-models.Gardens.belongsToMany(models.Users, {through: 'UsersGardens'});
+// establish the relationships between the tables
+// models.Users.hasMany(models.Plants);
+// models.Gardens.hasMany(models.Plants);
+// models.SpeciesInfos.hasMany(models.Plants);
+// models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
+// models.Gardens.belongsToMany(models.Users, {through: 'Plants'});
+// models.Users.hasMany(models.Gardens);
+// models.Gardens.hasMany(models.Users);
+// models.Users.belongsToMany(models.Gardens, {through: 'UsersGardens'});
+// models.Gardens.belongsToMany(models.Users, {through: 'UsersGardens'});
 
 // {force: true} will drop the table and re-create it
-models.Users.sync({force: false})
-           .then(function() {
-             console.log('User sync in sequelize.js');
-           });
+models.Users.sync({
+    force: false
+  })
+  .then(function() {
+    console.log('User sync in sequelize.js');
+    models.Plants.sync({
+        force: false
+      })
+      .then(function() {
+        console.log('Plant sync in sequelize.js');
+        models.SpeciesInfos.sync({
+            force: false
+          })
+          .then(function() {
+            console.log('SpeciesInfo sync in sequelize.js');
+            models.Gardens.sync({
+                force: false
+              })
+              .then(function() {
+                console.log('Garden sync in sequelize.js');
+                models.UsersGardens.sync({
+                    force: false
+                  })
+                  .then(function() {
+                    console.log('UsersGardens sync in sequelize.js');
+                  });
+              });
+          });
+      });
+  });
 
-models.Plants.sync({force: false})
-           .then(function() {
-             console.log('Plant sync in sequelize.js');
-           });
 
-models.Events.sync({force: false})
-            .then(function() {
-              console.log('Event syn in sequelize.js');
-            });
 
-models.SpeciesInfos.sync({force: false})
-           .then(function() {
-             console.log('SpeciesInfo sync in sequelize.js');
-           });
 
-models.Gardens.sync({force: false})
-            .then(function() {
-              console.log('Garden sync in sequelize.js');
-            });
 
-models.UsersGardens.sync({force: false})
-            .then(function() {
-              console.log('UsersGardens sync in sequelize.js');
-            });
 
 module.exports = models;
