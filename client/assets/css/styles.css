@@ -107,6 +107,11 @@
   width: auto;
 }
 
+/*.box-image {
+  height: 242.6px;
+  width: 450.6px;
+}*/
+
 .dropdown-menu {
   margin-left: 10%;
 }
@@ -154,6 +159,11 @@
     height: 75px;
     width: auto;
   }
+
+/*.box-image {
+  height: 242.6px;
+  width: 450.6px;
+}*/
 
   #menu-btn-container {
     width: 100%;
