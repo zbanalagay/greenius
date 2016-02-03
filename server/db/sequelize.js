@@ -126,6 +126,24 @@ models.Gardens = sequelize.define('Garden', {
   }
 });
 
+models.Events = sequelize.define('Event', {
+   idOfUser: {
+     type: Sequelize.INTEGER
+   },
+   idOfPlant: {
+     type: Sequelize.INTEGER
+   },
+   eventDate: {
+     type: Sequelize.STRING
+   },
+   createdAt: {
+     type: Sequelize.STRING
+   },
+   updatedAt: {
+     type: Sequelize.STRING
+   }
+ });
+
 models.UsersGardens = sequelize.define('UsersGarden', {
   userId: {
     type: Sequelize.INTEGER
@@ -138,19 +156,21 @@ models.UsersGardens = sequelize.define('UsersGarden', {
   },
   updatedAt: {
     type: Sequelize.STRING
-  } 
+  }
 });
 
 // establish the relationships between the tables
-// models.Users.hasMany(models.Plants);
-// models.Gardens.hasMany(models.Plants);
-// models.SpeciesInfos.hasMany(models.Plants);
-// models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
-// models.Gardens.belongsToMany(models.Users, {through: 'Plants'});
-// models.Users.hasMany(models.Gardens);
-// models.Gardens.hasMany(models.Users);
-// models.Users.belongsToMany(models.Gardens, {through: 'UsersGardens'});
-// models.Gardens.belongsToMany(models.Users, {through: 'UsersGardens'});
+models.Users.hasMany(models.Events);
+models.Plants.hasMany(models.Events);
+models.Users.hasMany(models.Plants);
+models.Gardens.hasMany(models.Plants);
+models.SpeciesInfos.hasMany(models.Plants);
+models.Users.belongsToMany(models.Gardens, {through: 'Plants'});
+models.Gardens.belongsToMany(models.Users, {through: 'Plants'});
+models.Users.hasMany(models.Gardens);
+models.Gardens.hasMany(models.Users);
+models.Users.belongsToMany(models.Gardens, {through: 'UsersGardens'});
+models.Gardens.belongsToMany(models.Users, {through: 'UsersGardens'});
 
 // {force: true} will drop the table and re-create it
 models.Users.sync({
@@ -178,6 +198,10 @@ models.Users.sync({
                   })
                   .then(function() {
                     console.log('UsersGardens sync in sequelize.js');
+                    models.Events.sync({force: false})
+                     .then(function() {
+                       console.log('Event sync in sequelize.js');
+                      });
                   });
               });
           });
