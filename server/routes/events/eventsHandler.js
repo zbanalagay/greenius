@@ -9,7 +9,8 @@ if(!process.env.DEPLOYED) {
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 //TODO: make process.env variables fro CLIENT_SECRET
-var oauth2Client = new OAuth2(process.env.GOOGLE_CALENDAR_ID || config.GOOGLE_CALENDAR_ID, process.env.GOOGLE_CLIENT_SECRET || config.GOOGLE_CLIENT_SECRET, "http://127.0.0.1:3000/auth/google/callback");
+// var oauth2Client = new OAuth2(process.env.GOOGLE_CALENDAR_ID || config.GOOGLE_CALENDAR_ID, process.env.GOOGLE_CLIENT_SECRET || config.GOOGLE_CLIENT_SECRET, "http://127.0.0.1:3000/auth/google/callback");
+oauth2Client = new OAuth2( config.GOOGLE_CALENDAR_ID, config.GOOGLE_CLIENT_SECRET);
 var mailer = require('./../../config/mailer.js');
 
 module.exports = {
@@ -61,8 +62,8 @@ module.exports = {
      access_token: req.body.token.accessToken,
      refresh_token: req.body.token.refreshToken
    });
-
-   console.log(req.body, 'THIS IS THE REQ.BODY IN POSTTOGOOGLECALENDAR HANDLER');
+   console.log(oauth2Client, 'LOOK AT MEEEEEEEE')
+  //  console.log(req.body, 'THIS IS THE REQ.BODY IN POSTTOGOOGLECALENDAR HANDLER');
    //TODO GET WHAT YOU NEED FROM THE REQ.BODY;
    var description = req.body  //TODO GET WHAT YOU NEED FROM THE REQ.BODY;
 
@@ -78,22 +79,23 @@ module.exports = {
    }
    var calendar = google.calendar('v3');
 
-   calendar.events.insert({
-     auth: oauth2Client,
-     calendarId: 'primary',
-     resource: event,
-   }, function(err, event){
-     if(err){
-       console.log('Oh no! There was an error contacting the calendar service: ', err);
-       return;
-     }
+  //  TODO fix google calendar
+  //  calendar.events.insert({
+  //    auth: oauth2Client,
+  //    calendarId: 'primary',
+  //    resource: event,
+  //  }, function(err, event){
+  //    if(err){
+  //      console.log('Oh no! There was an error contacting the calendar service: ', err);
+  //      return;
+  //    }
 
-
+    // TODO fix so that it only send an email on that day
      var recepient = req.body.email;
      mailer.sendMail(recepient);
      res.send(200).status('POSTED TO GOOGLE CALENDAR ');
 
-   })
+  //  })
  },
 
  removePlantEvent: function(req, res){
