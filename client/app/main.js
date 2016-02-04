@@ -11,6 +11,7 @@ var main = angular.module('greeniusApp',
 	'myPlants',
   'myGarden',
 	'plantProfile',
+	'plantProfileDirective',
 	'services',
 	'ui.router']);
 
