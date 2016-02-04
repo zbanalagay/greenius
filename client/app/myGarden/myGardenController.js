@@ -19,37 +19,29 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   that.resultPlants;
   that.lists;
   that.gardenArray = [];
-  that.expectedPlantLife; 
-  that.plantWaterSched; 
+  that.expectedPlantLife;
+  that.plantWaterSched;
   that.wateringSchedule;
+  that.idOfPlant;
 
   // on move plant from 'nursery' sandbox to 'garden' sandbox, set garden and create watering events
   that.dropCallback = function(event, index, item, external, type){
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
     var name = {nickname: item.name};
+    that.idOfPlant = item.plantId;
 
     if(confirm('Are you sure you want to plant this today?')){
-      var plantEvent = {};
+
       that.getExpectedPlantLife();
       that.getWateringInfo(name);
       Plants.addGardenToPlant(plant, garden)
         .then(function(results){
           that.getUserPlants()
-          plantEvent.username = that.data.username;
-          plantEvent.idOfPlant = plant.plantId;
-          plantEvent.eventDate = moment().valueOf();
-          // console.log(plantEvent, 'asjkdlfklasdfkljasfak;seiorwioeruweioruweioruioewuqeroiqurwer')
-          Events.addPlantEvent(plantEvent)
-            .then(function(results){
-              console.log(results, 'PLANTEventCONTROLLER');
-              console.log(that.data, 'GUERUOERIWEIORU')
-              // Events.postToGoogleCalendar()
-            })
-        })  
+        })
         .catch(function(error){
           console.log(error, 'ERROR ADDING GARDEN TO PLANT');
-        })  
+        })
     }
      else{
       // return plant back to 'Nursery'
@@ -72,31 +64,6 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
       })
   };
 
-  // get current time and create reoccuring schedule
-  that.findWaterSched = function(plantLife, waterSched) {
-    var currentDate = moment().valueOf();
-    var plantDate = currentDate;
-    var results = [];
-    var theWaterSched = [604800000/1,604800000/2,604800000/3];
-    var endDate = moment().add(plantLife, 'days').valueOf();
-
-    while(plantDate < endDate) {
-      plantDate = plantDate + theWaterSched[waterSched - 1];
-      results.push(plantDate);
-    }
-    return results;
-  };
-
-  // format date to google calendar specifications (e.g "2016-04-20T18:36:42-07:00")
-  that.formDate = function(dates) {
-    var results = [];
-    for(var i = 0; i < dates.length; i++) {
-      results.push(moment(dates[i]).format());
-    }
-    that.wateringSchedule = results;
-    console.log(that.wateringSchedule);
-  };
-
   // prompt user for expected plant life (Seasonal, Semi-annual, Annual)
   that.getExpectedPlantLife = function() {
     var inputPlantLife = prompt("Input expected Plant Life: (Seasonal, Semi-annual, Annual)");
@@ -109,13 +76,65 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
         that.expectedPlantLife = 365;
       }
     }
-  };    
+  };
+
+  // get current time and create reoccuring schedule
+  that.findWaterSched = function(plantLife, waterSched) {
+    var currentDate = moment().valueOf();
+    var plantDate = currentDate;
+    var results = [];
+    var theWaterSched = [604800000/1,604800000/2,604800000/3];
+    var endDate = moment().add(plantLife, 'days').valueOf();
+
+    while(plantDate < endDate) {
+      plantDate = plantDate + theWaterSched[waterSched - 1];
+      var endTime = plantDate + 900000;
+      results.push([plantDate, endTime]);
+    }
+    return results;
+  };
+
+  // format date to google calendar specifications (e.g "2016-04-20T18:36:42-07:00")
+  that.formDate = function(dates) {
+    var results = [];
+    for(var i = 0; i < dates.length; i++) {
+      results.push([moment(dates[i][0]).format(), moment(dates[i][1]).format()]);
+    }
+    that.wateringSchedule = results;
+    console.log(that.wateringSchedule);
+    that.addEvents();
+  };
+
+  that.addEvents = function(){
+    var plantEvent = {};
+    plantEvent.username = that.data.username;
+    plantEvent.idOfPlant = that.idOfPlant;
+    plantEvent.token = {};
+    plantEvent.token.accessToken = that.data.token.accessToken;
+    plantEvent.token.refreshToken = that.data.token.refreshToken;
+    plantEvent.email = that.data.email;
+
+    for(var i = 0 ; i< that.wateringSchedule.length; i++){
+      plantEvent.eventDate= that.wateringSchedule[i][0];
+      plantEvent.endDate = that.wateringSchedule[i][1];
+      // console.log(plantEvent, 'plantEVENT OBJ')
+      Events.addPlantEvent(plantEvent)
+        .then(function(results){
+          Events.postToGoogleCalendar(plantEvent)
+            .then(function(results){
+              console.log('SUCESS TO POSTTOGOOGLECALENDAR CONTROLLER', results)
+            })
+            .catch(function(error){
+              console.log(error, 'ERROR TO POSTTOGOOGLECALENDAR CONTROLLER')
+            })
+        })
+    }
+  }
 
   that.getUserPlants = function(){
     var tempArray = [];
     Plants.getUsersPlants(that.data)
       .then(function(results) {
-        // console.log(results, 'SUCCESS IN GETUSERPLANTS CONTROLLER');
         for(var i = 0 ; i < results.data.length; i++){
           var obj = {};
           obj.nickname    = results.data[i].nickname;

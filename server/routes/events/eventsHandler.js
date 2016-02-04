@@ -84,7 +84,7 @@ module.exports = {
      resource: event,
    }, function(err, event){
      if(err){
-       console.log('Oh no! There was an error contacting the calendar service: ', error);
+       console.log('Oh no! There was an error contacting the calendar service: ', err);
        return;
      }
 
