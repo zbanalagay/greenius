@@ -1,5 +1,5 @@
 var myGarden = angular.module('myGarden',[]);
-myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Events', function(Plants, $state, $window, Events){
+myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Events', 'store', function(Plants, $state, $window, Events, store){
   var that = this;
   that.data = {};
   that.data.username = $state.params.username;
@@ -10,6 +10,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   that.data.plantStatus;
   that.data.idOfGarden;
   that.data.gardenAdded = '';
+  that.data.token={};
   that.gardens = {"0": "The Nursery"};
   that.count = 0;
   that.resultPlants;
@@ -17,7 +18,9 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   that.gardenArray = [];
   that.durationOfPlantLife; // input for findWaterSched
   that.plantWaterSched; // input for findWaterSched
-  
+  that.data.token.accessToken = store.get('access_token');
+  that.data.token.refreshToken = store.get('refresh_token');
+  that.data.email = $window.localStorage.getItem('email');
 
   // that.confirm = function(){
   //   if(confirm('Are you sure you want to plant this today?')){
@@ -28,7 +31,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   //       })
   //   }
   // }
-  
+
 
   that.dropCallback = function(event, index, item, external, type){
     console.log(item);
@@ -42,11 +45,14 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
           var plantEvent = {};
           plantEvent.username = that.data.username;
           plantEvent.idOfPlant = plant.plantId;
-          plantEvent.eventDate = time;
+          plantEvent.eventDate = moment().valueOf();
           // console.log(plantEvent, 'asjkdlfklasdfkljasfak;seiorwioeruweioruweioruioewuqeroiqurwer')
           Events.addPlantEvent(plantEvent)
             .then(function(results){
-              console.log(results, 'PLANTEventCONTROLLER')
+              console.log(results, 'PLANTEventCONTROLLER');
+
+              console.log(that.data, 'GUERUOERIWEIORU')
+              // Events.postToGoogleCalendar()
             })
         })
     }
@@ -56,7 +62,7 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   };
 
   // get current time and create reoccuring schedule
-  that.findWaterSched = function(plantLife, waterSched) { 
+  that.findWaterSched = function(plantLife, waterSched) {
     var currentDate = moment().valueOf();
     var plantDate = currentDate;
     var results = [];
