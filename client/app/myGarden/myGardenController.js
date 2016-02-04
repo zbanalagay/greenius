@@ -11,38 +11,31 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
   that.data.idOfGarden;
   that.data.gardenAdded = '';
   that.data.token={};
+  that.data.token.accessToken = store.get('access_token');
+  that.data.token.refreshToken = store.get('refresh_token');
+  that.data.email = $window.localStorage.getItem('email');
   that.gardens = {"0": "The Nursery"};
   that.count = 0;
   that.resultPlants;
   that.lists;
   that.gardenArray = [];
-  that.durationOfPlantLife; // input for findWaterSched
-  that.plantWaterSched; // input for findWaterSched
-  that.data.token.accessToken = store.get('access_token');
-  that.data.token.refreshToken = store.get('refresh_token');
-  that.data.email = $window.localStorage.getItem('email');
+  that.expectedPlantLife; 
+  that.plantWaterSched; 
+  that.wateringSchedule;
 
-  // that.confirm = function(){
-  //   if(confirm('Are you sure you want to plant this today?')){
-  //     Plants.addGardenToPlant(plant, garden)
-  //       .then(function(){
-  //         that.getUserPlants()
-  //         // Events.
-  //       })
-  //   }
-  // }
-
-
+  // on move plant from 'nursery' sandbox to 'garden' sandbox, set garden and create watering events
   that.dropCallback = function(event, index, item, external, type){
-    console.log(item);
     var plant = {plantId: item.plantId};
     var garden = {gardenName: item.bucket};
+    var name = {nickname: item.name};
 
-    if(prompt('Are you sure you want to plant this today?')){
+    if(confirm('Are you sure you want to plant this today?')){
+      var plantEvent = {};
+      that.getExpectedPlantLife();
+      that.getWateringInfo(name);
       Plants.addGardenToPlant(plant, garden)
         .then(function(results){
           that.getUserPlants()
-          var plantEvent = {};
           plantEvent.username = that.data.username;
           plantEvent.idOfPlant = plant.plantId;
           plantEvent.eventDate = moment().valueOf();
@@ -50,15 +43,33 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
           Events.addPlantEvent(plantEvent)
             .then(function(results){
               console.log(results, 'PLANTEventCONTROLLER');
-
               console.log(that.data, 'GUERUOERIWEIORU')
               // Events.postToGoogleCalendar()
             })
-        })
+        })  
+        .catch(function(error){
+          console.log(error, 'ERROR ADDING GARDEN TO PLANT');
+        })  
     }
      else{
       // return plant back to 'Nursery'
     }
+  };
+
+  // query database using plant nickname for species wateringInformation
+  that.getWateringInfo = function(plant) {
+    Plants.getPlant(plant)
+      .then(function(plantResult) {
+        var plantObj = {id: plantResult.data.idOfSpecies};
+        Plants.getSpecieById(plantObj)
+        .then(function(speciesResult) {
+          that.plantWaterSched = speciesResult.data.wateringInformation;
+          that.formDate(that.findWaterSched(that.expectedPlantLife, that.plantWaterSched))
+        })
+      })
+      .catch(function(error){
+        console.log(error, 'ERROR IN DELETING PLANTS OF A GARDEN CONTROLLER');
+      })
   };
 
   // get current time and create reoccuring schedule
@@ -73,19 +84,32 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
       plantDate = plantDate + theWaterSched[waterSched - 1];
       results.push(plantDate);
     }
-
     return results;
-  }
+  };
 
-  // format date to google calendar specifications
+  // format date to google calendar specifications (e.g "2016-04-20T18:36:42-07:00")
   that.formDate = function(dates) {
     var results = [];
     for(var i = 0; i < dates.length; i++) {
       results.push(moment(dates[i]).format());
     }
-    return results;
-  }
-  // console.log(that.formDate(that.findWaterSched(90, 1))); TODO: Remove before commit to master
+    that.wateringSchedule = results;
+    console.log(that.wateringSchedule);
+  };
+
+  // prompt user for expected plant life (Seasonal, Semi-annual, Annual)
+  that.getExpectedPlantLife = function() {
+    var inputPlantLife = prompt("Input expected Plant Life: (Seasonal, Semi-annual, Annual)");
+    if (inputPlantLife != null) {
+      if(inputPlantLife === 'Seasonal') {
+        that.expectedPlantLife = 90;
+      } else if (inputPlantLife === 'Semi-annual') {
+        that.expectedPlantLife = 180;
+      } else {
+        that.expectedPlantLife = 365;
+      }
+    }
+  };    
 
   that.getUserPlants = function(){
     var tempArray = [];
