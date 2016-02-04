@@ -1,16 +1,17 @@
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 if(!process.env.DEPLOYED) {
 	var config = require('./../env/config.js');
 }
 
-var transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport(smtpTransport({
   service: 'Gmail',
   auth: {
-    //TODO put process.env variables
     user: 'greenius.thesis@gmail.com',
-    password: process.env.NODEMAILER_PASSWORD || config.NODEMAILER_PASSWORD
+    pass: process.env.NODEMAILER_PASSWORD || config.NODEMAILER_PASSWORD
   }
-});
+}));
+
 
 exports.sendMail = function(receiverEmail){
   var mailOptions = {
