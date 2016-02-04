@@ -1,4 +1,11 @@
  /* Toggle Styles */
+ html{
+    font-family: sans-serif;
+    font-style: normal;
+    background-color: #F1F2F4;
+    color: #36373E;
+
+ }
 
 #wrapper {
   padding-left: 0;
@@ -20,7 +27,7 @@
   height: 100%;
   margin-left: -250px;
   overflow-y: auto;
-  background: rgba(89, 154, 41, 0.96);
+  background: #53545b;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -32,6 +39,7 @@
 }
 
 #page-content-wrapper {
+  background: rgba(89, 154, 41, 0.43);
   width: 100%;
   position: absolute;
   padding: 15px;
@@ -58,6 +66,7 @@
   }
 
 .sidebar-nav li a {
+  letter-spacing: 0.1rem;
   display: inline-block;
   text-decoration: none;
   color: #fff;
@@ -65,7 +74,7 @@
 
 .sidebar-nav li:hover {
   text-decoration: none;
-  background: rgb(81, 140, 38);
+  background: #36373e;
   color: #fff;
 }
 
@@ -79,8 +88,6 @@
   padding: 10px;
   font-size: 18px;
   line-height: 60px;
-  border-color: #ccc;
-  border-bottom: 2px solid white;
 }
 
 .sidebar-nav > .sidebar-brand:hover {
