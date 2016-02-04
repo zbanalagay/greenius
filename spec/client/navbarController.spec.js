@@ -32,7 +32,6 @@ describe('navbarController', function () {
         $location: $location 
       });
 
-
   }));
 
   it("contains spec with an expectation", function() {
