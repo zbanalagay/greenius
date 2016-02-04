@@ -57,6 +57,7 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
       that.data.commonName = plant;
       that.browse();
     }
+    
     that.browse = function(){
       console.log('browse got heard!!');
       if(that.data.commonName){
