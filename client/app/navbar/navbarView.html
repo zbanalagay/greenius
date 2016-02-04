@@ -2,30 +2,25 @@
     <!-- Sidebar -->
     <div id='sidebar-wrapper' ng-class="nvp.isOpen ? 'toggled' : ''">
       <ul class='sidebar-nav'>
-        <li class='sidebar-brand' style='margin: 2% 0% 0% 0%;'>
-          <img id='profile-image' ng-src={{nvp.userImage}} class='img-circle'></img><a>{{nvp.userName}}</a> <!-- TODO: add profile image & username -->
+        <li class='sidebar-brand'>
+          <img id='profile-image' ng-src={{nvp.userImage}} class='img-circle'></img><br>
+          <a>Welcome, {{nvp.userName}}</a> <!-- TODO: add profile image & username -->
         </li>
         <li>
-          <a class='full-width' href='#/navbar/dashboard'>Dashboard</a>
+          <a href='#/navbar/dashboard'>Dashboard</a>
         </li>
         <li>
-          <a class='full-width' href='#/navbar/browseplant'>The Greenhouse</a>
+          <a href='#/navbar/browseplant'>The Greenhouse</a>
         </li>
         <li>
-          <a class='full-width' href='#/navbar/mygarden'>Garden Builder</a>
+          <a href='#/navbar/mygarden'>Garden Builder</a>
         </li>
         <li>
-          <a class='full-width' href='#/navbar/myplants'>My Plants</a>
+          <a href='#/navbar/myplants'>My Plants</a>
         </li>
-        <li>
-          <li class='dropdown'>
-            <a class='dropdown-toggle full-width' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='true'>Dropdown<span class='caret'></span></a>
-            <ul class='dropdown-menu'>
-              <li><a href='#/settings'>Settings</a></li>
-              <li><a href='#/landingPage' ng-click='nvp.logout()'>Logout</a></li>
-            </ul>
-          </li>
-        </li>
+        <li><a href='#/settings'>Settings</a></li>
+        <li><a href='#/landingPage' ng-click='nvp.logout()'>Logout</a></li>
+  
       </ul>
     </div>
     <!-- Page Content -->
