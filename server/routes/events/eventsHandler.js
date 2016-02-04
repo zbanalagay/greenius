@@ -15,7 +15,7 @@ var mailer = require('./../../config/mailer.js');
 module.exports = {
 
   addPlantEvent: function(req, res){
-    console.log(req.body, 'THIS IS REQ.BODY IN ADDPLANTEVENT HANDLER');
+    // console.log(req.body, 'THIS IS REQ.BODY IN ADDPLANTEVENT HANDLER');
     var plantEventData = req.body;
     helper.addPlantEvent(plantEventData)
       .then(function(results){
@@ -57,11 +57,9 @@ module.exports = {
   },
 
   postToGoogleCalendar: function(req, res){
-    console.log(req.user, 'THIS IS THE REQ.USER IN POSTTOGOOGLECALENDAR HANDLER');
-    //TODO MAKE SURE THIS IS RIGHT
     oauth2Client.setCredentials({
-     access_token: req.user.accessToken,
-     refresh_token: req.user.refreshToken
+     access_token: req.body.token.accessToken,
+     refresh_token: req.body.token.refreshToken
    });
 
    console.log(req.body, 'THIS IS THE REQ.BODY IN POSTTOGOOGLECALENDAR HANDLER');
@@ -72,7 +70,7 @@ module.exports = {
      'summary' : description,
      'description' : description,
      'start' : {
-       'dateTime': req.body.plantDate
+       'dateTime': req.body.eventDate
      },
      'end' : {
        'dateTime': req.body.endDate //have some logic that this is three months after plantDate;
@@ -90,10 +88,10 @@ module.exports = {
        return;
      }
 
-    //TODO MAKE SURE THIS IS RIGHT
-     var email = req.user.profile.emails[0].value;
-     mailer.sendMail(email, event.htmlLink);
-     res.send(200).status(event.htmlLink);
+
+     var recepient = req.body.email;
+     mailer.sendMail(recepient);
+     res.send(200).status('POSTED TO GOOGLE CALENDAR ');
 
    })
  },

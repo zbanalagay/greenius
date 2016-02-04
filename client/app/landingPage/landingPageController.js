@@ -4,17 +4,26 @@ landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$loc
   that.data = {};
 
   that.login = function(){
+
       auth.signin({
+        authParams: {
+          scope: 'openid offline_access'
+      // The following is optional
+      // device: 'Chrome browser'
+    },
         connections : ['google-oauth2'],
         icon: 'http://s8.postimg.org/pmmaghi29/leaf.png'
-      }, function(profile, token){
+      }, function(profile, token, refresh_token, access_token){
         store.set('profile', profile);
         store.set('token', token);
-
+        store.set('refresh_token', refresh_token);
+        store.set('access_token', access_token);
+        console.log(store, 'hey lizz');
         that.data.email = profile.email;
         that.data.username = profile.name;
         that.data.userPic = profile.picture;
         that.data.createdAt = profile.created_at;
+        $window.localStorage.setItem('email', profile.email);
 
         Users.getUser(that.data)
         .then(function(results){
@@ -42,6 +51,9 @@ landingPage.controller('landingPageController', ['$http', 'auth', 'store', '$loc
 
   that.logout = function(){
     auth.signout();
+
+    store.remove('refresh_token');
+    store.remove('access_token');
     store.remove('profile');
     store.remove('token');
   };

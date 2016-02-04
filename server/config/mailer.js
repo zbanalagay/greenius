@@ -12,12 +12,12 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-exports.sendMail = function(receiverEmail, eventURL){
+exports.sendMail = function(receiverEmail){
   var mailOptions = {
     from: 'greenius.thesis@gmail.com',
     to: receiverEmail,
     subject: 'I need water!!',
-    text: 'One of the plants in your gardens needs to be watered! View it here :' + eventURL,
+    text: 'One of the plants in your gardens needs to be watered!',
   };
 
   transporter.sendMail(mailOptions, function(error, info){
