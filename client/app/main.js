@@ -13,7 +13,8 @@ var main = angular.module('greeniusApp',
 	'plantProfile',
 	'plantProfileDirective',
 	'services',
-	'ui.router']);
+	'ui.router',
+	'ui.calendar']);
 
 main.config(function (authProvider){
   authProvider.init({
