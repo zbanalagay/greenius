@@ -8,7 +8,7 @@
         <input ng-model="query" type="text" class="form-control" placeholder="Search for...">
       </div>
       <div class="list-group">
-        <a class="list-group-item " ng-repeat='plant in bpp.plants | filter:query' ng-click = "bpp.changeCommonName(plant)">{{plant}}</a>
+        <a class="list-group-item " ng-show='query' ng-repeat='plant in bpp.plants | filter:query' ng-click = "bpp.changeCommonName(plant)">{{plant}}</a>
       </div>
     </div>
 
