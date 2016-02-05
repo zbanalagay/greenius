@@ -12,7 +12,6 @@ calendar.controller('calendarController', ['auth', '$window', 'Events', 'Plants'
     Events.getUserEvents(that.data)
       .then(function(results){
         for(var i = 0; i < results.data.length; i++){
-          // console.log('SUCCESS IN getUserEvents CONTROLLER', results.data[i]);
           that.data.eventDate = results.data[i].eventDate;
             var year = moment(that.data.eventDate).format('YYYY');
             var month = moment(that.data.eventDate).format('MM');
@@ -24,7 +23,6 @@ calendar.controller('calendarController', ['auth', '$window', 'Events', 'Plants'
               start : new Date(year, month-1, day, hour, minute),
               end : new Date(year, month-1, day, hour, minute + 15)
             })
-            console.log(that.events, 'JEWS')
           }
         })
       .catch(function(error){
@@ -33,21 +31,7 @@ calendar.controller('calendarController', ['auth', '$window', 'Events', 'Plants'
   };
   that.getEvents();
   that.events = [];
-  // that.getPlantById = function(plantId){
-  //   var plant = {
-  //     plantId: plantId
-  //   }
-  //   Plants.getPlantById(plant)
-  //     .then(function(results){
-  //       console.log('SUCCESS IN GETPLANTBYIDCONTROLLER', results.data.nickname);
-  //         that.nickname = results.data.nickname;
-  //     })
-  //     .catch(function(error) {
-  //       console.log('ERROR IN GETPLANTBYIDCONTROLLER', error);
-  //     })
-  // }
-  //
-  // that.getPlantById();
+
 
   /* Change View */
   that.changeView = function(view,calendar) {
