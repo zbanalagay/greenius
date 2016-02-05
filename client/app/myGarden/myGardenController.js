@@ -113,22 +113,34 @@ myGarden.controller('myGardenController', ['Plants', '$state', '$window', 'Event
     plantEvent.token.accessToken = that.data.token.accessToken;
     plantEvent.token.refreshToken = that.data.token.refreshToken;
     plantEvent.email = that.data.email;
-
-    for(var i = 0 ; i< that.wateringSchedule.length; i++){
-      plantEvent.eventDate= that.wateringSchedule[i][0];
-      plantEvent.endDate = that.wateringSchedule[i][1];
-      // console.log(plantEvent, 'plantEVENT OBJ')
-      Events.addPlantEvent(plantEvent)
-        .then(function(results){
-          Events.postToGoogleCalendar(plantEvent)
+    consoel.log(that.wateringSchedule)
+        for(var i = 0 ; i< that.wateringSchedule.length; i++){
+          plantEvent.eventDate= that.wateringSchedule[i][0];
+          plantEvent.endDate = that.wateringSchedule[i][1];
+          console.log(plantEvent, 'plantEVENT OBJ')
+          Events.addPlantEvent(plantEvent)
             .then(function(results){
-              console.log('SUCESS TO POSTTOGOOGLECALENDAR CONTROLLER', results)
+              console.log(results, 'Sucess addingPlant event');
             })
             .catch(function(error){
-              console.log(error, 'ERROR TO POSTTOGOOGLECALENDAR CONTROLLER')
+              console.log(error, 'ERRROR IN adding plant event')
             })
+        }
+      Events.postToGoogleCalendar(plantEvent)
+        .then(function(results){
+            console.log('SUCESS TO POSTTOGOOGLECALENDAR CONTROLLER', results)
         })
-    }
+      .catch(function(error){
+        console.log(error, 'ERROR TO POSTTOGOOGLECALENDAR CONTROLLER')
+      })
+
+    // Events.postToGoogleCalendar(plantEvent)
+    //   .then(function(results){
+    //     console.log('SUCESS TO POSTTOGOOGLECALENDAR CONTROLLER', results)
+    //   })
+    //   .catch(function(error){
+    //     console.log(error, 'ERROR TO POSTTOGOOGLECALENDAR CONTROLLER')
+    //   })
   }
 
   that.getUserPlants = function(){

@@ -436,6 +436,23 @@ var helpers = {
     })
   },
 
+  // plant is an object with plantId
+  getPlantById : function(plant) {
+    return db.Plants.findOne({
+      where : {id: plant.plantId}
+    })
+    .then(function(plantResult){
+      if(!plantResult){
+        throw ERROR('Plant does not exist');
+      }
+      console.log('GETPLANTBYID WAS SUCCESSFUL', plantResult);
+      return plantResult;
+    })
+    .catch(function(error){
+      console.log(error, 'ERROR IN GETPLANTBYID');
+    })
+  },
+
   //user is an object with username
   getUserPlants : function(user) {
     var userId;
