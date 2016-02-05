@@ -53,44 +53,9 @@ module.exports = {
   },
 
   postToGoogleCalendar: function(req, res){
-  //   oauth2Client.setCredentials({
-  //    access_token: req.body.token.accessToken,
-  //    refresh_token: req.body.token.refreshToken
-  //  });
-  //  console.log(oauth2Client, 'LOOK AT MEEEEEEEE')
-  // //  console.log(req.body, 'THIS IS THE REQ.BODY IN POSTTOGOOGLECALENDAR HANDLER');
-  //  //TODO GET WHAT YOU NEED FROM THE REQ.BODY;
-  //  var description = req.body  //TODO GET WHAT YOU NEED FROM THE REQ.BODY;
-
-  //  var event = {
-  //    'summary' : description,
-  //    'description' : description,
-  //    'start' : {
-  //      'dateTime': req.body.eventDate
-  //    },
-  //    'end' : {
-  //      'dateTime': req.body.endDate //have some logic that this is three months after plantDate;
-  //    }
-  //  }
-  //  var calendar = google.calendar('v3');
-
-  //  TODO fix google calendar
-  //  calendar.events.insert({
-  //    auth: oauth2Client,
-  //    calendarId: 'primary',
-  //    resource: event,
-  //  }, function(err, event){
-  //    if(err){
-  //      console.log('Oh no! There was an error contacting the calendar service: ', err);
-  //      return;
-  //    }
-
-    // TODO fix so that it only send an email on that day
      var recepient = req.body.email;
-     mailer.sendMail(recepient);
+     mailer.plantMail(recepient);
      res.send(200).status('POSTED TO GOOGLE CALENDAR ');
-
-  //  })
  },
 
  removePlantEvent: function(req, res){
