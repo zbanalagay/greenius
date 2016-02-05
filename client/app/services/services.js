@@ -282,11 +282,24 @@ services.factory('Events', ['$http', function($http){
     });
   };
 
+  var removeAllPlantEvents = function(plantEvent){
+    return $http({
+      method: 'POST',
+      url: '/api/events/removeAllPlantEvents',
+      data: plantEvent
+    }).then(function(response){
+      console.log(response, 'SUCCESS INSIDE REMOVEALLPLANTEVENTS FACTORY', response);
+    }).catch(function(error){
+      console.log(error, 'ERROR INSIDE REMOVEALLPLANTEVENTS FACTORY');
+    })
+  }
+
   return{
     addPlantEvent: addPlantEvent,
     getPlantEvent: getPlantEvent,
     getUserEvents: getUserEvents,
     postToGoogleCalendar: postToGoogleCalendar,
     removePlantEvent: removePlantEvent,
+    removeAllPlantEvents : removeAllPlantEvents
   };
 }]);
