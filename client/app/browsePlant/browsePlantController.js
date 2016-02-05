@@ -65,7 +65,6 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
           .then(function(data){
             that.data.commonName = data.commonName;
             that.data.botanicalName = data.botanicalName;
-            console.log(that.data);
             that.userWantsToAddPlant();
           })
           .catch(function(error){
@@ -112,21 +111,21 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
         var plantStatusArray = [];
       Plants.getGardenPlants(that.data)
         .then(function(results) {
-          for(var i = results.length-1; i>= 0; i--){
-            var obj = {}
-             obj.nickname = results[i].nickname;
-             obj.id = i;
-             Plants.getSpecieById(results[i])
-              .then(function(results){
-                obj.commonName = results.data.commonName;
-                obj.plantPic = results.data.plantPic;
-              })
-              .catch(function(errror){
-                console.log(error);
-              });
-            nicknameArray.push(obj);
-          }
-          that.nicknameArray = nicknameArray;
+          // for(var i = results.length - 1 ; i>= 0; i--){
+          //   var obj = {}
+          //    obj.nickname = results[i].nickname;
+          //    obj.id = i;
+          //    Plants.getSpecieById(results[i])
+          //     .then(function(results){
+          //       obj.commonName = results.data.commonName;
+          //       obj.plantPic = results.data.plantPic;
+          //     })
+          //     .catch(function(errror){
+          //       console.log(error);
+          //     });
+          //   nicknameArray.push(obj);
+          // }
+          // that.nicknameArray = nicknameArray;
         })
         .catch(function(error){
           console.log(error);
@@ -137,7 +136,7 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
       if(that.data.nickname){
         Plants.addPlant(that.data)
           .then(function(results){
-            that.getGardenPlants();
+            //that.getGardenPlants();
             that.specificPlantInfoPrompts();
             that.userChoseGarden();
             that.userWantsToAddPlant();

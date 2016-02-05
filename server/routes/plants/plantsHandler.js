@@ -32,11 +32,9 @@ module.exports = {
   },
 
   addPlants: function(req, res) {
-    // console.log(req.body, 'THIS IS THE REQ.BODY INSIDE ADDPLANT');
     var plantData = req.body;
     helper.addPlant(plantData)
       .then(function(results) {
-        //need to call addSpeciesInfo?
         console.log(results, 'SUCCESS IN ADDPLANT HANDLER');
         res.status(200).send(results);
       })
