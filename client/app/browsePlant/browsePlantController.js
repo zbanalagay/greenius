@@ -53,7 +53,6 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
     };
 
     that.changeCommonName = function(plant) {
-      console.log(plant);
       that.data.commonName = plant;
       that.browse();
     }
@@ -65,6 +64,8 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
           .then(function(data){
             that.data.commonName = data.commonName;
             that.data.botanicalName = data.botanicalName;
+            that.data.plantPic = data.plantPic;
+            console.log(that.data.plantPic)
             that.userWantsToAddPlant();
           })
           .catch(function(error){
@@ -154,4 +155,22 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
         alert('You must enter a plant name.');
       }
     };
+
+    // that.getSpecieInfoOfPlant = function(){
+    //   Plants.getSpecieById(that.data)
+    //     .then(function(results){
+    //       that.data.botanicalName = results.data.botanicalName;
+    //       that.data.careGuide = results.data.careGuide;
+    //       that.data.commonName = results.data.commonName;
+    //       that.data.exposure = results.data.exposure;
+    //       that.data.generalPlantInfo = results.data.generalInformation;
+    //       that.data.plantPic = results.data.plantPic;
+    //       that.data.wateringInformation = results.data.wateringInformation;
+    //       that.data.typeOf = results.data.typeOf;
+    //     })
+    //     .catch(function(error){
+    //       console.log(error);
+    //     });
+    // };
+
 }]);
