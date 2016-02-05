@@ -18,10 +18,12 @@ calendar.controller('calendarController', ['auth', '$window', 'Events', 'Plants'
             var day = moment(that.data.eventDate).format('DD');
             var hour = moment(that.data.eventDate).format('HH');
             var minute = moment(that.data.eventDate).format('mm');
+
             that.events.push({
               title: 'Water me',
-              start : new Date(year, month-1, day, hour, minute),
-              end : new Date(year, month-1, day, hour, minute + 15)
+              start : new Date(year, month-1, day, 5),
+              end : new Date(year, month-1, day, 5, 30),
+              allDay : false
             })
           }
         })
