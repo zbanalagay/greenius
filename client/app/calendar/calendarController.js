@@ -5,16 +5,49 @@ calendar.controller('calendarController', ['auth', '$window', 'Events', 'Plants'
   var d = date.getDate();
   var m = date.getMonth();
   var y = date.getFullYear();
+  that.data = {};
+  that.data.username = $window.localStorage.getItem('username');
 
-  // fake events
-  that.events = [
-    {title: 'All Day Event',start: new Date(y, m, 1)},
-    {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-    {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-    {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-    {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-    {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-  ];
+  that.getEvents = function(){
+    Events.getUserEvents(that.data)
+      .then(function(results){
+        for(var i = 0; i < results.data.length; i++){
+          // console.log('SUCCESS IN getUserEvents CONTROLLER', results.data[i]);
+          that.data.eventDate = results.data[i].eventDate;
+            var year = moment(that.data.eventDate).format('YYYY');
+            var month = moment(that.data.eventDate).format('MM');
+            var day = moment(that.data.eventDate).format('DD');
+            var hour = moment(that.data.eventDate).format('HH');
+            var minute = moment(that.data.eventDate).format('mm');
+            that.events.push({
+              title: 'Water me',
+              start : new Date(year, month-1, day, hour, minute),
+              end : new Date(year, month-1, day, hour, minute + 15)
+            })
+            console.log(that.events, 'JEWS')
+          }
+        })
+      .catch(function(error){
+        console.log(error, 'ERROR INSIDE GETUSEREVENTS CONTROLLER');
+      })
+  };
+  that.getEvents();
+  that.events = [];
+  // that.getPlantById = function(plantId){
+  //   var plant = {
+  //     plantId: plantId
+  //   }
+  //   Plants.getPlantById(plant)
+  //     .then(function(results){
+  //       console.log('SUCCESS IN GETPLANTBYIDCONTROLLER', results.data.nickname);
+  //         that.nickname = results.data.nickname;
+  //     })
+  //     .catch(function(error) {
+  //       console.log('ERROR IN GETPLANTBYIDCONTROLLER', error);
+  //     })
+  // }
+  //
+  // that.getPlantById();
 
   /* Change View */
   that.changeView = function(view,calendar) {
@@ -48,5 +81,5 @@ calendar.controller('calendarController', ['auth', '$window', 'Events', 'Plants'
     };
 
     that.eventSources = [that.events];
-    
+
 }]);
