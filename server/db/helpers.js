@@ -172,7 +172,7 @@ var helpers = {
       if(!eventResults) {
         throw Error('IdOfPlant does not exist in Events table ', error);
       }
-      console.log('GetPlantEvents was successful');
+      console.log(eventResults,'GetPlantEvents was successful');
       return eventResults;
     })
   },
@@ -229,8 +229,8 @@ var helpers = {
       })
       .then(function(eventResult) {
         if(!eventResult) {
-          throw Error('Event already exists in database ', error);
-          return;
+          throw Error('Event already exists in database ');
+          // return;
         }
         // Insert event into Events table
         idOfEvent = eventResult.id;
@@ -241,7 +241,7 @@ var helpers = {
           if(!eventsResult) {
             throw Error('Error deleting Event from database');
           }
-          Console.log('RemovePlantEvent was successful');
+          console.log(eventsResult, 'RemovePlantEvent was successful');
           return eventsResult;
         })
         .catch(function(error) {
@@ -251,6 +251,22 @@ var helpers = {
     })
   },
 
+  // plant is an object with idOfPlant
+ removeAllPlantEvents: function(plant) {
+   // Check for username in Users Table
+   return db.Events.destroy({
+     where: {idOfPlant: plant.idOfPlant}
+   })
+   .then(function(eventResults) {
+     if(!eventResults) {
+       throw Error('Plant does not have any events to delete');
+     }
+     return eventResults;
+   })
+   .catch(function(error) {
+     console.log('Error removing plant events by id ', error);
+   })
+ },
   //garden is an object with gardenName
   addGarden : function(garden) {
     //Check for gardenName in Gardens table
@@ -599,5 +615,7 @@ var helpers = {
   }
 
 };
+// 
+// helpers.removeAllPlantEvents({idOfPlant: 2});
 
 module.exports = helpers;
