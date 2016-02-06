@@ -1,15 +1,14 @@
 <div class='container-fluid'>
   <div class="row">
     <div class='col-md-12'>
-      <a ng-click='nvp.toggleSideBar()' class='btn btn-default next' id='menu-toggle'>
-      <i class='fa fa-bars'></i>
-      </a>
-        
-      <h1 class="page-header">Garden Builder <small>Drag and drop a plant from 'The Nursery' into a garden</small>
+      <h1 class="page-header">
+        <a ng-click='nvp.toggleSideBar()' class='btn btn-default next' id='menu-toggle'>
+        <i class='fa fa-bars'></i>
+        </a> Garden Builder <small>Drag and drop a plant from 'The Nursery' into a garden</small>
       </h1>
     </div>
   </div>
-  <div class="row">
+  <div class="myGarden row">
     <div class='col-md-12'>
 
       <div ng-repeat="list in mgp.lists" id={{list.label}}>
@@ -63,4 +62,3 @@
   </div>
 
 </div>
-
