@@ -254,6 +254,7 @@
   border-color: #5CB854;
 }
 
+}
 .panel-success>.panel-heading {
     color: #FFFFFF;
     background-color: #5CB854;
@@ -268,5 +269,8 @@
     border-color: #8F3187;
 }
 
+.thumbnail {
+  border: 0px;
+}
 
 
