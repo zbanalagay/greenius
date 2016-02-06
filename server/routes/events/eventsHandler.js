@@ -81,7 +81,7 @@ module.exports = {
       });
   },
 
-  postToGoogleCalendar: function(req, res){
+  sendPlantMail: function(req, res){
      var recepient = req.body.email;
      mailer.plantMail(recepient);
      res.send(200).status('POSTED TO GOOGLE CALENDAR ');
