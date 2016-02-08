@@ -267,23 +267,23 @@ button.btn.btn-success {
     margin-top: 5px;
     margin-left: 20px;
 }
-.panel-success{
-  border-color: #5CB854;
-}
 
-}
 .panel-success>.panel-heading {
-    color: #FFFFFF;
-    background-color: #5CB854;
-    border-color: #5CB854;
+    color: #fff;
+    background-color: #3c763d;
+    border-color: #3c763d;
 }
-.panel-danger {
-  border-color: #8F3187;
+.panel-success {
+    border-color: #3c763d;
 }
 .panel-danger>.panel-heading {
     color: #fff;
     background-color: #8F3187;
     border-color: #8F3187;
+}
+
+.panel-danger{
+  border-color: #8F3187;
 }
 
 .thumbnail {
