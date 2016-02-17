@@ -67,7 +67,6 @@ browsePlant.controller('browsePlantController', ['Plants', '$state', '$window', 
             that.data.commonName = data.commonName;
             that.data.botanicalName = data.botanicalName;
             that.data.plantPic = data.plantPic;
-            console.log(that.data.plantPic)
             that.userWantsToAddPlant();
           })
           .catch(function(error) {
